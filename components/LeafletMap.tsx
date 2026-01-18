@@ -8,7 +8,7 @@
  * Note: Must be dynamically imported with ssr: false in parent components.
  */
 
-import { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { MapContainer, TileLayer, Marker, Popup, Circle } from "react-leaflet";
 import L from "leaflet";
 import { z } from "zod";
@@ -97,7 +97,7 @@ export default function LeafletMap({
       />
 
       {locations.map((loc) => (
-        <div key={`${loc.name}-${loc.lat}-${loc.lng}`}>
+        <React.Fragment key={`${loc.name}-${loc.lat}-${loc.lng}`}>
           <Marker position={[loc.lat, loc.lng]} icon={customIcon}>
             <Popup>
               <div className="font-bold text-deep-brown text-sm">{loc.name}</div>
@@ -113,7 +113,7 @@ export default function LeafletMap({
             }}
             radius={loc.radius}
           />
-        </div>
+        </React.Fragment>
       ))}
     </MapContainer>
   );

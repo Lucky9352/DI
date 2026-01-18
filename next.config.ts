@@ -11,7 +11,7 @@ const cspHeader = `
     default-src 'self';
     script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdnjs.cloudflare.com;
     style-src 'self' 'unsafe-inline';
-    img-src 'self' blob: data: https://cdn.sanity.io https://*.sanity.io https://images.unsplash.com https://picsum.photos https://i.ytimg.com https://*.ytimg.com;
+    img-src 'self' blob: data: https://cdn.sanity.io https://*.sanity.io https://images.unsplash.com https://picsum.photos https://i.ytimg.com https://*.ytimg.com https://unpkg.com https://*.tile.openstreetmap.org;
     font-src 'self' data:;
     connect-src 'self' https://*.sanity.io https://*.supabase.co https://cdnjs.cloudflare.com;
     media-src 'self' https://cdn.coverr.co https://*.coverr.co https://drive.google.com https://*.googlevideo.com blob:;

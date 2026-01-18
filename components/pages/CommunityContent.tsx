@@ -128,16 +128,6 @@ interface CommunityContentProps {
 }
 
 // =============================================================================
-// ANIMATION VARIANTS
-// =============================================================================
-
-const fadeInUp = {
-  initial: { opacity: 0, y: 30 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-};
-
-// =============================================================================
 // VALIDATION & DATA PARSING
 // =============================================================================
 
@@ -168,69 +158,195 @@ export default function CommunityContent({ initialCommunity }: CommunityContentP
   const tradeEvents = community.tradeEvents ?? [];
 
   return (
-    <div className="bg-linear-to-b from-ivory via-cashew-cream to-beige min-h-screen pt-24 pb-20 relative overflow-hidden">
+    <div className="bg-linear-to-b from-ivory via-cashew-cream to-beige min-h-screen pt-32 pb-20 relative overflow-hidden">
       {/* Decorative Background */}
       <DecorativeBackground />
 
       <div className="container mx-auto px-4 md:px-6 lg:px-10 relative z-10">
         {/* Header */}
         {community.header ? (
-          <div className="text-center mb-16">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.3 }}
+            className="text-center mb-20 relative"
+          >
+            {/* Decorative blob in background */}
+            <div
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 w-[600px] h-[300px] opacity-20"
+              style={{
+                background: "linear-gradient(135deg, #f5f0e8 0%, #efe3d2 50%, #e8dcc8 100%)",
+                borderRadius: "60% 40% 55% 45% / 55% 60% 40% 45%",
+                filter: "blur(40px)",
+              }}
+            />
+
+            <motion.p
+              className="uppercase tracking-[0.4em] text-xs text-(--color-muted) mb-4"
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 },
+              }}
+              transition={{ duration: 0.6, ease: "easeOut" as const }}
             >
-              <p className="uppercase tracking-[0.4em] text-xs text-(--color-muted) mb-4">
-                {community.header.eyebrow}
-              </p>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-deep-brown mb-6 font-heading">
-                {community.header.title}
-              </h1>
-              <p className="text-lg text-(--color-slate) max-w-4xl mx-auto leading-relaxed">
-                {community.header.subtitle}
-              </p>
+              {community.header.eyebrow}
+            </motion.p>
+            <motion.h1
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-deep-brown mb-6 font-heading"
+              variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0 },
+              }}
+              transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" as const }}
+            >
+              {community.header.title}
+            </motion.h1>
+            <motion.p
+              className="text-lg text-(--color-slate) max-w-4xl mx-auto leading-relaxed"
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 },
+              }}
+              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" as const }}
+            >
+              {community.header.subtitle}
+            </motion.p>
+
+            {/* Decorative icons */}
+            <motion.div
+              className="absolute top-0 right-0 md:right-20 -z-10 opacity-15"
+              variants={{
+                hidden: { opacity: 0, rotate: -20 },
+                visible: { opacity: 0.15, rotate: 12 },
+              }}
+              transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" as const }}
+              aria-hidden="true"
+            >
+              <LeafIcon className="w-48 h-48 md:w-64 md:h-64 text-gold" />
             </motion.div>
-          </div>
+          </motion.div>
         ) : null}
 
         {/* Core Philosophy */}
         {community.corePhilosophy ? (
           <motion.div
-            {...fadeInUp}
-            className="mb-16 bg-linear-to-br from-white to-ivory p-10 md:p-12 rounded-3xl border-2 border-sand shadow-xl"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.2 }}
+            className="mb-16 relative"
           >
-            <div className="max-w-4xl mx-auto text-center">
-              <p className="text-lg text-(--color-slate) leading-relaxed mb-6">
-                {community.corePhilosophy.paragraph}
-              </p>
-              <p className="text-xl font-semibold text-almond-gold">
-                {community.corePhilosophy.highlight}
-              </p>
+            {/* Organic blob background */}
+            <div
+              className="absolute -inset-4 -z-10"
+              style={{
+                background: "linear-gradient(135deg, #f5f0e8 0%, #efe3d2 50%, #e8dcc8 100%)",
+                borderRadius: "55% 45% 50% 50% / 50% 55% 45% 50%",
+                transform: "rotate(-2deg)",
+              }}
+            />
+
+            <div className="bg-white/90 backdrop-blur-sm p-10 md:p-12 rounded-2xl border border-sand shadow-lg">
+              <div className="max-w-4xl mx-auto text-center">
+                <motion.div
+                  className="flex justify-center mb-6"
+                  variants={{
+                    hidden: { opacity: 0, scale: 0.8 },
+                    visible: { opacity: 1, scale: 1 },
+                  }}
+                  transition={{ duration: 0.5, ease: "easeOut" as const }}
+                >
+                  <NutIcon className="w-12 h-12 text-almond-gold/50" />
+                </motion.div>
+
+                <motion.p
+                  className="text-lg text-(--color-slate) leading-relaxed mb-6"
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { opacity: 1, y: 0 },
+                  }}
+                  transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" as const }}
+                >
+                  {community.corePhilosophy.paragraph}
+                </motion.p>
+                <motion.p
+                  className="text-xl font-semibold text-almond-gold"
+                  variants={{
+                    hidden: { opacity: 0, x: -30 },
+                    visible: { opacity: 1, x: 0 },
+                  }}
+                  transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" as const }}
+                >
+                  {community.corePhilosophy.highlight}
+                </motion.p>
+              </div>
             </div>
           </motion.div>
         ) : null}
 
         {/* Education & Social Participation */}
         {community.educationSection ? (
-          <motion.div {...fadeInUp} className="mb-16">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.2 }}
+            className="mb-16"
+          >
             <div className="grid md:grid-cols-2 gap-8 items-center">
-              <div className="bg-linear-to-br from-almond-gold/10 to-gold-light/5 p-8 rounded-3xl border-2 border-almond-gold/20">
-                <div className="text-5xl mb-4">{community.educationSection.icon}</div>
-                <h2 className="text-3xl font-bold text-deep-brown mb-4 font-heading">
-                  {community.educationSection.title}
-                </h2>
-                {community.educationSection.paragraphs.map((paragraph, index) => (
-                  <p key={index} className="text-(--color-slate) leading-relaxed mb-4 last:mb-0">
-                    {paragraph}
+              <motion.div
+                className="relative"
+                variants={{
+                  hidden: { opacity: 0, x: -40 },
+                  visible: { opacity: 1, x: 0 },
+                }}
+                transition={{ duration: 0.7, ease: "easeOut" as const }}
+              >
+                {/* Organic blob background */}
+                <div
+                  className="absolute -inset-4 -z-10"
+                  style={{
+                    background: "linear-gradient(135deg, #f5f0e8 0%, #efe3d2 50%, #e8dcc8 100%)",
+                    borderRadius: "55% 45% 50% 50% / 50% 55% 45% 50%",
+                    transform: "rotate(-2deg)",
+                  }}
+                />
+
+                <div className="bg-white/90 backdrop-blur-sm p-8 rounded-2xl border border-almond-gold/30 shadow-lg">
+                  <AlmondIcon className="w-10 h-10 text-almond-gold/50 mb-4" />
+                  <div className="text-4xl mb-4">{community.educationSection.icon}</div>
+                  <h2 className="text-3xl font-bold text-deep-brown mb-4 font-heading">
+                    {community.educationSection.title}
+                  </h2>
+                  {community.educationSection.paragraphs.map((paragraph, index) => (
+                    <p key={index} className="text-(--color-slate) leading-relaxed mb-4 last:mb-0">
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+              </motion.div>
+
+              <motion.div
+                className="relative"
+                variants={{
+                  hidden: { opacity: 0, x: 40 },
+                  visible: { opacity: 1, x: 0 },
+                }}
+                transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" as const }}
+              >
+                <div
+                  className="absolute -inset-3 -z-10"
+                  style={{
+                    background: "linear-gradient(135deg, #f5f0e8 0%, #efe3d2 50%, #e8dcc8 100%)",
+                    borderRadius: "45% 55% 50% 50% / 50% 45% 55% 50%",
+                    transform: "rotate(3deg)",
+                  }}
+                />
+                <div className="bg-white/95 backdrop-blur-sm p-8 rounded-2xl border border-sand shadow-lg">
+                  <CashewIcon className="w-8 h-8 text-almond-gold/40 mb-4" />
+                  <p className="text-deep-brown font-semibold text-lg italic">
+                    &quot;{community.educationSection.quote}&quot;
                   </p>
-                ))}
-              </div>
-              <div className="bg-white p-8 rounded-3xl border border-sand shadow-lg">
-                <p className="text-deep-brown font-semibold text-lg italic">
-                  &quot;{community.educationSection.quote}&quot;
-                </p>
-              </div>
+                </div>
+              </motion.div>
             </div>
           </motion.div>
         ) : null}
@@ -238,45 +354,122 @@ export default function CommunityContent({ initialCommunity }: CommunityContentP
         {/* Women Empowerment */}
         {community.womenEmpowerment ? (
           <motion.div
-            {...fadeInUp}
-            className="mb-16 bg-linear-to-br from-pistachio-green/10 to-white p-10 md:p-12 rounded-3xl border-2 border-pistachio-green/20 shadow-xl"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.2 }}
+            className="mb-16 relative"
           >
-            <div className="text-center mb-8">
-              <div className="text-5xl mb-4">{community.womenEmpowerment.icon}</div>
-              <h2 className="text-3xl md:text-4xl font-bold text-deep-brown mb-4 font-heading">
-                {community.womenEmpowerment.title}
-              </h2>
-            </div>
-            <div className="max-w-4xl mx-auto space-y-6 text-lg text-(--color-slate) leading-relaxed">
-              {community.womenEmpowerment.paragraphs.map((paragraph, index) => {
-                const isLast = index === community.womenEmpowerment!.paragraphs.length - 1;
-                return (
-                  <p key={index} className={isLast ? "font-semibold text-deep-brown" : ""}>
-                    {paragraph}
-                  </p>
-                );
-              })}
+            {/* Organic blob background */}
+            <div
+              className="absolute -inset-6 -z-10"
+              style={{
+                background: "linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 50%, #f5f5f5 100%)",
+                borderRadius: "50% 50% 45% 55% / 45% 50% 50% 55%",
+                transform: "rotate(1deg)",
+              }}
+            />
+
+            <div className="bg-white/85 backdrop-blur-sm p-10 md:p-12 rounded-2xl border border-pistachio-green/30 shadow-lg">
+              <motion.div
+                className="text-center mb-8"
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+                transition={{ duration: 0.6, ease: "easeOut" as const }}
+              >
+                <LeafIcon className="w-12 h-12 text-pistachio-green/50 mx-auto mb-4" />
+                <div className="text-4xl mb-4">{community.womenEmpowerment.icon}</div>
+                <h2 className="text-3xl md:text-4xl font-bold text-deep-brown mb-4 font-heading">
+                  {community.womenEmpowerment.title}
+                </h2>
+              </motion.div>
+              <div className="max-w-4xl mx-auto space-y-6 text-lg text-(--color-slate) leading-relaxed">
+                {community.womenEmpowerment.paragraphs.map((paragraph, index) => {
+                  const isLast = index === community.womenEmpowerment!.paragraphs.length - 1;
+                  return (
+                    <motion.p
+                      key={index}
+                      className={isLast ? "font-semibold text-deep-brown" : ""}
+                      variants={{
+                        hidden: { opacity: 0, y: 20 },
+                        visible: { opacity: 1, y: 0 },
+                      }}
+                      transition={{
+                        duration: 0.5,
+                        delay: 0.1 + index * 0.1,
+                        ease: "easeOut" as const,
+                      }}
+                    >
+                      {paragraph}
+                    </motion.p>
+                  );
+                })}
+              </div>
             </div>
           </motion.div>
         ) : null}
 
         {/* Childcare & Learning */}
         {community.childcareSection ? (
-          <motion.div {...fadeInUp} className="mb-16">
-            <div className="bg-linear-to-br from-white to-cashew-cream p-10 md:p-12 rounded-3xl border-2 border-gold-light shadow-xl">
-              <div className="text-center mb-8">
-                <div className="text-5xl mb-4">{community.childcareSection.icon}</div>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.2 }}
+            className="mb-16 relative"
+          >
+            {/* Organic blob background */}
+            <div
+              className="absolute -inset-6 -z-10"
+              style={{
+                background: "linear-gradient(135deg, #f5f0e8 0%, #efe3d2 50%, #e8dcc8 100%)",
+                borderRadius: "45% 55% 50% 50% / 50% 45% 55% 50%",
+                transform: "rotate(-1deg)",
+              }}
+            />
+
+            <div className="bg-white/90 backdrop-blur-sm p-10 md:p-12 rounded-2xl border border-gold-light shadow-lg">
+              <motion.div
+                className="text-center mb-8"
+                variants={{
+                  hidden: { opacity: 0, scale: 0.9 },
+                  visible: { opacity: 1, scale: 1 },
+                }}
+                transition={{ duration: 0.6, ease: "easeOut" as const }}
+              >
+                <WalnutIcon className="w-12 h-12 text-almond-gold/50 mx-auto mb-4" />
+                <div className="text-4xl mb-4">{community.childcareSection.icon}</div>
                 <h2 className="text-3xl md:text-4xl font-bold text-deep-brown mb-4 font-heading">
                   {community.childcareSection.title}
                 </h2>
-              </div>
+              </motion.div>
               <div className="max-w-4xl mx-auto space-y-6 text-lg text-(--color-slate) leading-relaxed">
                 {community.childcareSection.paragraphs.map((paragraph, index) => (
-                  <p key={index}>{paragraph}</p>
+                  <motion.p
+                    key={index}
+                    variants={{
+                      hidden: { opacity: 0, y: 20 },
+                      visible: { opacity: 1, y: 0 },
+                    }}
+                    transition={{
+                      duration: 0.5,
+                      delay: 0.1 + index * 0.1,
+                      ease: "easeOut" as const,
+                    }}
+                  >
+                    {paragraph}
+                  </motion.p>
                 ))}
-                <p className="text-center font-semibold text-almond-gold text-xl">
+                <motion.p
+                  className="text-center font-semibold text-almond-gold text-xl"
+                  variants={{
+                    hidden: { opacity: 0, x: -30 },
+                    visible: { opacity: 1, x: 0 },
+                  }}
+                  transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" as const }}
+                >
                   {community.childcareSection.highlight}
-                </p>
+                </motion.p>
               </div>
             </div>
           </motion.div>
@@ -284,44 +477,88 @@ export default function CommunityContent({ initialCommunity }: CommunityContentP
 
         {/* Industry Collaboration & Environmental Responsibility */}
         {community.industryCollaboration || community.environmentalSection ? (
-          <motion.div {...fadeInUp} className="mb-16">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.2 }}
+            className="mb-16"
+          >
             <div className="grid md:grid-cols-2 gap-8">
               {/* Industry Collaboration */}
               {community.industryCollaboration ? (
-                <div className="bg-linear-to-br from-ivory to-white p-8 rounded-3xl border-2 border-sand shadow-lg">
-                  <div className="text-5xl mb-4">{community.industryCollaboration.icon}</div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-deep-brown mb-4 font-heading">
-                    {community.industryCollaboration.title}
-                  </h2>
-                  {community.industryCollaboration.paragraphs.map((paragraph, index) => (
-                    <p key={index} className="text-(--color-slate) leading-relaxed mb-4 last:mb-0">
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
+                <motion.div
+                  className="relative"
+                  variants={{
+                    hidden: { opacity: 0, x: -40 },
+                    visible: { opacity: 1, x: 0 },
+                  }}
+                  transition={{ duration: 0.7, ease: "easeOut" as const }}
+                >
+                  <div
+                    className="absolute -inset-4 -z-10"
+                    style={{
+                      background: "linear-gradient(135deg, #f5f0e8 0%, #efe3d2 50%, #e8dcc8 100%)",
+                      borderRadius: "55% 45% 50% 50% / 50% 55% 45% 50%",
+                      transform: "rotate(-2deg)",
+                    }}
+                  />
+                  <div className="bg-white/90 backdrop-blur-sm p-8 rounded-2xl border border-sand shadow-lg">
+                    <CashewIcon className="w-10 h-10 text-almond-gold/40 mb-4" />
+                    <div className="text-4xl mb-4">{community.industryCollaboration.icon}</div>
+                    <h2 className="text-2xl md:text-3xl font-bold text-deep-brown mb-4 font-heading">
+                      {community.industryCollaboration.title}
+                    </h2>
+                    {community.industryCollaboration.paragraphs.map((paragraph, index) => (
+                      <p
+                        key={index}
+                        className="text-(--color-slate) leading-relaxed mb-4 last:mb-0"
+                      >
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                </motion.div>
               ) : null}
 
               {/* Environmental Responsibility */}
               {community.environmentalSection ? (
-                <div className="bg-linear-to-br from-leaf-green/10 to-white p-8 rounded-3xl border-2 border-leaf-green/20 shadow-lg">
-                  <div className="text-5xl mb-4">{community.environmentalSection.icon}</div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-deep-brown mb-4 font-heading">
-                    {community.environmentalSection.title}
-                  </h2>
-                  <p className="text-(--color-slate) leading-relaxed mb-4">
-                    {community.environmentalSection.introText}
-                  </p>
-                  <ul className="space-y-3 text-(--color-slate)">
-                    {community.environmentalSection.initiatives.map(
-                      (initiative: EnvironmentalInitiative) => (
-                        <li key={initiative._key} className="flex items-start">
-                          <span className="text-almond-gold mr-2">{initiative.icon}</span>
-                          <span>{initiative.text}</span>
-                        </li>
-                      )
-                    )}
-                  </ul>
-                </div>
+                <motion.div
+                  className="relative"
+                  variants={{
+                    hidden: { opacity: 0, x: 40 },
+                    visible: { opacity: 1, x: 0 },
+                  }}
+                  transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" as const }}
+                >
+                  <div
+                    className="absolute -inset-4 -z-10"
+                    style={{
+                      background: "linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 50%, #f5f5f5 100%)",
+                      borderRadius: "45% 55% 50% 50% / 50% 45% 55% 50%",
+                      transform: "rotate(2deg)",
+                    }}
+                  />
+                  <div className="bg-white/90 backdrop-blur-sm p-8 rounded-2xl border border-leaf-green/30 shadow-lg">
+                    <LeafIcon className="w-10 h-10 text-leaf-green/50 mb-4" />
+                    <div className="text-4xl mb-4">{community.environmentalSection.icon}</div>
+                    <h2 className="text-2xl md:text-3xl font-bold text-deep-brown mb-4 font-heading">
+                      {community.environmentalSection.title}
+                    </h2>
+                    <p className="text-(--color-slate) leading-relaxed mb-4">
+                      {community.environmentalSection.introText}
+                    </p>
+                    <ul className="space-y-3 text-(--color-slate)">
+                      {community.environmentalSection.initiatives.map(
+                        (initiative: EnvironmentalInitiative) => (
+                          <li key={initiative._key} className="flex items-start">
+                            <span className="text-almond-gold mr-2">{initiative.icon}</span>
+                            <span>{initiative.text}</span>
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  </div>
+                </motion.div>
               ) : null}
             </div>
           </motion.div>
@@ -329,8 +566,21 @@ export default function CommunityContent({ initialCommunity }: CommunityContentP
 
         {/* Trade Events Section */}
         {tradeEvents.length > 0 ? (
-          <motion.div {...fadeInUp} className="mb-20">
-            <div className="text-center mb-12">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.2 }}
+            className="mb-20"
+          >
+            <motion.div
+              className="text-center mb-12"
+              variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0 },
+              }}
+              transition={{ duration: 0.6, ease: "easeOut" as const }}
+            >
+              <PeanutIcon className="w-12 h-12 text-almond-gold/40 mx-auto mb-4" />
               <h2 className="text-3xl md:text-4xl font-bold text-deep-brown mb-4 font-heading">
                 {community.tradeEventsSection?.title ?? "Trade Events & Exhibitions"}
               </h2>
@@ -338,7 +588,7 @@ export default function CommunityContent({ initialCommunity }: CommunityContentP
                 {community.tradeEventsSection?.subtitle ??
                   "Meet us at leading industry events across India"}
               </p>
-            </div>
+            </motion.div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {tradeEvents.map((event: TradeEvent, index: number) => (
@@ -351,23 +601,64 @@ export default function CommunityContent({ initialCommunity }: CommunityContentP
         {/* Growing With Purpose - Final Message */}
         {community.closingMessage ? (
           <motion.div
-            {...fadeInUp}
-            className="mb-16 bg-linear-to-br from-white to-ivory p-10 md:p-12 rounded-3xl border-2 border-sand shadow-xl"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.2 }}
+            className="mb-16 relative"
           >
-            <div className="text-center mb-8">
-              <h2 className="text-3xl md:text-4xl font-bold text-deep-brown mb-4 font-heading">
-                {community.closingMessage.title}
-              </h2>
-            </div>
-            <div className="max-w-4xl mx-auto space-y-6 text-lg text-(--color-slate) leading-relaxed">
-              {community.closingMessage.paragraphs.map((paragraph, index) => (
-                <p key={index} className={index === 0 ? "text-center" : ""}>
-                  {paragraph}
-                </p>
-              ))}
-              <p className="text-center text-xl font-semibold text-deep-brown">
-                {community.closingMessage.finalHighlight}
-              </p>
+            {/* Organic blob background */}
+            <div
+              className="absolute -inset-6 -z-10"
+              style={{
+                background: "linear-gradient(135deg, #f5f0e8 0%, #efe3d2 50%, #e8dcc8 100%)",
+                borderRadius: "55% 45% 50% 50% / 50% 55% 45% 50%",
+                transform: "rotate(-2deg)",
+              }}
+            />
+
+            <div className="bg-white/90 backdrop-blur-sm p-10 md:p-12 rounded-2xl border border-sand shadow-lg">
+              <motion.div
+                className="text-center mb-8"
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+                transition={{ duration: 0.6, ease: "easeOut" as const }}
+              >
+                <NutIcon className="w-14 h-14 text-almond-gold/50 mx-auto mb-4" />
+                <h2 className="text-3xl md:text-4xl font-bold text-deep-brown mb-4 font-heading">
+                  {community.closingMessage.title}
+                </h2>
+              </motion.div>
+              <div className="max-w-4xl mx-auto space-y-6 text-lg text-(--color-slate) leading-relaxed">
+                {community.closingMessage.paragraphs.map((paragraph, index) => (
+                  <motion.p
+                    key={index}
+                    className={index === 0 ? "text-center" : ""}
+                    variants={{
+                      hidden: { opacity: 0, y: 20 },
+                      visible: { opacity: 1, y: 0 },
+                    }}
+                    transition={{
+                      duration: 0.5,
+                      delay: 0.1 + index * 0.1,
+                      ease: "easeOut" as const,
+                    }}
+                  >
+                    {paragraph}
+                  </motion.p>
+                ))}
+                <motion.p
+                  className="text-center text-xl font-semibold text-deep-brown"
+                  variants={{
+                    hidden: { opacity: 0, x: -30 },
+                    visible: { opacity: 1, x: 0 },
+                  }}
+                  transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" as const }}
+                >
+                  {community.closingMessage.finalHighlight}
+                </motion.p>
+              </div>
             </div>
           </motion.div>
         ) : null}
@@ -388,26 +679,41 @@ interface TradeEventCardProps {
 function TradeEventCard({ event, index }: TradeEventCardProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.1 }}
-      className="bg-white p-6 rounded-2xl border border-sand shadow-md hover:shadow-lg transition-all duration-300"
+      initial={{ opacity: 0, scale: 0.9, y: 20 }}
+      whileInView={{ opacity: 1, scale: 1, y: 0 }}
+      viewport={{ once: false, amount: 0.3 }}
+      transition={{ delay: index * 0.1, duration: 0.5, ease: "easeOut" }}
+      className="relative"
     >
-      <div className="flex items-start space-x-4">
-        <div className="shrink-0 w-12 h-12 bg-linear-to-br from-almond-gold to-gold-dark rounded-full flex items-center justify-center text-white font-bold">
-          📅
-        </div>
-        <div className="flex-1">
-          <h3 className="font-bold text-deep-brown mb-2">{event.name}</h3>
-          <p className="text-sm text-(--color-slate) mb-1">📍 {event.location}</p>
-          <p className="text-sm text-almond-gold font-semibold">
-            {new Date(event.date).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </p>
+      {/* Organic blob background */}
+      <div
+        className="absolute -inset-2 -z-10"
+        style={{
+          background: "linear-gradient(135deg, #f5f0e8 0%, #efe3d2 50%, #e8dcc8 100%)",
+          borderRadius:
+            index % 2 === 0
+              ? "55% 45% 50% 50% / 50% 55% 45% 50%"
+              : "45% 55% 50% 50% / 50% 45% 55% 50%",
+          transform: `rotate(${index % 2 === 0 ? -2 : 2}deg)`,
+        }}
+      />
+
+      <div className="bg-white/95 backdrop-blur-sm p-6 rounded-2xl border border-sand shadow-md hover:shadow-lg transition-all duration-300">
+        <div className="flex items-start space-x-4">
+          <div className="shrink-0 w-12 h-12 bg-linear-to-br from-almond-gold to-gold-dark rounded-full flex items-center justify-center text-white font-bold shadow-md">
+            📅
+          </div>
+          <div className="flex-1">
+            <h3 className="font-bold text-deep-brown mb-2">{event.name}</h3>
+            <p className="text-sm text-(--color-slate) mb-1">📍 {event.location}</p>
+            <p className="text-sm text-almond-gold font-semibold">
+              {new Date(event.date).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </p>
+          </div>
         </div>
       </div>
     </motion.div>

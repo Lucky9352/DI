@@ -40,8 +40,9 @@ const DistributionRegionSchema = z.object({
   _key: z.string().optional(),
   name: z.string(),
   description: z.string().optional(),
-  x: z.number().optional(),
-  y: z.number().optional(),
+  lat: z.number().optional(),
+  lng: z.number().optional(),
+  radius: z.number().optional(),
 });
 
 const TimelineSummaryCardSchema = z.object({
@@ -186,28 +187,6 @@ interface AboutContentProps {
 }
 
 // =============================================================================
-// ANIMATION VARIANTS
-// =============================================================================
-
-const fadeInUp = {
-  initial: { opacity: 0, y: 30 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-};
-
-const fadeInLeft = {
-  initial: { opacity: 0, x: -30 },
-  whileInView: { opacity: 1, x: 0 },
-  viewport: { once: true },
-};
-
-const fadeInRight = {
-  initial: { opacity: 0, x: 30 },
-  whileInView: { opacity: 1, x: 0 },
-  viewport: { once: true },
-};
-
-// =============================================================================
 // VALIDATION & DATA PARSING
 // =============================================================================
 
@@ -262,75 +241,226 @@ export default function AboutContent({
   }
 
   return (
-    <div className="bg-linear-to-b from-ivory via-cashew-cream to-beige min-h-screen pt-24 pb-20 relative overflow-hidden">
+    <div className="bg-linear-to-b from-ivory via-cashew-cream to-beige min-h-screen pt-32 pb-20 relative overflow-hidden">
       {/* Decorative Background Icons */}
       <DecorativeBackground />
 
       <div className="container mx-auto px-4 md:px-6 lg:px-10">
         {/* Header */}
         {about.header ? (
-          <div className="text-center mb-16 relative">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.3 }}
+            className="text-center mb-20 relative"
+          >
+            {/* Decorative blob in background */}
+            <div
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 w-[600px] h-[300px] opacity-20"
+              style={{
+                background: "linear-gradient(135deg, #f5f0e8 0%, #efe3d2 50%, #e8dcc8 100%)",
+                borderRadius: "60% 40% 55% 45% / 55% 60% 40% 45%",
+                filter: "blur(40px)",
+              }}
+            />
+
+            <motion.p
+              className="uppercase tracking-[0.4em] text-xs text-(--color-muted) mb-4"
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 },
+              }}
+              transition={{ duration: 0.6, ease: "easeOut" as const }}
             >
-              <p className="uppercase tracking-[0.4em] text-xs text-(--color-muted) mb-4">
-                {about.header.eyebrow}
-              </p>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-deep-brown mb-6 font-heading">
-                {about.header.title}
-              </h1>
-              <p className="text-lg text-(--color-slate) max-w-3xl mx-auto leading-relaxed">
-                {about.header.subtitle}
-              </p>
+              {about.header.eyebrow}
+            </motion.p>
+            <motion.h1
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-deep-brown mb-6 font-heading"
+              variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0 },
+              }}
+              transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" as const }}
+            >
+              {about.header.title}
+            </motion.h1>
+            <motion.p
+              className="text-lg text-(--color-slate) max-w-3xl mx-auto leading-relaxed"
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 },
+              }}
+              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" as const }}
+            >
+              {about.header.subtitle}
+            </motion.p>
+
+            {/* Decorative icons */}
+            <motion.div
+              className="absolute top-0 right-0 md:right-20 -z-10 opacity-15"
+              variants={{
+                hidden: { opacity: 0, rotate: -20 },
+                visible: { opacity: 0.15, rotate: 12 },
+              }}
+              transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" as const }}
+              aria-hidden="true"
+            >
+              <LeafIcon className="w-48 h-48 md:w-64 md:h-64 text-gold" />
             </motion.div>
-            <div className="absolute top-0 right-0 -z-10 opacity-10 rotate-12" aria-hidden="true">
-              <LeafIcon className="w-64 h-64 text-leaf-green" />
-            </div>
-          </div>
+            <motion.div
+              className="absolute bottom-0 left-0 md:left-20 -z-10 opacity-10"
+              variants={{
+                hidden: { opacity: 0, rotate: 20 },
+                visible: { opacity: 0.1, rotate: -15 },
+              }}
+              transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" as const }}
+              aria-hidden="true"
+            >
+              <AlmondIcon className="w-32 h-32 md:w-40 md:h-40 text-almond-gold" />
+            </motion.div>
+          </motion.div>
         ) : null}
 
         {/* Opening Story */}
         {about.openingStory ? (
           <motion.div
-            {...fadeInUp}
-            className="text-center mb-16 bg-linear-to-br from-almond-gold/10 to-gold-light/5 p-12 rounded-3xl border-2 border-almond-gold/20 relative overflow-hidden"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.2 }}
+            className="text-center mb-16 relative"
           >
-            <div className="relative z-10">
-              <h2 className="text-3xl md:text-4xl font-bold text-deep-brown mb-6 font-heading">
+            {/* Organic blob background */}
+            <div
+              className="absolute -inset-6 -z-10"
+              style={{
+                background: "linear-gradient(135deg, #f5f0e8 0%, #efe3d2 50%, #e8dcc8 100%)",
+                borderRadius: "55% 45% 50% 50% / 50% 55% 45% 50%",
+                transform: "rotate(-2deg)",
+              }}
+            />
+
+            <div className="bg-white/80 backdrop-blur-sm p-12 rounded-2xl border border-almond-gold/30 shadow-lg relative overflow-hidden">
+              {/* Decorative Icon at top */}
+              <motion.div
+                className="flex justify-center mb-6"
+                variants={{
+                  hidden: { opacity: 0, y: -20 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+                transition={{ duration: 0.5, ease: "easeOut" as const }}
+              >
+                <NutIcon className="w-14 h-14 text-almond-gold/50" />
+              </motion.div>
+
+              <motion.h2
+                className="text-3xl md:text-4xl font-bold text-deep-brown mb-6 font-heading"
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+                transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" as const }}
+              >
                 {about.openingStory.title}
-              </h2>
+              </motion.h2>
+
               <div className="max-w-4xl mx-auto space-y-6 text-lg text-(--color-slate) leading-relaxed">
-                <p className="text-xl font-semibold text-almond-gold">
+                <motion.p
+                  className="text-xl font-semibold text-almond-gold"
+                  variants={{
+                    hidden: { opacity: 0, x: -30 },
+                    visible: { opacity: 1, x: 0 },
+                  }}
+                  transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" as const }}
+                >
                   {about.openingStory.highlight}
-                </p>
+                </motion.p>
                 {about.openingStory.paragraphs.map((p, i) => (
-                  <p key={i}>{p}</p>
+                  <motion.p
+                    key={i}
+                    variants={{
+                      hidden: { opacity: 0, y: 20 },
+                      visible: { opacity: 1, y: 0 },
+                    }}
+                    transition={{ duration: 0.5, delay: 0.3 + i * 0.1, ease: "easeOut" as const }}
+                  >
+                    {p}
+                  </motion.p>
                 ))}
               </div>
+
+              <DecorativeCorners />
             </div>
-            <DecorativeCorners />
           </motion.div>
         ) : null}
 
         {/* The Anjeer Story */}
         {about.anjeerStory ? (
           <motion.div
-            {...fadeInUp}
-            className="mb-16 bg-linear-to-br from-white to-cashew-cream p-10 rounded-3xl border-2 border-gold-light shadow-xl"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.2 }}
+            className="mb-16 relative"
           >
-            <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-3xl font-bold text-deep-brown mb-8 font-heading">
-                {about.anjeerStory.title}
-              </h2>
-              <div className="space-y-6 text-lg text-(--color-slate) leading-relaxed">
-                {about.anjeerStory.paragraphs[0] ? <p>{about.anjeerStory.paragraphs[0]}</p> : null}
-                {about.anjeerStory.paragraphs[1] ? (
-                  <p className="text-xl font-semibold text-almond-gold italic">
-                    {about.anjeerStory.paragraphs[1]}
-                  </p>
-                ) : null}
+            {/* Organic blob background */}
+            <div
+              className="absolute -inset-4 -z-10"
+              style={{
+                background: "linear-gradient(135deg, #f5f0e8 0%, #efe3d2 50%, #e8dcc8 100%)",
+                borderRadius: "45% 55% 50% 50% / 50% 45% 55% 50%",
+                transform: "rotate(2deg)",
+              }}
+            />
+
+            <div className="bg-white/90 backdrop-blur-sm p-10 rounded-2xl border border-gold-light shadow-lg">
+              <div className="max-w-4xl mx-auto text-center">
+                {/* Decorative Icon */}
+                <motion.div
+                  className="flex justify-center mb-6"
+                  variants={{
+                    hidden: { opacity: 0, scale: 0.8 },
+                    visible: { opacity: 1, scale: 1 },
+                  }}
+                  transition={{ duration: 0.5, ease: "easeOut" as const }}
+                >
+                  <CashewIcon className="w-12 h-12 text-almond-gold/50" />
+                </motion.div>
+
+                <motion.h2
+                  className="text-3xl font-bold text-deep-brown mb-8 font-heading"
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { opacity: 1, y: 0 },
+                  }}
+                  transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" as const }}
+                >
+                  {about.anjeerStory.title}
+                </motion.h2>
+
+                <div className="space-y-6 text-lg text-(--color-slate) leading-relaxed">
+                  {about.anjeerStory.paragraphs[0] ? (
+                    <motion.p
+                      variants={{
+                        hidden: { opacity: 0, y: 20 },
+                        visible: { opacity: 1, y: 0 },
+                      }}
+                      transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" as const }}
+                    >
+                      {about.anjeerStory.paragraphs[0]}
+                    </motion.p>
+                  ) : null}
+                  {about.anjeerStory.paragraphs[1] ? (
+                    <motion.p
+                      className="text-xl font-semibold text-almond-gold italic"
+                      variants={{
+                        hidden: { opacity: 0, x: 30 },
+                        visible: { opacity: 1, x: 0 },
+                      }}
+                      transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" as const }}
+                    >
+                      {about.anjeerStory.paragraphs[1]}
+                    </motion.p>
+                  ) : null}
+                </div>
               </div>
             </div>
           </motion.div>
@@ -338,30 +468,70 @@ export default function AboutContent({
 
         {/* The Birth of Divyansh International */}
         {about.birthSection ? (
-          <motion.div {...fadeInUp} className="mb-16">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-deep-brown mb-6 font-heading">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.2 }}
+            className="mb-16"
+          >
+            <motion.div
+              className="text-center mb-12"
+              variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0 },
+              }}
+              transition={{ duration: 0.6, ease: "easeOut" as const }}
+            >
+              <AlmondIcon className="w-12 h-12 text-almond-gold/40 mx-auto mb-4" />
+              <h2 className="text-3xl md:text-4xl font-bold text-deep-brown font-heading">
                 {about.birthSection.title}
               </h2>
-            </div>
+            </motion.div>
 
             <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div className="space-y-6 text-lg text-(--color-slate) leading-relaxed">
+              e
+              <motion.div
+                className="space-y-6 text-lg text-(--color-slate) leading-relaxed"
+                variants={{
+                  hidden: { opacity: 0, x: -40 },
+                  visible: { opacity: 1, x: 0 },
+                }}
+                transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" as const }}
+              >
                 {about.birthSection.paragraphs.map((p, i) => (
                   <p key={i} className={i === 2 ? "font-semibold text-deep-brown" : ""}>
                     {p}
                   </p>
                 ))}
-              </div>
+              </motion.div>
+              <motion.div
+                className="relative"
+                variants={{
+                  hidden: { opacity: 0, x: 40 },
+                  visible: { opacity: 1, x: 0 },
+                }}
+                transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" as const }}
+              >
+                {/* Organic blob background */}
+                <div
+                  className="absolute -inset-4 -z-10"
+                  style={{
+                    background: "linear-gradient(135deg, #f5f0e8 0%, #efe3d2 50%, #e8dcc8 100%)",
+                    borderRadius: "55% 45% 50% 50% / 50% 55% 45% 50%",
+                    transform: "rotate(3deg)",
+                  }}
+                />
 
-              <div className="bg-linear-to-br from-ivory to-white p-8 rounded-3xl border-2 border-sand shadow-lg">
-                <h3 className="text-2xl font-bold text-almond-gold mb-4 text-center">
-                  {about.birthSection.boxTitle}
-                </h3>
-                <p className="text-(--color-slate) text-center leading-relaxed">
-                  {about.birthSection.boxText}
-                </p>
-              </div>
+                <div className="bg-white/90 backdrop-blur-sm p-8 rounded-2xl border border-sand shadow-lg">
+                  <WalnutIcon className="w-10 h-10 text-almond-gold/40 mx-auto mb-4" />
+                  <h3 className="text-xl font-bold text-almond-gold mb-4 text-center">
+                    {about.birthSection.boxTitle}
+                  </h3>
+                  <p className="text-(--color-slate) text-center leading-relaxed">
+                    {about.birthSection.boxText}
+                  </p>
+                </div>
+              </motion.div>
             </div>
           </motion.div>
         ) : null}
@@ -369,22 +539,71 @@ export default function AboutContent({
         {/* Growing While Staying Rooted */}
         {about.growingSection ? (
           <motion.div
-            {...fadeInUp}
-            className="mb-16 bg-linear-to-br from-almond-gold/5 to-gold-light/10 p-12 rounded-3xl border border-almond-gold/20"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.2 }}
+            className="mb-16 relative"
           >
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl font-bold text-deep-brown mb-8 text-center font-heading">
-                {about.growingSection.title}
-              </h2>
-              <div className="space-y-6 text-lg text-(--color-slate) leading-relaxed">
-                {about.growingSection.paragraphs[0] ? (
-                  <p>{about.growingSection.paragraphs[0]}</p>
-                ) : null}
-                {about.growingSection.paragraphs[1] ? (
-                  <p className="text-center font-semibold text-deep-brown">
-                    {about.growingSection.paragraphs[1]}
-                  </p>
-                ) : null}
+            {/* Organic blob background */}
+            <div
+              className="absolute -inset-6 -z-10"
+              style={{
+                background: "linear-gradient(135deg, #f5f0e8 0%, #efe3d2 50%, #e8dcc8 100%)",
+                borderRadius: "50% 50% 45% 55% / 45% 50% 50% 55%",
+                transform: "rotate(-1deg)",
+              }}
+            />
+
+            <div className="bg-white/80 backdrop-blur-sm p-12 rounded-2xl border border-almond-gold/30 shadow-lg">
+              <div className="max-w-4xl mx-auto">
+                {/* Decorative Icon */}
+                <motion.div
+                  className="flex justify-center mb-6"
+                  variants={{
+                    hidden: { opacity: 0, y: -20 },
+                    visible: { opacity: 1, y: 0 },
+                  }}
+                  transition={{ duration: 0.5, ease: "easeOut" as const }}
+                >
+                  <LeafIcon className="w-14 h-14 text-gold/40" />
+                </motion.div>
+
+                <motion.h2
+                  className="text-3xl font-bold text-deep-brown mb-8 text-center font-heading"
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { opacity: 1, y: 0 },
+                  }}
+                  transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" as const }}
+                >
+                  {about.growingSection.title}
+                </motion.h2>
+
+                <div className="space-y-6 text-lg text-(--color-slate) leading-relaxed">
+                  {about.growingSection.paragraphs[0] ? (
+                    <motion.p
+                      variants={{
+                        hidden: { opacity: 0, y: 20 },
+                        visible: { opacity: 1, y: 0 },
+                      }}
+                      transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" as const }}
+                    >
+                      {about.growingSection.paragraphs[0]}
+                    </motion.p>
+                  ) : null}
+                  {about.growingSection.paragraphs[1] ? (
+                    <motion.p
+                      className="text-center font-semibold text-deep-brown"
+                      variants={{
+                        hidden: { opacity: 0, y: 20 },
+                        visible: { opacity: 1, y: 0 },
+                      }}
+                      transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" as const }}
+                    >
+                      {about.growingSection.paragraphs[1]}
+                    </motion.p>
+                  ) : null}
+                </div>
               </div>
             </div>
           </motion.div>
@@ -393,85 +612,247 @@ export default function AboutContent({
         {/* Our Philosophy */}
         {about.philosophySection ? (
           <motion.div
-            {...fadeInUp}
-            className="text-center mb-16 bg-linear-to-br from-almond-gold/10 to-gold-light/5 p-12 rounded-3xl border-2 border-almond-gold/20 relative overflow-hidden"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.2 }}
+            className="text-center mb-16 relative"
           >
-            <div className="relative z-10">
-              <h2 className="text-3xl md:text-4xl font-bold text-deep-brown mb-6 font-heading">
+            {/* Organic blob background */}
+            <div
+              className="absolute -inset-6 -z-10"
+              style={{
+                background: "linear-gradient(135deg, #f5f0e8 0%, #efe3d2 50%, #e8dcc8 100%)",
+                borderRadius: "55% 45% 50% 50% / 50% 55% 45% 50%",
+                transform: "rotate(2deg)",
+              }}
+            />
+
+            <div className="bg-white/85 backdrop-blur-sm p-12 rounded-2xl border border-almond-gold/30 shadow-lg relative overflow-hidden">
+              {/* Decorative Icon */}
+              <motion.div
+                className="flex justify-center mb-6"
+                variants={{
+                  hidden: { opacity: 0, scale: 0.8 },
+                  visible: { opacity: 1, scale: 1 },
+                }}
+                transition={{ duration: 0.5, ease: "easeOut" as const }}
+              >
+                <PeanutIcon className="w-14 h-14 text-almond-gold/50" />
+              </motion.div>
+
+              <motion.h2
+                className="text-3xl md:text-4xl font-bold text-deep-brown mb-6 font-heading"
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+                transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" as const }}
+              >
                 {about.philosophySection.title}
-              </h2>
+              </motion.h2>
+
               <div className="max-w-4xl mx-auto space-y-6 text-lg text-(--color-slate) leading-relaxed">
-                <p className="text-xl font-semibold text-almond-gold">
+                <motion.p
+                  className="text-xl font-semibold text-almond-gold"
+                  variants={{
+                    hidden: { opacity: 0, x: -30 },
+                    visible: { opacity: 1, x: 0 },
+                  }}
+                  transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" as const }}
+                >
                   {about.philosophySection.highlight}
-                </p>
+                </motion.p>
                 {about.philosophySection.paragraphs.map((p, i) => (
-                  <p key={i} className={i === 1 ? "italic" : ""}>
+                  <motion.p
+                    key={i}
+                    className={i === 1 ? "italic" : ""}
+                    variants={{
+                      hidden: { opacity: 0, y: 20 },
+                      visible: { opacity: 1, y: 0 },
+                    }}
+                    transition={{ duration: 0.5, delay: 0.3 + i * 0.1, ease: "easeOut" as const }}
+                  >
                     {p}
-                  </p>
+                  </motion.p>
                 ))}
               </div>
+
+              <DecorativeCorners />
             </div>
-            <DecorativeCorners />
           </motion.div>
         ) : null}
 
-        {/* Timeline Summary */}
+        {/* Timeline Summary Cards */}
         {about.timelineSummaryCards && about.timelineSummaryCards.length > 0 ? (
-          <motion.div {...fadeInUp} className="mb-16 text-center">
-            <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-              {about.timelineSummaryCards.map((item, index) => (
-                <div
-                  key={item._key ?? index}
-                  className="bg-linear-to-br from-white to-ivory p-8 rounded-3xl border-2 border-sand shadow-lg"
-                >
-                  <h3 className="text-2xl font-bold text-almond-gold mb-3">{item.title}</h3>
-                  <p className="text-(--color-slate)">{item.description}</p>
-                </div>
-              ))}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.2 }}
+            className="mb-16 text-center"
+          >
+            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              {about.timelineSummaryCards.map((item, index) => {
+                const icons = [AlmondIcon, CashewIcon, WalnutIcon];
+                const Icon = icons[index % icons.length] ?? AlmondIcon;
+
+                return (
+                  <motion.div
+                    key={item._key ?? index}
+                    variants={{
+                      hidden: { opacity: 0, y: 40 },
+                      visible: { opacity: 1, y: 0 },
+                    }}
+                    transition={{ duration: 0.6, delay: index * 0.2, ease: "easeOut" }}
+                    className="relative"
+                  >
+                    {/* Numbered Circle */}
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
+                      <div className="w-10 h-10 rounded-full bg-linear-to-br from-gold to-almond-gold flex items-center justify-center text-white font-bold text-lg shadow-lg ring-4 ring-white">
+                        {index + 1}
+                      </div>
+                    </div>
+
+                    {/* Card with organic blob background */}
+                    <div className="relative pt-8">
+                      <div
+                        className="absolute -inset-2 -z-10"
+                        style={{
+                          background:
+                            "linear-gradient(135deg, #f5f0e8 0%, #efe3d2 50%, #e8dcc8 100%)",
+                          borderRadius:
+                            index === 0
+                              ? "60% 40% 55% 45% / 55% 60% 40% 45%"
+                              : index === 1
+                                ? "45% 55% 50% 50% / 50% 45% 55% 50%"
+                                : "40% 60% 45% 55% / 45% 40% 60% 55%",
+                          transform: `rotate(${index === 1 ? 0 : index === 0 ? -3 : 3}deg)`,
+                        }}
+                      />
+
+                      <div className="bg-white/90 backdrop-blur-sm p-8 rounded-2xl border border-sand shadow-lg relative overflow-hidden">
+                        {/* Decorative Icon */}
+                        <div className="mb-4 flex justify-center">
+                          <Icon className="w-10 h-10 text-almond-gold/50" />
+                        </div>
+
+                        <h3 className="text-xl font-bold text-almond-gold mb-3">{item.title}</h3>
+                        <p className="text-(--color-slate) text-sm leading-relaxed">
+                          {item.description}
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
             </div>
-            <div className="mt-12">
+            <motion.div
+              className="mt-12"
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 },
+              }}
+              transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
+            >
               <p className="text-2xl font-bold text-deep-brown font-heading">
                 Divyansh International.
               </p>
-            </div>
+            </motion.div>
           </motion.div>
         ) : null}
 
         {/* Our Brands */}
         {about.brandsSection ? (
           <motion.div
-            {...fadeInUp}
-            className="mb-16 bg-linear-to-br from-white to-cashew-cream p-10 rounded-3xl border-2 border-gold-light shadow-xl"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.2 }}
+            className="mb-16 relative"
           >
-            <h2 className="text-3xl font-bold text-deep-brown mb-8 text-center font-heading">
-              {about.brandsSection.title}
-            </h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="text-center p-6 bg-linear-to-br from-ivory to-white rounded-2xl border border-sand">
-                <h3 className="text-2xl font-bold text-almond-gold mb-3">
-                  {about.brandsSection.b2b.title}
-                </h3>
-                <div className="space-y-2">
-                  {about.brandsSection.b2b.names.map((name) => (
-                    <p key={name} className="text-lg font-semibold text-deep-brown">
-                      {name}
+            {/* Section blob background */}
+            <div
+              className="absolute -inset-6 -z-10"
+              style={{
+                background: "linear-gradient(135deg, #f5f0e8 0%, #efe3d2 50%, #e8dcc8 100%)",
+                borderRadius: "50% 50% 45% 55% / 45% 50% 50% 55%",
+              }}
+            />
+
+            <div className="bg-white/90 backdrop-blur-sm p-10 rounded-2xl border border-gold-light shadow-xl">
+              <motion.h2
+                className="text-3xl font-bold text-deep-brown mb-10 text-center font-heading"
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+              >
+                {about.brandsSection.title}
+              </motion.h2>
+
+              <div className="grid md:grid-cols-2 gap-8">
+                {/* B2B Card */}
+                <motion.div
+                  className="relative"
+                  variants={{
+                    hidden: { opacity: 0, x: -40 },
+                    visible: { opacity: 1, x: 0 },
+                  }}
+                  transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+                >
+                  <div className="absolute -top-3 -left-3 z-10">
+                    <div className="w-8 h-8 rounded-full bg-linear-to-br from-gold to-almond-gold flex items-center justify-center text-white font-bold text-sm shadow-md ring-2 ring-white">
+                      B2B
+                    </div>
+                  </div>
+
+                  <div className="text-center p-8 bg-white rounded-2xl border border-sand shadow-lg relative overflow-hidden">
+                    <WalnutIcon className="w-10 h-10 text-almond-gold/40 mx-auto mb-4" />
+
+                    <h3 className="text-xl font-bold text-almond-gold mb-4">
+                      {about.brandsSection.b2b.title}
+                    </h3>
+                    <div className="space-y-2 mb-4">
+                      {about.brandsSection.b2b.names.map((name) => (
+                        <p key={name} className="text-lg font-semibold text-deep-brown">
+                          {name}
+                        </p>
+                      ))}
+                    </div>
+                    <p className="text-sm text-(--color-slate)">
+                      {about.brandsSection.b2b.description}
                     </p>
-                  ))}
-                </div>
-                <p className="text-sm text-(--color-slate) mt-3">
-                  {about.brandsSection.b2b.description}
-                </p>
-              </div>
-              <div className="text-center p-6 bg-linear-to-br from-ivory to-white rounded-2xl border border-sand">
-                <h3 className="text-2xl font-bold text-almond-gold mb-3">
-                  {about.brandsSection.d2c.title}
-                </h3>
-                <p className="text-lg font-semibold text-deep-brown">
-                  {about.brandsSection.d2c.name}
-                </p>
-                <p className="text-sm text-(--color-slate) mt-3">
-                  {about.brandsSection.d2c.description}
-                </p>
+                  </div>
+                </motion.div>
+
+                {/* D2C Card */}
+                <motion.div
+                  className="relative"
+                  variants={{
+                    hidden: { opacity: 0, x: 40 },
+                    visible: { opacity: 1, x: 0 },
+                  }}
+                  transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+                >
+                  <div className="absolute -top-3 -left-3 z-10">
+                    <div className="w-8 h-8 rounded-full bg-linear-to-br from-gold to-almond-gold flex items-center justify-center text-white font-bold text-[10px] shadow-md ring-2 ring-white">
+                      D2C
+                    </div>
+                  </div>
+
+                  <div className="text-center p-8 bg-white rounded-2xl border border-sand shadow-lg relative overflow-hidden">
+                    <PeanutIcon className="w-10 h-10 text-almond-gold/40 mx-auto mb-4" />
+
+                    <h3 className="text-xl font-bold text-almond-gold mb-4">
+                      {about.brandsSection.d2c.title}
+                    </h3>
+                    <p className="text-lg font-semibold text-deep-brown mb-4">
+                      {about.brandsSection.d2c.name}
+                    </p>
+                    <p className="text-sm text-(--color-slate)">
+                      {about.brandsSection.d2c.description}
+                    </p>
+                  </div>
+                </motion.div>
               </div>
             </div>
           </motion.div>
@@ -479,77 +860,162 @@ export default function AboutContent({
 
         {/* Product Range */}
         {about.productRangeSection ? (
-          <motion.div {...fadeInUp} className="mb-16 text-center">
-            <h2 className="text-3xl font-bold text-deep-brown mb-8 font-heading">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.2 }}
+            className="mb-16 text-center"
+          >
+            <motion.h2
+              className="text-3xl font-bold text-deep-brown mb-8 font-heading"
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 },
+              }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+            >
               {about.productRangeSection.title}
-            </h2>
+            </motion.h2>
             <div className="flex flex-wrap justify-center gap-4 mb-6">
               {about.productRangeSection.products.map((product, index) => (
                 <motion.span
                   key={product}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
+                  variants={{
+                    hidden: { opacity: 0, scale: 0.8, y: 20 },
+                    visible: { opacity: 1, scale: 1, y: 0 },
+                  }}
+                  transition={{ duration: 0.5, delay: 0.1 + index * 0.1, ease: "easeOut" }}
                   className="px-6 py-3 bg-linear-to-r from-almond-gold to-gold-dark text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                 >
                   {product}
                 </motion.span>
               ))}
             </div>
-            <p className="text-(--color-slate) max-w-2xl mx-auto">
+            <motion.p
+              className="text-(--color-slate) max-w-2xl mx-auto"
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 },
+              }}
+              transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
+            >
               {about.productRangeSection.description}
-            </p>
+            </motion.p>
           </motion.div>
         ) : null}
 
         {/* Who We Are & Mission/Vision Grid */}
         {about.whoWeAre || about.mission || about.vision ? (
-          <div className="grid md:grid-cols-2 gap-8 mb-24">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.2 }}
+            className="grid md:grid-cols-2 gap-10 mb-24"
+          >
             {about.whoWeAre ? (
               <motion.div
-                {...fadeInLeft}
-                className="bg-linear-to-br from-white to-cashew-cream p-10 rounded-3xl border-2 border-gold-light shadow-xl relative overflow-hidden hover:shadow-2xl transition-all duration-300"
+                variants={{
+                  hidden: { opacity: 0, x: -60 },
+                  visible: { opacity: 1, x: 0 },
+                }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
+                className="relative"
               >
-                <h2 className="text-3xl font-bold text-deep-brown mb-6 font-heading">
-                  {about.whoWeAre.title}
-                </h2>
-                <p className="text-foreground mb-6 leading-relaxed">{about.whoWeAre.description}</p>
-                <LeafIcon
-                  className="absolute -bottom-10 -right-10 w-40 h-40 text-gold/10"
-                  aria-hidden="true"
+                {/* Organic blob background */}
+                <div
+                  className="absolute -inset-4 -z-10"
+                  style={{
+                    background: "linear-gradient(135deg, #f5f0e8 0%, #efe3d2 50%, #e8dcc8 100%)",
+                    borderRadius: "60% 40% 55% 45% / 55% 60% 40% 45%",
+                    transform: "rotate(-3deg)",
+                  }}
                 />
+
+                <div className="bg-white/95 backdrop-blur-sm p-10 rounded-2xl border border-gold-light shadow-xl relative overflow-hidden">
+                  {/* Decorative Icon */}
+                  <div className="mb-4">
+                    <NutIcon className="w-12 h-12 text-almond-gold/40" />
+                  </div>
+
+                  <h2 className="text-3xl font-bold text-deep-brown mb-6 font-heading">
+                    {about.whoWeAre.title}
+                  </h2>
+                  <p className="text-foreground leading-relaxed">{about.whoWeAre.description}</p>
+
+                  <LeafIcon
+                    className="absolute -bottom-10 -right-10 w-40 h-40 text-gold/10"
+                    aria-hidden="true"
+                  />
+                </div>
               </motion.div>
             ) : null}
 
             <div className="space-y-8">
               {about.mission ? (
                 <motion.div
-                  {...fadeInRight}
-                  transition={{ delay: 0.2 }}
-                  className="bg-linear-to-br from-white to-ivory p-8 rounded-3xl border-2 border-sand shadow-lg hover:shadow-xl transition-all duration-300"
+                  variants={{
+                    hidden: { opacity: 0, x: 60 },
+                    visible: { opacity: 1, x: 0 },
+                  }}
+                  transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+                  className="relative"
                 >
-                  <h3 className="text-2xl font-bold text-deep-brown mb-3 font-heading">
-                    {about.mission.title}
-                  </h3>
-                  <p className="text-(--color-slate)">{about.mission.description}</p>
+                  {/* Numbered circle */}
+                  <div className="absolute -top-3 -left-3 z-10">
+                    <div className="w-8 h-8 rounded-full bg-linear-to-br from-gold to-almond-gold flex items-center justify-center text-white font-bold text-sm shadow-md ring-2 ring-white">
+                      1
+                    </div>
+                  </div>
+
+                  <div className="bg-white/95 backdrop-blur-sm p-8 rounded-2xl border border-sand shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden">
+                    <div className="flex items-start gap-4">
+                      <AlmondIcon className="w-8 h-8 text-almond-gold/50 shrink-0 mt-1" />
+                      <div>
+                        <h3 className="text-2xl font-bold text-deep-brown mb-3 font-heading">
+                          {about.mission.title}
+                        </h3>
+                        <p className="text-(--color-slate) leading-relaxed">
+                          {about.mission.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </motion.div>
               ) : null}
 
               {about.vision ? (
                 <motion.div
-                  {...fadeInRight}
-                  transition={{ delay: 0.3 }}
-                  className="bg-linear-to-br from-white to-ivory p-8 rounded-3xl border-2 border-sand shadow-lg hover:shadow-xl transition-all duration-300"
+                  variants={{
+                    hidden: { opacity: 0, x: 60 },
+                    visible: { opacity: 1, x: 0 },
+                  }}
+                  transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
+                  className="relative"
                 >
-                  <h3 className="text-2xl font-bold text-deep-brown mb-3 font-heading">
-                    {about.vision.title}
-                  </h3>
-                  <p className="text-(--color-slate)">{about.vision.description}</p>
+                  {/* Numbered circle */}
+                  <div className="absolute -top-3 -left-3 z-10">
+                    <div className="w-8 h-8 rounded-full bg-linear-to-br from-gold to-almond-gold flex items-center justify-center text-white font-bold text-sm shadow-md ring-2 ring-white">
+                      2
+                    </div>
+                  </div>
+
+                  <div className="bg-white/95 backdrop-blur-sm p-8 rounded-2xl border border-sand shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden">
+                    <div className="flex items-start gap-4">
+                      <CashewIcon className="w-8 h-8 text-almond-gold/50 shrink-0 mt-1" />
+                      <div>
+                        <h3 className="text-2xl font-bold text-deep-brown mb-3 font-heading">
+                          {about.vision.title}
+                        </h3>
+                        <p className="text-(--color-slate) leading-relaxed">
+                          {about.vision.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </motion.div>
               ) : null}
             </div>
-          </div>
+          </motion.div>
         ) : null}
 
         {/* Journey / Legacy Animation */}
@@ -584,9 +1050,9 @@ export default function AboutContent({
             <DistributionMap
               locations={(about.distributionRegions || []).map((r) => ({
                 name: r.name,
-                lat: 28.6139, // Default fallback, ideally these should come from CMS
-                lng: 77.209,
-                radius: 50000,
+                lat: r.lat ?? 28.6139,
+                lng: r.lng ?? 77.209,
+                radius: r.radius ?? 50000,
                 _id: r._id,
               }))}
               heading={siteSettings?.distribution?.heading}
