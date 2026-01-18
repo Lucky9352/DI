@@ -24,11 +24,13 @@ const HTMLFlipBook = dynamic(() => import("react-pageflip"), {
   ),
 });
 
-// React PDF configuration
-import { Document, Page as PdfPage, pdfjs } from "react-pdf";
-
-// Restore standard worker source for Next.js
-pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
+// Dynamic import to avoid SSR issues with react-pdf (DOMMatrix not available in Node.js)
+const Document = dynamic(() => import("react-pdf").then((mod) => mod.Document), {
+  ssr: false,
+});
+const PdfPage = dynamic(() => import("react-pdf").then((mod) => mod.Page), {
+  ssr: false,
+});
 
 // =============================================================================
 // ZOD VALIDATION SCHEMAS
@@ -251,6 +253,13 @@ export default function CatalogueViewer({ settings }: CatalogueViewerProps) {
 
   // PDF State
   const [numPages, setNumPages] = useState<number | null>(null);
+
+  // Configure PDF.js worker on client side only
+  useEffect(() => {
+    import("react-pdf").then(({ pdfjs }) => {
+      pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
+    });
+  }, []);
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
     setNumPages(numPages);
