@@ -518,7 +518,7 @@ const heroSlides = [
     ],
     primaryCta: { label: "Explore Our Collection", target: "products" },
     secondaryCta: { label: "Contact Trade Desk", target: "contact" },
-    videoUrl: "https://youtu.be/aTOTCFNhlq8",
+    videoUrl: "https://youtu.be/6qCa_lNKxjw?si=d834rowMA4ALItv_",
     posterUrl: "https://images.unsplash.com/photo-1508747703725-719777637510?w=1920&q=80",
   },
 ];
@@ -2260,7 +2260,45 @@ async function seed() {
         _key: "vid1",
         title: "Facility Overview",
         description: "Aerial view of our processing facility",
-        videoUrl: "https://youtu.be/0ZD8ukKe7zU",
+        videoUrl: "https://youtu.be/0ZD8ukKe7zU?si=zu1lLx2Tdmvs9qNd",
+      },
+    ],
+  };
+
+  const videoTestimonialsData = {
+    eyebrow: "OUR TEAM",
+    title: "Employee Stories",
+    note: "Hear directly from the people who make it happen.",
+    videos: [
+      {
+        _key: "emptest1",
+        title: "Employee Experience",
+        description: "Shared journey at Divyansh International",
+        videoUrl: "https://youtu.be/MXmxsiLI1cI?si=LD3Yko8xEJt_71b_",
+      },
+      {
+        _key: "emptest2",
+        title: "Working Culture",
+        description: "Inside our collaborative environment",
+        videoUrl: "https://youtu.be/nS38lUmTEVs?si=MoWxeEwLKKlVT3s-",
+      },
+      {
+        _key: "emptest3",
+        title: "Growth Opportunities",
+        description: "Professional development stories",
+        videoUrl: "https://youtu.be/IHjzmuLm_3o?si=S03BtxAhckJ4TJSR",
+      },
+      {
+        _key: "emptest4",
+        title: "Team Spirit",
+        description: "Building success together",
+        videoUrl: "https://youtu.be/s0Nhc1kj5K8?si=0wLyh3rezdTseCw9",
+      },
+      {
+        _key: "emptest5",
+        title: "Daily Operations",
+        description: "A day in the life of our team",
+        videoUrl: "https://youtu.be/h3n9kGDcdkY?si=6cqqai91AbY9sB_0",
       },
     ],
   };
@@ -2273,9 +2311,16 @@ async function seed() {
       title: "Client Success Stories",
       eyebrow: "TESTIMONIALS",
       droneSection: droneSectionData,
+      videoTestimonialsSection: videoTestimonialsData,
     });
   } else {
-    await client.patch(currentSection._id).set({ droneSection: droneSectionData }).commit();
+    await client
+      .patch(currentSection._id)
+      .set({
+        droneSection: droneSectionData,
+        videoTestimonialsSection: videoTestimonialsData,
+      })
+      .commit();
   }
 
   const regionNames = [

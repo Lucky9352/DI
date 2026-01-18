@@ -43,7 +43,7 @@ const VideoItemSchema = z.object({
   thumbnail: SanityImageSourceSchema.optional(),
 });
 
-const DroneSectionSchema = z.object({
+const VideoShowcaseSchema = z.object({
   eyebrow: z.string().nullish(),
   title: z.string().nullish(),
   placeholderText: z.string().nullish(),
@@ -57,7 +57,8 @@ const DroneSectionSchema = z.object({
 const SectionSettingsSchema = z.object({
   eyebrow: z.string().optional(),
   title: z.string().optional(),
-  droneSection: DroneSectionSchema.optional(),
+  droneSection: VideoShowcaseSchema.optional(),
+  videoTestimonialsSection: VideoShowcaseSchema.optional(),
 });
 
 const RoutingSchema = z.object({
@@ -144,15 +145,22 @@ export default function VideoTestimonialsSection({
     >
       <div className="container mx-auto px-4 md:px-6 lg:px-10">
         <div className="grid lg:grid-cols-2 gap-12 items-start">
-          {/* Left Column: Testimonials List */}
-          <TestimonialsList
-            testimonials={testimonials}
-            eyebrow={sectionSettings?.eyebrow}
-            title={sectionSettings?.title}
-          />
+          {/* Left Column: Testimonials List & Employee Stories */}
+          <div className="space-y-12">
+            <TestimonialsList
+              testimonials={testimonials}
+              eyebrow={sectionSettings?.eyebrow}
+              title={sectionSettings?.title}
+            />
+            {sectionSettings?.videoTestimonialsSection ? (
+              <VideoShowcase data={sectionSettings.videoTestimonialsSection} />
+            ) : null}
+          </div>
 
           {/* Right Column: Drone/Video Showcase */}
-          <DroneVideoShowcase sectionSettings={sectionSettings} />
+          <div className="space-y-12">
+            <VideoShowcase data={sectionSettings?.droneSection} />
+          </div>
         </div>
       </div>
     </section>
@@ -220,14 +228,14 @@ function TestimonialsList({ testimonials, eyebrow, title }: TestimonialsListProp
   );
 }
 
-interface DroneVideoShowcaseProps {
-  sectionSettings: SectionSettings | null | undefined;
+interface VideoShowcaseProps {
+  data: z.infer<typeof VideoShowcaseSchema> | null | undefined;
 }
 
-function DroneVideoShowcase({ sectionSettings }: DroneVideoShowcaseProps) {
-  const droneSettings = sectionSettings?.droneSection;
-  const videos = droneSettings?.videos ?? [];
-  const droneHighlightsList = droneSettings?.highlights ?? [];
+function VideoShowcase({ data }: VideoShowcaseProps) {
+  const settings = data;
+  const videos = settings?.videos ?? [];
+  const highlightsList = settings?.highlights ?? [];
 
   const [activeVideoIndex, setActiveVideoIndex] = useState(0);
   const [isMuted, setIsMuted] = useState(true);
@@ -245,6 +253,8 @@ function DroneVideoShowcase({ sectionSettings }: DroneVideoShowcaseProps) {
     setIsMuted((prev) => !prev);
   }, []);
 
+  if (!settings) return null;
+
   return (
     <motion.div
       className="bg-linear-to-br from-white to-ivory border-2 border-gold-light p-8 rounded-3xl shadow-xl space-y-6"
@@ -253,7 +263,7 @@ function DroneVideoShowcase({ sectionSettings }: DroneVideoShowcaseProps) {
       viewport={{ once: true, amount: 0.1 }}
       variants={slideInRight}
     >
-      {droneSettings?.eyebrow ? (
+      {settings.eyebrow ? (
         <motion.p
           className="uppercase tracking-[0.4em] text-xs text-(--color-muted) mb-4"
           initial={{ opacity: 0, y: 20 }}
@@ -261,14 +271,12 @@ function DroneVideoShowcase({ sectionSettings }: DroneVideoShowcaseProps) {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          {droneSettings.eyebrow}
+          {settings.eyebrow}
         </motion.p>
       ) : null}
 
-      {droneSettings?.title ? (
-        <h3 className="text-2xl font-semibold text-(--color-graphite) mb-4">
-          {droneSettings.title}
-        </h3>
+      {settings.title ? (
+        <h3 className="text-2xl font-semibold text-(--color-graphite) mb-4">{settings.title}</h3>
       ) : null}
 
       {/* Video Player Component */}
@@ -277,7 +285,7 @@ function DroneVideoShowcase({ sectionSettings }: DroneVideoShowcaseProps) {
         totalVideos={videos.length}
         onPrev={handlePrevVideo}
         onNext={handleNextVideo}
-        placeholderText={droneSettings?.placeholderText ?? undefined}
+        placeholderText={settings.placeholderText ?? undefined}
         isMuted={isMuted}
         onToggleMute={handleToggleMute}
       />
@@ -310,7 +318,7 @@ function DroneVideoShowcase({ sectionSettings }: DroneVideoShowcaseProps) {
       ) : null}
 
       <ul className="space-y-4 text-(--color-slate)">
-        {droneHighlightsList.map((point) => (
+        {highlightsList.map((point) => (
           <li key={point} className="flex gap-3">
             <span aria-hidden="true" className="mt-2 h-2 w-2 rounded-full bg-gold" />
             <span>{point}</span>
@@ -318,9 +326,7 @@ function DroneVideoShowcase({ sectionSettings }: DroneVideoShowcaseProps) {
         ))}
       </ul>
 
-      {droneSettings?.note ? (
-        <p className="mt-6 text-sm text-(--color-muted)">{droneSettings.note}</p>
-      ) : null}
+      {settings.note ? <p className="mt-6 text-sm text-(--color-muted)">{settings.note}</p> : null}
     </motion.div>
   );
 }

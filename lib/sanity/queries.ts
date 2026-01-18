@@ -200,6 +200,20 @@ export const testimonialsSectionQuery = groq`
       },
       highlights,
       note
+    },
+    videoTestimonialsSection {
+      eyebrow,
+      title,
+      placeholderText,
+      videos[] {
+        _key,
+        title,
+        description,
+        videoUrl,
+        thumbnail
+      },
+      highlights,
+      note
     }
   }
 `;
