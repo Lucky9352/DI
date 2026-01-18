@@ -266,8 +266,6 @@ export default function CatalogueViewer({ settings }: CatalogueViewerProps) {
   // Determine total pages based on content type
   const totalPages = contentType === "pdf" ? numPages || 0 : validPages.length;
 
-
-
   // Calculate responsive dimensions
   useEffect(() => {
     const updateDimensions = () => {
@@ -333,16 +331,19 @@ export default function CatalogueViewer({ settings }: CatalogueViewerProps) {
     setCurrentPage(e.data);
   }, []);
 
-  const goToPage = useCallback((pageIndex: number) => {
-    if (contentType === "pdf") {
-      setCurrentPage(pageIndex);
-    } else {
-      const flipBook = flipBookRef.current as {
-        pageFlip?: () => { turnToPage: (page: number) => void };
-      } | null;
-      flipBook?.pageFlip?.()?.turnToPage(pageIndex);
-    }
-  }, [contentType]);
+  const goToPage = useCallback(
+    (pageIndex: number) => {
+      if (contentType === "pdf") {
+        setCurrentPage(pageIndex);
+      } else {
+        const flipBook = flipBookRef.current as {
+          pageFlip?: () => { turnToPage: (page: number) => void };
+        } | null;
+        flipBook?.pageFlip?.()?.turnToPage(pageIndex);
+      }
+    },
+    [contentType]
+  );
 
   const handleDownload = useCallback(() => {
     if (!pdfUrl) return;
@@ -596,7 +597,7 @@ export default function CatalogueViewer({ settings }: CatalogueViewerProps) {
                   style={{
                     width: dimensions.width,
                     height: dimensions.height,
-                    perspective: '2000px', // Enhanced depth
+                    perspective: "2000px", // Enhanced depth
                   }}
                 >
                   <AnimatePresence initial={false} custom={direction} mode="popLayout">
@@ -619,8 +620,8 @@ export default function CatalogueViewer({ settings }: CatalogueViewerProps) {
                           x: 0,
                           transition: {
                             rotateY: { type: "spring", stiffness: 60, damping: 12, mass: 1.2 }, // Heavy physics feel
-                            opacity: { duration: 0.4 }
-                          }
+                            opacity: { duration: 0.4 },
+                          },
                         },
                         exit: (direction: number) => ({
                           rotateY: direction > 0 ? -120 : 120, // Flip out to opposite side
@@ -629,15 +630,15 @@ export default function CatalogueViewer({ settings }: CatalogueViewerProps) {
                           // transformOrigin: direction > 0 ? "left center" : "right center", // Consistent origin
                           transition: {
                             rotateY: { type: "spring", stiffness: 60, damping: 12 },
-                            opacity: { duration: 0.4 }
-                          }
-                        })
+                            opacity: { duration: 0.4 },
+                          },
+                        }),
                       }}
                       initial="enter"
                       animate="center"
                       exit="exit"
                       className="absolute inset-0 bg-white"
-                      style={{ backfaceVisibility: 'hidden' }}
+                      style={{ backfaceVisibility: "hidden" }}
                     >
                       {numPages && currentPage < numPages && (
                         <PdfFlipPage
@@ -654,7 +655,7 @@ export default function CatalogueViewer({ settings }: CatalogueViewerProps) {
                         animate={{ opacity: 0 }}
                         exit={{ opacity: 0.5 }}
                         className="absolute inset-0 pointer-events-none z-50 bg-black"
-                        style={{ mixBlendMode: 'multiply' }}
+                        style={{ mixBlendMode: "multiply" }}
                       />
                     </motion.div>
                   </AnimatePresence>
@@ -693,26 +694,26 @@ export default function CatalogueViewer({ settings }: CatalogueViewerProps) {
                 {/* Image Pages */}
                 {contentType === "images"
                   ? validPages.map((page, index) => (
-                    <PageComponent
-                      key={page._key || `page-${index}`}
-                      page={page}
-                      pageNumber={index + 1}
-                      showPageNumbers={showPageNumbers}
-                    />
-                  ))
+                      <PageComponent
+                        key={page._key || `page-${index}`}
+                        page={page}
+                        pageNumber={index + 1}
+                        showPageNumbers={showPageNumbers}
+                      />
+                    ))
                   : null}
 
                 {/* PDF Pages */}
                 {contentType === "pdf" && numPages
                   ? Array.from(new Array(numPages), (el, index) => (
-                    <PdfFlipPage
-                      key={`pdf-page-${index + 1}`}
-                      pageNumber={index + 1}
-                      width={dimensions.width}
-                      height={dimensions.height}
-                      isCover={index === 0 || index === numPages - 1}
-                    />
-                  ))
+                      <PdfFlipPage
+                        key={`pdf-page-${index + 1}`}
+                        pageNumber={index + 1}
+                        width={dimensions.width}
+                        height={dimensions.height}
+                        isCover={index === 0 || index === numPages - 1}
+                      />
+                    ))
                   : null}
               </HTMLFlipBook>
             ) : null}
@@ -748,50 +749,48 @@ export default function CatalogueViewer({ settings }: CatalogueViewerProps) {
         </motion.div>
 
         {/* Thumbnails */}
-        {
-          showThumbnails && validPages.length > 0 ? (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="mt-10"
-            >
-              <div className="flex gap-3 overflow-x-auto pb-4 px-4 justify-center flex-wrap">
-                {validPages.slice(0, 16).map((page, index) => (
-                  <button
-                    key={page._key || `thumb-${index}`}
-                    onClick={() => goToPage(index)}
-                    className={cn(
-                      "relative w-16 h-22 md:w-20 md:h-28 rounded-lg overflow-hidden border-2 transition-all shrink-0 hover:scale-105 bg-white shadow-md",
-                      currentPage === index
-                        ? "border-almond-gold shadow-lg ring-2 ring-almond-gold/30"
-                        : "border-gray-200 hover:border-gold-light"
-                    )}
-                    aria-label={`Go to page ${index + 1}`}
-                  >
-                    {page.asset?.url ? (
-                      <Image
-                        src={page.asset.url}
-                        alt={page.alt || `Thumbnail ${index + 1}`}
-                        fill
-                        className="object-cover"
-                        sizes="80px"
-                      />
-                    ) : null}
-                    {currentPage === index ? (
-                      <div className="absolute inset-0 bg-almond-gold/20" />
-                    ) : null}
-                  </button>
-                ))}
-                {validPages.length > 16 ? (
-                  <div className="flex items-center text-sm text-gray-500 px-2">
-                    +{validPages.length - 16} more
-                  </div>
-                ) : null}
-              </div>
-            </motion.div>
-          ) : null
-        }
+        {showThumbnails && validPages.length > 0 ? (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="mt-10"
+          >
+            <div className="flex gap-3 overflow-x-auto pb-4 px-4 justify-center flex-wrap">
+              {validPages.slice(0, 16).map((page, index) => (
+                <button
+                  key={page._key || `thumb-${index}`}
+                  onClick={() => goToPage(index)}
+                  className={cn(
+                    "relative w-16 h-22 md:w-20 md:h-28 rounded-lg overflow-hidden border-2 transition-all shrink-0 hover:scale-105 bg-white shadow-md",
+                    currentPage === index
+                      ? "border-almond-gold shadow-lg ring-2 ring-almond-gold/30"
+                      : "border-gray-200 hover:border-gold-light"
+                  )}
+                  aria-label={`Go to page ${index + 1}`}
+                >
+                  {page.asset?.url ? (
+                    <Image
+                      src={page.asset.url}
+                      alt={page.alt || `Thumbnail ${index + 1}`}
+                      fill
+                      className="object-cover"
+                      sizes="80px"
+                    />
+                  ) : null}
+                  {currentPage === index ? (
+                    <div className="absolute inset-0 bg-almond-gold/20" />
+                  ) : null}
+                </button>
+              ))}
+              {validPages.length > 16 ? (
+                <div className="flex items-center text-sm text-gray-500 px-2">
+                  +{validPages.length - 16} more
+                </div>
+              ) : null}
+            </div>
+          </motion.div>
+        ) : null}
 
         {/* Touch Instructions */}
         <motion.div
@@ -804,32 +803,30 @@ export default function CatalogueViewer({ settings }: CatalogueViewerProps) {
         </motion.div>
 
         {/* Download Button */}
-        {
-          pdfUrl ? (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="mt-10 text-center"
+        {pdfUrl ? (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="mt-10 text-center"
+          >
+            <button
+              onClick={handleDownload}
+              className="px-8 py-4 bg-linear-to-r from-almond-gold to-gold-dark text-white rounded-full font-semibold hover:shadow-xl transition-all duration-300 hover:scale-105 inline-flex items-center gap-3 text-lg"
             >
-              <button
-                onClick={handleDownload}
-                className="px-8 py-4 bg-linear-to-r from-almond-gold to-gold-dark text-white rounded-full font-semibold hover:shadow-xl transition-all duration-300 hover:scale-105 inline-flex items-center gap-3 text-lg"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                  />
-                </svg>
-                Download PDF Catalogue
-              </button>
-            </motion.div>
-          ) : null
-        }
-      </div >
-    </div >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                />
+              </svg>
+              Download PDF Catalogue
+            </button>
+          </motion.div>
+        ) : null}
+      </div>
+    </div>
   );
 }
