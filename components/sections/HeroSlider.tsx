@@ -341,8 +341,9 @@ function VideoBackground({
                   isYouTubeUrl(slide.videoUrl) ? (
                     <div className="w-full h-full relative overflow-hidden">
                       <iframe
+                        key={`${slide._id}-${isMuted}`}
                         className="video-background-iframe"
-                        src={`${getYouTubeEmbedUrl(slide.videoUrl) || ""}&mute=${isMuted ? 1 : 0}`}
+                        src={`${getYouTubeEmbedUrl(slide.videoUrl) || ""}&mute=${isMuted ? 1 : 0}&vq=hd1080&hd=1&quality=high&autoplay=1`}
                         title="Background video"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen

@@ -210,7 +210,7 @@ export default function Footer({
     `© ${currentYear} ${companyName}. All rights reserved.`;
 
   return (
-    <footer className="bg-[#1a120b] py-16 relative overflow-hidden text-white border-t border-gold/20">
+    <footer className="bg-[#1a120b] py-16 relative overflow-hidden text-white border-t border-[#d4a574]/20">
       {/* Visual Elements */}
       <FooterVisualElements />
 
@@ -218,17 +218,17 @@ export default function Footer({
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDE0YzAtMy4zMTQgMi42ODYtNiA2LTZzNiAyLjY4NiA2IDYtMi42ODYgNi02IDYtNi0yLjY4Ni02LTZ6TTEyIDM4YzAtMy4zMTQgMi42ODYtNiA2LTZzNiAyLjY4NiA2IDYtMi42ODYgNi02IDYtNi0yLjY4Ni02LTZ6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-30"></div>
 
       {/* Subtle Gold Glow at top */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-px bg-linear-to-r from-transparent via-gold/40 to-transparent"></div>
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-px bg-linear-to-r from-transparent via-[#d4a574]/40 to-transparent"></div>
 
       <div className="container mx-auto px-4 md:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Company Info */}
           <div className="space-y-6">
             <div>
-              <h3 className="text-2xl font-bold mb-3 text-almond-gold font-heading tracking-wide">
+              <h3 className="text-2xl font-bold mb-3 text-[#d4a574] font-heading tracking-wide">
                 {labels?.companyTitle || companyName}
               </h3>
-              <p className="text-sm leading-relaxed text-ivory/80 max-w-sm">
+              <p className="text-sm leading-relaxed text-white/80 max-w-sm">
                 {labels?.companyDescription}
               </p>
             </div>
@@ -238,7 +238,7 @@ export default function Footer({
               {footer.socialLinks.facebook && footer.socialLinks.facebook !== "#" ? (
                 <a
                   href={footer.socialLinks.facebook}
-                  className="bg-white/5 hover:bg-gold hover:text-deep-brown text-white transition-all duration-300 rounded-full p-2.5 flex items-center justify-center border border-white/10 hover:border-gold"
+                  className="bg-white/5 hover:bg-[#d4a574] hover:text-[#3e2f23] text-white transition-all duration-300 rounded-full p-2.5 flex items-center justify-center border border-white/10 hover:border-[#d4a574]"
                   aria-label={accessibility?.socialFacebookAria}
                   rel="noopener noreferrer"
                   target="_blank"
@@ -251,7 +251,7 @@ export default function Footer({
               {footer.socialLinks.twitter && footer.socialLinks.twitter !== "#" ? (
                 <a
                   href={footer.socialLinks.twitter}
-                  className="bg-white/5 hover:bg-gold hover:text-deep-brown text-white transition-all duration-300 rounded-full p-2.5 flex items-center justify-center border border-white/10 hover:border-gold"
+                  className="bg-white/5 hover:bg-[#d4a574] hover:text-[#3e2f23] text-white transition-all duration-300 rounded-full p-2.5 flex items-center justify-center border border-white/10 hover:border-[#d4a574]"
                   aria-label={accessibility?.socialTwitterAria}
                   rel="noopener noreferrer"
                   target="_blank"
@@ -264,7 +264,7 @@ export default function Footer({
               {footer.socialLinks.linkedin && footer.socialLinks.linkedin !== "#" ? (
                 <a
                   href={footer.socialLinks.linkedin}
-                  className="bg-white/5 hover:bg-gold hover:text-deep-brown text-white transition-all duration-300 rounded-full p-2.5 flex items-center justify-center border border-white/10 hover:border-gold"
+                  className="bg-white/5 hover:bg-[#d4a574] hover:text-[#3e2f23] text-white transition-all duration-300 rounded-full p-2.5 flex items-center justify-center border border-white/10 hover:border-[#d4a574]"
                   aria-label={accessibility?.socialLinkedinAria}
                   rel="noopener noreferrer"
                   target="_blank"
@@ -277,7 +277,7 @@ export default function Footer({
               {footer.socialLinks.instagram && footer.socialLinks.instagram !== "#" ? (
                 <a
                   href={footer.socialLinks.instagram}
-                  className="bg-white/5 hover:bg-gold hover:text-deep-brown text-white transition-all duration-300 rounded-full p-2.5 flex items-center justify-center border border-white/10 hover:border-gold"
+                  className="bg-white/5 hover:bg-[#d4a574] hover:text-[#3e2f23] text-white transition-all duration-300 rounded-full p-2.5 flex items-center justify-center border border-white/10 hover:border-[#d4a574]"
                   aria-label={accessibility?.socialInstagramAria}
                   rel="noopener noreferrer"
                   target="_blank"
@@ -300,7 +300,7 @@ export default function Footer({
               <li>
                 <button
                   onClick={handleMakeEnquiry}
-                  className="group relative overflow-hidden bg-linear-to-r from-almond-gold via-gold to-almond-gold text-white px-5 py-2.5 rounded-lg font-bold text-sm shadow-md transition-all duration-300 hover:shadow-gold/20 hover:scale-[1.02] active:scale-95 w-full md:w-auto text-center"
+                  className="group relative overflow-hidden bg-linear-to-r from-[#d4a574] via-[#c9a66b] to-[#d4a574] text-white px-5 py-2.5 rounded-lg font-bold text-sm shadow-md transition-all duration-300 hover:shadow-[#d4a574]/20 hover:scale-[1.02] active:scale-95 w-full md:w-auto text-center"
                 >
                   <span className="relative z-10">Make an Enquiry</span>
                   <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
@@ -313,7 +313,7 @@ export default function Footer({
                   <li key={index}>
                     <Link
                       href={link.url}
-                      className="text-ivory/70 hover:text-gold transition-colors text-sm block hover:translate-x-1 duration-200"
+                      className="text-white/70 hover:text-[#d4a574] transition-colors text-sm block hover:translate-x-1 duration-200"
                     >
                       {link.label}
                     </Link>
@@ -332,7 +332,7 @@ export default function Footer({
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-ivory/70 hover:text-gold transition-colors text-sm block hover:translate-x-1 duration-200"
+                    className="text-white/70 hover:text-[#d4a574] transition-colors text-sm block hover:translate-x-1 duration-200"
                   >
                     {link.label}
                   </Link>
@@ -350,19 +350,19 @@ export default function Footer({
               {/* Certification Badges */}
               <div className="flex gap-3 flex-wrap">
                 {labels?.isoLabel ? (
-                  <div className="bg-white/10 border border-white/20 px-4 py-2 rounded-md text-xs font-bold text-white tracking-wider uppercase backdrop-blur-sm hover:bg-gold hover:text-deep-brown hover:border-gold transition-colors cursor-default">
+                  <div className="bg-white/10 border border-white/20 px-4 py-2 rounded-md text-xs font-bold text-white tracking-wider uppercase backdrop-blur-sm hover:bg-[#d4a574] hover:text-[#3e2f23] hover:border-[#d4a574] transition-colors cursor-default">
                     {labels.isoLabel}
                   </div>
                 ) : null}
                 {labels?.fssaiLabel ? (
-                  <div className="bg-white/10 border border-white/20 px-4 py-2 rounded-md text-xs font-bold text-white tracking-wider uppercase backdrop-blur-sm hover:bg-gold hover:text-deep-brown hover:border-gold transition-colors cursor-default">
+                  <div className="bg-white/10 border border-white/20 px-4 py-2 rounded-md text-xs font-bold text-white tracking-wider uppercase backdrop-blur-sm hover:bg-[#d4a574] hover:text-[#3e2f23] hover:border-[#d4a574] transition-colors cursor-default">
                     {labels.fssaiLabel}
                   </div>
                 ) : null}
               </div>
 
               <div className="pt-2">
-                <p className="text-xs text-ivory/50 italic">{labels?.servingText}</p>
+                <p className="text-xs text-white/50 italic">{labels?.servingText}</p>
               </div>
             </div>
           </div>
@@ -370,12 +370,12 @@ export default function Footer({
 
         {/* Bottom Bar */}
         <div className="border-t border-white/10 pt-8 mt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-ivory/60">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/60">
             <p className="font-medium">{copyright}</p>
             <div className="flex items-center gap-4">
               <Link
                 href="/privacy-policy"
-                className="hover:text-gold transition-colors focus:outline-2 focus:outline-gold focus:rounded"
+                className="hover:text-[#d4a574] transition-colors focus:outline-2 focus:outline-[#d4a574] focus:rounded"
               >
                 {labels?.privacyPolicyText}
               </Link>

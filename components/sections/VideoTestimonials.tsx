@@ -44,14 +44,14 @@ const VideoItemSchema = z.object({
 });
 
 const DroneSectionSchema = z.object({
-  eyebrow: z.string().optional(),
-  title: z.string().optional(),
-  placeholderText: z.string().optional(),
-  highlights: z.array(z.string()).optional(),
-  note: z.string().optional(),
-  videoUrl: z.string().optional(),
-  image: SanityImageSourceSchema.optional(),
-  videos: z.array(VideoItemSchema).optional(),
+  eyebrow: z.string().nullish(),
+  title: z.string().nullish(),
+  placeholderText: z.string().nullish(),
+  highlights: z.array(z.string()).nullish(),
+  note: z.string().nullish(),
+  videoUrl: z.string().nullish(),
+  image: SanityImageSourceSchema.nullish(),
+  videos: z.array(VideoItemSchema).nullish(),
 });
 
 const SectionSettingsSchema = z.object({
@@ -133,7 +133,6 @@ export default function VideoTestimonialsSection({
   if (process.env.NODE_ENV === "development") {
     validateProps({ initialTestimonials, sectionSettings, routing });
   }
-
   const testimonials = initialTestimonials ?? [];
   const sectionId = routing?.testimonialsSectionId;
 
@@ -231,6 +230,7 @@ function DroneVideoShowcase({ sectionSettings }: DroneVideoShowcaseProps) {
   const droneHighlightsList = droneSettings?.highlights ?? [];
 
   const [activeVideoIndex, setActiveVideoIndex] = useState(0);
+  const [isMuted, setIsMuted] = useState(true);
   const activeVideo = videos[activeVideoIndex];
 
   const handlePrevVideo = useCallback(() => {
@@ -240,6 +240,10 @@ function DroneVideoShowcase({ sectionSettings }: DroneVideoShowcaseProps) {
   const handleNextVideo = useCallback(() => {
     setActiveVideoIndex((prev) => (prev === videos.length - 1 ? 0 : prev + 1));
   }, [videos.length]);
+
+  const handleToggleMute = useCallback(() => {
+    setIsMuted((prev) => !prev);
+  }, []);
 
   return (
     <motion.div
@@ -273,7 +277,9 @@ function DroneVideoShowcase({ sectionSettings }: DroneVideoShowcaseProps) {
         totalVideos={videos.length}
         onPrev={handlePrevVideo}
         onNext={handleNextVideo}
-        placeholderText={droneSettings?.placeholderText}
+        placeholderText={droneSettings?.placeholderText ?? undefined}
+        isMuted={isMuted}
+        onToggleMute={handleToggleMute}
       />
 
       {/* active video title/desc */}
@@ -325,6 +331,8 @@ interface VideoPlayerProps {
   onPrev: () => void;
   onNext: () => void;
   placeholderText: string | undefined;
+  isMuted: boolean;
+  onToggleMute: () => void;
 }
 
 function VideoPlayer({
@@ -333,10 +341,12 @@ function VideoPlayer({
   onPrev,
   onNext,
   placeholderText,
+  isMuted,
+  onToggleMute,
 }: VideoPlayerProps) {
   return (
     <div className="relative">
-      <div className="rounded-2xl overflow-hidden border-2 border-gold-light bg-beige min-h-[220px] relative">
+      <div className="rounded-2xl overflow-hidden border-2 border-gold-light bg-beige aspect-video relative">
         <AnimatePresence mode="wait">
           {activeVideo?.videoUrl ? (
             <motion.div
@@ -344,17 +354,20 @@ function VideoPlayer({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="w-full h-full aspect-video"
+              className="absolute inset-0 w-full h-full"
             >
               {isYouTubeUrl(activeVideo.videoUrl) ? (
-                <iframe
-                  className="w-full h-full"
-                  src={`${getYouTubeEmbedUrl(activeVideo.videoUrl) || ""}&controls=1`}
-                  title={activeVideo.title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  style={{ border: "none" }}
-                />
+                <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
+                  <iframe
+                    key={`${activeVideo._key}-${isMuted}`}
+                    className="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto -translate-x-1/2 -translate-y-1/2 scale-[1.5]"
+                    src={`${getYouTubeEmbedUrl(activeVideo.videoUrl) || ""}&controls=0&showinfo=0&disablekb=1&fs=0&iv_load_policy=3&rel=0&modestbranding=1&vq=hd1080&hd=1&quality=high&mute=${isMuted ? 1 : 0}&autoplay=1`}
+                    title={activeVideo.title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    style={{ border: "none" }}
+                  />
+                </div>
               ) : (
                 <video
                   className="w-full h-full object-cover"
@@ -423,6 +436,39 @@ function VideoPlayer({
             </button>
           </>
         ) : null}
+
+        {/* Mute/Unmute Button */}
+        <button
+          onClick={onToggleMute}
+          className="absolute bottom-2 right-2 p-2 rounded-full bg-white/90 hover:bg-white text-deep-brown hover:text-almond-gold transition-all shadow-lg z-10"
+          aria-label={isMuted ? "Unmute video" : "Mute video"}
+        >
+          {isMuted ? (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+              />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"
+              />
+            </svg>
+          ) : (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+              />
+            </svg>
+          )}
+        </button>
       </div>
     </div>
   );

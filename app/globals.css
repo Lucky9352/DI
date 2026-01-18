@@ -775,22 +775,46 @@ html.hydrated {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%) scale(2);
   pointer-events: none;
 }
 
+/* Desktop: wider screens need less scaling */
 @media (min-aspect-ratio: 16/9) {
   .video-background-iframe {
-    width: 100%;
+    width: 100vw;
     height: 56.25vw;
-    /* 100 * 9 / 16 */
+    transform: translate(-50%, -50%) scale(1.2);
   }
 }
 
+/* Tablet: moderate portrait screens */
 @media (max-aspect-ratio: 16/9) {
   .video-background-iframe {
-    width: 177.78vh;
-    /* 100 * 16 / 9 */
-    height: 100%;
+    width: 200vw;
+    height: 100vh;
+    transform: translate(-50%, -50%) scale(2);
+  }
+}
+
+/* Mobile: narrow portrait screens need aggressive scaling */
+@media (max-aspect-ratio: 9/16) {
+  .video-background-iframe {
+    width: 300vw;
+    height: 100vh;
+    transform: translate(-50%, -50%) scale(3);
+  }
+}
+
+/* Extra narrow screens (320px and below) */
+@media (max-width: 480px) and (max-aspect-ratio: 3/4) {
+  .video-background-iframe {
+    width: 350vw;
+    height: 100vh;
+    transform: translate(-50%, -50%) scale(3.5);
   }
 }

@@ -518,7 +518,7 @@ const heroSlides = [
     ],
     primaryCta: { label: "Explore Our Collection", target: "products" },
     secondaryCta: { label: "Contact Trade Desk", target: "contact" },
-    videoUrl: "https://cdn.coverr.co/videos/coverr-hand-scooping-almonds-5583/1080p.mp4",
+    videoUrl: "https://youtu.be/aTOTCFNhlq8",
     posterUrl: "https://images.unsplash.com/photo-1508747703725-719777637510?w=1920&q=80",
   },
 ];
@@ -2260,25 +2260,7 @@ async function seed() {
         _key: "vid1",
         title: "Facility Overview",
         description: "Aerial view of our processing facility",
-        videoUrl: "",
-      },
-      {
-        _key: "vid2",
-        title: "Quality Control",
-        description: "Our quality assurance processes",
-        videoUrl: "",
-      },
-      {
-        _key: "vid3",
-        title: "Packaging Line",
-        description: "State-of-the-art packaging systems",
-        videoUrl: "",
-      },
-      {
-        _key: "vid4",
-        title: "Storage Facility",
-        description: "Temperature-controlled storage",
-        videoUrl: "",
+        videoUrl: "https://youtu.be/0ZD8ukKe7zU",
       },
     ],
   };
@@ -2292,12 +2274,8 @@ async function seed() {
       eyebrow: "TESTIMONIALS",
       droneSection: droneSectionData,
     });
-  } else if (!currentSection.droneSection || !currentSection.droneSection.videos) {
-    await client
-      .patch(currentSection._id)
-      .setIfMissing({ droneSection: droneSectionData })
-      .commit();
   } else {
+    await client.patch(currentSection._id).set({ droneSection: droneSectionData }).commit();
   }
 
   const regionNames = [

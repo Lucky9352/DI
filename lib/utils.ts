@@ -133,13 +133,13 @@ export function getYouTubeEmbedUrl(url: string): string | null {
   // Pattern for youtu.be/VIDEO_ID
   const shortMatch = url.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
   if (shortMatch?.[1]) {
-    return `https://www.youtube.com/embed/${shortMatch[1]}?autoplay=1&loop=1&playlist=${shortMatch[1]}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1`;
+    return `https://www.youtube.com/embed/${shortMatch[1]}?autoplay=1&mute=1&loop=1&playlist=${shortMatch[1]}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1`;
   }
 
   // Pattern for youtube.com/watch?v=VIDEO_ID
   const watchMatch = url.match(/youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})/);
   if (watchMatch?.[1]) {
-    return `https://www.youtube.com/embed/${watchMatch[1]}?autoplay=1&loop=1&playlist=${watchMatch[1]}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1`;
+    return `https://www.youtube.com/embed/${watchMatch[1]}?autoplay=1&mute=1&loop=1&playlist=${watchMatch[1]}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1`;
   }
 
   // Pattern for youtube.com/embed/VIDEO_ID (already embed format)
@@ -147,7 +147,7 @@ export function getYouTubeEmbedUrl(url: string): string | null {
   if (embedMatch?.[1]) {
     // Add autoplay params if not present
     if (!url.includes("autoplay")) {
-      return `${url.split("?")[0]}?autoplay=1&loop=1&playlist=${embedMatch[1]}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1`;
+      return `${url.split("?")[0]}?autoplay=1&mute=1&loop=1&playlist=${embedMatch[1]}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1`;
     }
     return url;
   }

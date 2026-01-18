@@ -191,6 +191,13 @@ export const testimonialsSectionQuery = groq`
       placeholderText,
       videoUrl,
       image,
+      videos[] {
+        _key,
+        title,
+        description,
+        videoUrl,
+        thumbnail
+      },
       highlights,
       note
     }
