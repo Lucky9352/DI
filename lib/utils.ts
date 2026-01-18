@@ -185,12 +185,13 @@ export function extractGoogleDriveId(url: string): string | null {
 }
 
 /**
- * Generates a direct image URL for Google Drive files.
- * Uses the lh3.googleusercontent.com domain for better performance/caching with Next.js Image.
+ * Generates a proxied image URL for Google Drive files.
+ * Uses the local /api/image-proxy endpoint to bypass CORS restrictions.
+ * Note: Files must be shared with "Anyone with the link" permission.
  */
-export function getGoogleDriveImageUrl(url: string): string | null {
+export function getGoogleDriveImageUrl(url: string, _size?: number): string | null {
   const id = extractGoogleDriveId(url);
   if (!id) return null;
-  // 'd' parameter means direct download/view, allows size params if needed but basic format operates well
-  return `https://lh3.googleusercontent.com/d/${id}`;
+  // Use our proxy API to bypass CORS and rate limiting
+  return `/api/image-proxy?id=${id}`;
 }
