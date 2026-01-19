@@ -82,38 +82,6 @@ const products = [
     listSections: [
       {
         _key: "ls-1",
-        title: createLocaleString("Almond Varieties We Offer"),
-        items: [
-          createLocaleString("Non-Pareil Almonds (high demand for bulk and retail packaging)"),
-          createLocaleString("Independence Almonds (cost-effective, versatile quality)"),
-          createLocaleString(
-            "Mamra Almonds (premium, oil-rich, ideal for gifting & high-end retailers)"
-          ),
-          createLocaleString("Gurbandi Almonds (small-sized, nutrient dense)"),
-          createLocaleString("Sonora Almonds"),
-          createLocaleString(
-            "Carmel / Sonora Almonds (mid-grade, suitable for value packs and food processing needs)"
-          ),
-          createLocaleString(
-            "Peerless Almonds (mid-grade, balanced taste, preferred for snacking and processing)"
-          ),
-          createLocaleString(
-            "Monterey Almonds (larger size, smooth surface, popular for roasting and snacking)"
-          ),
-          createLocaleString(
-            "Shasta Almonds (uniform size, light colour, good for confectionery and processed foods)"
-          ),
-          createLocaleString(
-            "Supareil Almonds (long and narrow shape, premium look, often used for luxury confectionery and exports)"
-          ),
-          createLocaleString(
-            "Price Almonds (versatile, mild flavour, widely used for mixed packs and commercial food applications)"
-          ),
-          createLocaleString("Inshell & Kernel – All Varieties Available"),
-        ],
-      },
-      {
-        _key: "ls-2",
         title: createLocaleString("Grades & Size Options"),
         items: [
           createLocaleString("Sui / Single / Double"),
@@ -121,7 +89,7 @@ const products = [
         ],
       },
       {
-        _key: "ls-3",
+        _key: "ls-2",
         title: createLocaleString("Packaging Formats Available"),
         items: [
           createLocaleString("Inshell 22.6 kg bag and Kernels in 25 kg"),
@@ -129,7 +97,7 @@ const products = [
         ],
       },
       {
-        _key: "ls-4",
+        _key: "ls-3",
         title: createLocaleString("Why Choose Us as Your Almond Partner?"),
         items: [
           createLocaleString("ISO-certified quality"),
