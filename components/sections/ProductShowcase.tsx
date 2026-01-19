@@ -265,14 +265,14 @@ interface ProductsGridProps {
 function ProductsGrid({ products, siteSettings, onAddToEnquiry }: ProductsGridProps) {
   return (
     <motion.div
-      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+      className="columns-1 md:columns-2 lg:columns-3 gap-8"
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.1, margin: "0px 0px -50px 0px" }}
       variants={staggerContainer}
     >
       {products.map((product) => (
-        <motion.div key={product._id} variants={fadeInUp}>
+        <motion.div key={product._id} variants={fadeInUp} className="break-inside-avoid mb-8">
           <ProductCard
             product={product}
             onAddToEnquiry={() => onAddToEnquiry(product)}

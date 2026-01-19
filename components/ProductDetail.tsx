@@ -267,33 +267,33 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
             className="bg-white rounded-2xl shadow-lg overflow-hidden relative"
           >
             {/* Main Product Section */}
-            <div className="grid lg:grid-cols-2 gap-8 p-8">
+            <div className="grid lg:grid-cols-2 gap-8 p-6 md:p-8">
               {/* Product Images */}
               <div className="space-y-4">
-                <div className="aspect-square rounded-2xl overflow-hidden bg-gray-50 border border-gray-100 relative">
+                <div className="rounded-2xl overflow-hidden bg-gray-50 border border-gray-100">
                   {productImages[selectedImage] ? (
                     productImages[selectedImage].type === "url" ? (
                       /* eslint-disable-next-line @next/next/no-img-element */
                       <img
                         src={productImages[selectedImage].url}
                         alt={productImages[selectedImage].alt}
-                        className="w-full h-full object-cover"
+                        className="w-full h-auto object-contain"
                       />
                     ) : (
                       <Image
                         src={urlFor(productImages[selectedImage].image)
                           .width(800)
-                          .height(800)
+                          .height(1000)
                           .url()}
                         alt={productImages[selectedImage].alt}
                         width={800}
-                        height={800}
-                        className="w-full h-full object-cover"
+                        height={1000}
+                        className="w-full h-auto object-contain"
                         priority
                       />
                     )
                   ) : (
-                    <div className="w-full h-full flex flex-col items-center justify-center text-gray-400 p-8">
+                    <div className="w-full aspect-square flex flex-col items-center justify-center text-gray-400 p-8">
                       <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center mb-4">
                         <span className="text-2xl">📸</span>
                       </div>
@@ -321,7 +321,7 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
                           <img
                             src={img.url}
                             alt={`${productTitle} ${index + 1}`}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-contain"
                           />
                         ) : (
                           <Image
@@ -329,7 +329,7 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
                             alt={`${productTitle} ${index + 1}`}
                             width={80}
                             height={80}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-contain"
                           />
                         )}
                       </button>

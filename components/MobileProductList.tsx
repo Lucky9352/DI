@@ -97,7 +97,7 @@ export default function MobileProductList({
                   src={urlForImage(product.heroImage).width(600).height(400).url()}
                   alt={productTitle}
                   fill
-                  className="object-cover"
+                  className="object-contain"
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
               ) : null}

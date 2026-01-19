@@ -141,26 +141,28 @@ export default function ProductCard({ product, onAddToEnquiry, labels }: Product
 
       <Link href={`/products/${productSlug}`} className="block flex-1 p-6 space-y-4">
         {/* Hero Image */}
-        <div className="relative aspect-square w-full rounded-2xl border border-dashed border-deep-brown bg-beige flex items-center justify-center text-center overflow-hidden">
+        <div className="relative w-full rounded-2xl overflow-hidden">
           {product.heroImageUrl ? (
             /* eslint-disable-next-line @next/next/no-img-element */
             <img
               src={getGoogleDriveImageUrl(product.heroImageUrl) || ""}
               alt={productTitle}
-              className="absolute inset-0 w-full h-full object-cover"
+              className="w-full h-auto block rounded-2xl"
             />
           ) : product.heroImage ? (
             <Image
-              src={urlFor(product.heroImage).width(500).height(500).url()}
+              src={urlFor(product.heroImage).width(600).height(750).url()}
               alt={productTitle}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              width={600}
+              height={750}
+              className="w-full h-auto block rounded-2xl"
             />
           ) : (
-            <span className="text-xs uppercase tracking-[0.3em] text-(--color-muted)">
-              {labels?.productCard?.placeholderText || "Product Image"}
-            </span>
+            <div className="min-h-[200px] flex items-center justify-center bg-beige rounded-2xl border border-dashed border-deep-brown">
+              <span className="text-xs uppercase tracking-[0.3em] text-(--color-muted)">
+                {labels?.productCard?.placeholderText || "Product Image"}
+              </span>
+            </div>
           )}
         </div>
 
