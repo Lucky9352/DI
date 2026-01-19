@@ -74,7 +74,7 @@ function StatCard({ item, index }: { item: Capability; index: number }) {
   const isInView = useInView(ref, { once: true, margin: "-50px" });
 
   // Extract number and suffix from metric
-  const { number, suffix, prefix } = parseMetric(item.metric);
+  const { number, suffix, prefix, isTextOnly, textMetric } = parseMetric(item.metric);
 
   // Icon resolution
   const Icon = (item.icon && ICON_MAP[item.icon.toLowerCase()]) || getIconFromTitle(item.title);
@@ -100,9 +100,15 @@ function StatCard({ item, index }: { item: Capability; index: number }) {
 
           {item.metric ? (
             <div className="font-bold text-3xl text-deep-brown font-heading flex items-baseline">
-              {prefix}
-              <Counter from={0} to={number} duration={2} start={isInView} />
-              <span className="text-lg ml-1 text-gold">{suffix}</span>
+              {isTextOnly ? (
+                <span>{textMetric}</span>
+              ) : (
+                <>
+                  {prefix}
+                  <Counter from={0} to={number} duration={2} start={isInView} />
+                  <span className="text-lg ml-1 text-gold">{suffix}</span>
+                </>
+              )}
             </div>
           ) : null}
         </div>
@@ -155,7 +161,7 @@ function Counter({
 }
 
 function parseMetric(metric?: string) {
-  if (!metric) return { number: 0, suffix: "", prefix: "" };
+  if (!metric) return { number: 0, suffix: "", prefix: "", isTextOnly: true };
 
   const match = metric.match(/^([^0-9]*)([0-9,]+)(.*)$/);
 
@@ -165,10 +171,12 @@ function parseMetric(metric?: string) {
       prefix: match[1] || "",
       number: parseInt(rawNum, 10) || 0,
       suffix: match[3] || "",
+      isTextOnly: false,
     };
   }
 
-  return { number: 0, suffix: metric, prefix: "" };
+  // No numbers found - return the full metric as text-only
+  return { number: 0, suffix: "", prefix: "", isTextOnly: true, textMetric: metric };
 }
 
 function getIconFromTitle(title: string): LucideIcon {

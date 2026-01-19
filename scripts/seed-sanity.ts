@@ -163,65 +163,97 @@ const products = [
     ],
     varieties: [
       {
-        name: "Non-Pareil Almonds",
-        description: "High demand for bulk and retail packaging",
-        grade: "Premium",
-        color: "from-amber-100 to-amber-200",
-      },
-      {
-        name: "Independence Almonds",
-        description: "Cost-effective, versatile quality",
-        grade: "Standard",
-        color: "from-orange-100 to-orange-200",
-      },
-      {
-        name: "Mamra Almonds",
-        description: "Premium, oil-rich, ideal for gifting & high-end retailers",
-        grade: "Premium+",
-        color: "from-yellow-100 to-yellow-200",
-      },
-      {
-        name: "Gurbandi Almonds",
-        description: "Small-sized, nutrient dense",
-        grade: "Premium",
-        color: "from-amber-100 to-amber-200",
-      },
-      {
-        name: "Sonora Almonds",
-        description: "Mid-grade quality",
-        grade: "Standard",
-        color: "from-orange-100 to-orange-200",
-      },
-      {
-        name: "Carmel / Sonora Almonds",
-        description: "Mid-grade, suitable for value packs and food processing needs",
-        grade: "Standard",
-        color: "from-orange-100 to-orange-200",
-      },
-      {
-        name: "Peerless Almonds",
-        description: "Mid-grade, balanced taste, preferred for snacking and processing",
-        grade: "Standard",
-        color: "from-orange-100 to-orange-200",
-      },
-      {
-        name: "Monterey Almonds",
-        description: "Larger size, smooth surface, popular for roasting and snacking",
-        grade: "Premium",
-        color: "from-amber-100 to-amber-200",
-      },
-      {
-        name: "Shasta Almonds",
-        description: "Uniform size, light colour, good for confectionery and processed foods",
-        grade: "Standard",
-        color: "from-orange-100 to-orange-200",
-      },
-      {
-        name: "Supareil Almonds",
+        name: "Nonpareil",
         description:
-          "Long and narrow shape, premium look, often used for luxury confectionery and exports",
-        grade: "Premium+",
+          "Most popular California variety, known for its smooth appearance and mild flavor",
+        grade: "Premium",
+        color: "from-amber-100 to-amber-200",
+      },
+      {
+        name: "Carmel",
+        description: "Excellent flavor with soft shell, ideal for processing",
+        grade: "Premium",
+        color: "from-orange-100 to-orange-200",
+      },
+      {
+        name: "Butte",
+        description: "Small, plump shape with wrinkled surface, great for snacking",
+        grade: "Standard",
         color: "from-yellow-100 to-yellow-200",
+      },
+      {
+        name: "Padre",
+        description: "Hard shell variety, known for durability and extended shelf life",
+        grade: "Standard",
+        color: "from-amber-100 to-amber-200",
+      },
+      {
+        name: "Mission",
+        description: "Dark brown kernels with intense flavor, preferred for roasting",
+        grade: "Premium",
+        color: "from-orange-100 to-orange-200",
+      },
+    ],
+    almondVarieties: [
+      {
+        _key: "variety-nonpareil",
+        name: "Nonpareil",
+        code: "NP",
+        imageUrl:
+          "https://drive.google.com/file/d/1wn6Bi308RhfaeJQgbk3UnhK1J5ycQI_M/view?usp=sharing",
+        shell: "Soft shell, light color, high suture opening",
+        nut: "Medium, flat shape, smooth surface",
+        characteristics: "Long and flat",
+        classification: "Nonpareil",
+        availability: "Shelled, Inshell",
+      },
+      {
+        _key: "variety-carmel",
+        name: "Carmel",
+        code: "CR",
+        imageUrl:
+          "https://drive.google.com/file/d/1ie7T2bX39fC2TbxVz8YksItThotc1JT-/view?usp=sharing",
+        shell: "Soft shell, good shell integrity, fair suture opening",
+        nut: "Medium, narrow shape, slightly wrinkled surface",
+        characteristics: "Long and flat",
+        classification: "California",
+        availability: "Shelled",
+      },
+      {
+        _key: "variety-butte",
+        name: "Butte",
+        code: "BT",
+        imageUrl:
+          "https://drive.google.com/file/d/1XzIqXu_AZQb8cYjElyOVsznRBcc_1b_K/view?usp=sharing",
+        shell: "Semi hard shell, light color, smooth surface, low suture opening",
+        nut: "Small, short plump shape, wrinkled surface",
+        characteristics: "Short and plump/round",
+        classification: "California, Mission",
+        availability: "Shelled",
+      },
+      {
+        _key: "variety-padre",
+        name: "Padre",
+        code: "PD",
+        imageUrl:
+          "https://drive.google.com/file/d/1hfWn20Cc-xP2CedfKeXWiGPW04wbvqjP/view?usp=sharing",
+        shell: "Hard shell, good shell integrity, no suture opening",
+        nut: "Small, short, wide shape, wrinkled surface",
+        characteristics: "Short and plump/round",
+        classification: "California, Mission",
+        availability: "Shelled",
+      },
+      {
+        _key: "variety-mission",
+        name: "Mission",
+        code: "MI",
+        imageUrl:
+          "https://drive.google.com/file/d/1qUXBBoQNgBL38_uMwUSjqUDqBWykY9LO/view?usp=sharing",
+        shell: "Hard shell, good shell integrity, no suture opening",
+        nut: "Small, short, wide shape, dark brown, deeply wrinkled surface",
+        characteristics: "Short and plump/round",
+        classification: "Mission",
+        availability: "Shelled",
       },
     ],
   },
@@ -2228,7 +2260,11 @@ async function seed() {
   }
   try {
     for (const product of products) {
-      const doc = {
+      const doc: {
+        _type: string;
+        _id: string;
+        [key: string]: unknown;
+      } = {
         _type: "product",
         _id: `product-${product.slug.current}`,
         title: product.title,
@@ -2258,6 +2294,12 @@ async function seed() {
           })) || [],
         order: product.order,
       };
+
+      // Add almondVarieties if present (for almonds product)
+      if ("almondVarieties" in product && product.almondVarieties) {
+        doc["almondVarieties"] = product.almondVarieties;
+      }
+
       await safeCreateOrReplace(doc);
     }
   } catch {}

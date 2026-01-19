@@ -16,6 +16,9 @@ import {
 } from "@/components/VisualElements";
 import { z } from "zod";
 import { getGoogleDriveImageUrl } from "@/lib/utils";
+import AlmondVarietiesSection, {
+  type AlmondVariety,
+} from "@/components/sections/AlmondVarietiesSection";
 
 // =============================================================================
 // ZOD SCHEMAS & TYPES
@@ -85,6 +88,7 @@ const ProductSchema = z.object({
   applications: z.array(z.string()).optional(),
   varieties: z.array(VarietySchema).optional(),
   grades: z.array(z.string()).optional(), // Fallback legacy
+  almondVarieties: z.array(z.custom<AlmondVariety>()).optional(),
 });
 
 // Labels from Site Settings
@@ -459,8 +463,19 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
                       </div>
                     ))}
 
-                    {/* Varieties Grid (If Available) */}
-                    {product.varieties && product.varieties.length > 0 ? (
+                    {/* California Almond Varieties Section (Almonds only) */}
+                    {product.category === "almonds" &&
+                    product.almondVarieties &&
+                    product.almondVarieties.length > 0 ? (
+                      <AlmondVarietiesSection varieties={product.almondVarieties} />
+                    ) : null}
+
+                    {/* Varieties Grid (For non-almonds or if no almondVarieties) */}
+                    {product.varieties &&
+                    product.varieties.length > 0 &&
+                    (product.category !== "almonds" ||
+                      !product.almondVarieties ||
+                      product.almondVarieties.length === 0) ? (
                       <div>
                         <h3 className="text-xl font-semibold text-deep-brown mb-4">
                           Available Varieties

@@ -400,6 +400,24 @@ export type Product = {
     _key: string;
   }>;
   ctaLine?: LocaleString;
+  almondVarieties?: Array<{
+    name?: string;
+    code?: string;
+    imageUrl?: string;
+    image?: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    shell?: string;
+    nut?: string;
+    characteristics?: string;
+    classification?: string;
+    availability?: string;
+    _key: string;
+  }>;
   heroImage?: {
     asset?: SanityImageAssetReference;
     media?: unknown;

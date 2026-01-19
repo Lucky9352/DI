@@ -124,6 +124,92 @@ export default defineType({
       group: "content",
       description: "Persuasive text near the call-to-action button",
     }),
+    defineField({
+      name: "almondVarieties",
+      title: "California Almond Varieties",
+      type: "array",
+      group: "content",
+      description: "Detailed almond varieties with images (specific to almonds product)",
+      hidden: ({ document }) => document?.["category"] !== "almonds",
+      of: [
+        {
+          type: "object",
+          title: "Almond Variety",
+          fields: [
+            defineField({
+              name: "name",
+              title: "Variety Name",
+              type: "string",
+              description: "e.g., Nonpareil",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "code",
+              title: "Variety Code",
+              type: "string",
+              description: "e.g., NP",
+            }),
+            defineField({
+              name: "imageUrl",
+              title: "Image URL (Google Drive)",
+              type: "url",
+              description: "Google Drive URL for the variety image",
+              validation: (Rule) => Rule.uri({ scheme: ["https", "http"] }),
+            }),
+            defineField({
+              name: "image",
+              title: "Image (Upload)",
+              type: "image",
+              options: { hotspot: true },
+            }),
+            defineField({
+              name: "shell",
+              title: "Shell Characteristics",
+              type: "string",
+              description: "e.g., Soft shell, light color, high suture opening",
+            }),
+            defineField({
+              name: "nut",
+              title: "Nut Characteristics",
+              type: "string",
+              description: "e.g., Medium, flat shape, smooth surface",
+            }),
+            defineField({
+              name: "characteristics",
+              title: "Physical Characteristics",
+              type: "string",
+              description: "e.g., Long and flat",
+            }),
+            defineField({
+              name: "classification",
+              title: "Classification/Type",
+              type: "string",
+              description: "e.g., California, Mission",
+            }),
+            defineField({
+              name: "availability",
+              title: "Available Forms",
+              type: "string",
+              description: "e.g., Shelled, Inshell",
+            }),
+          ],
+          preview: {
+            select: {
+              title: "name",
+              subtitle: "code",
+              media: "image",
+            },
+            prepare({ title, subtitle, media }) {
+              return {
+                title: title || "Unnamed Variety",
+                subtitle: subtitle ? `(${subtitle})` : "",
+                media,
+              };
+            },
+          },
+        },
+      ],
+    }),
 
     // =========================================================================
     // MEDIA
