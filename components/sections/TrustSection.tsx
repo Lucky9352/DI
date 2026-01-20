@@ -21,7 +21,6 @@ import {
   Factory,
   CheckCircle,
   Shield,
-  Award,
 } from "lucide-react";
 
 import type { SanityImageSource } from "@sanity/image-url";
@@ -181,7 +180,7 @@ export default function TrustSection({
             <Shield className="w-8 h-8" />
           </motion.div>
 
-          {sectionSettings?.eyebrow && (
+          {sectionSettings?.eyebrow ? (
             <motion.div
               className="flex items-center justify-center gap-2 mb-4"
               initial={{ opacity: 0, y: 20 }}
@@ -195,9 +194,9 @@ export default function TrustSection({
               </span>
               <span className="h-px w-8 bg-gold" />
             </motion.div>
-          )}
+          ) : null}
 
-          {sectionSettings?.title && (
+          {sectionSettings?.title ? (
             <motion.h2
               id="trust-heading"
               className="text-3xl md:text-4xl lg:text-5xl font-bold text-deep-brown mb-6 font-heading leading-tight"
@@ -208,9 +207,9 @@ export default function TrustSection({
             >
               {sectionSettings.title}
             </motion.h2>
-          )}
+          ) : null}
 
-          {sectionSettings?.description && (
+          {sectionSettings?.description ? (
             <motion.p
               className="text-lg text-text-muted leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
@@ -220,7 +219,7 @@ export default function TrustSection({
             >
               {sectionSettings.description}
             </motion.p>
-          )}
+          ) : null}
         </div>
 
         {/* Certificates Grid */}

@@ -114,7 +114,7 @@ export default function Header({ initialHeader, products, siteSettings }: Header
   // Resolve Logo URL
   const logoUrl = siteSettings?.organization?.logo
     ? urlForImage(siteSettings.organization.logo).width(64).height(64).url()
-    : "/divyansh-logo.jpg";
+    : "/favicon.png";
 
   // Dynamic Navigation Labels & URLs
   const nav = siteSettings?.navigation;

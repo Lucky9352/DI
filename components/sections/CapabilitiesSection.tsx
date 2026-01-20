@@ -14,13 +14,6 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { z } from "zod";
 
-import {
-  AlmondIcon,
-  CashewIcon,
-  WalnutIcon,
-  PeanutIcon,
-  NutIcon,
-} from "@/components/assets/Decorations";
 import DecorativeBackground from "@/components/ui/DecorativeBackground";
 import { urlForImage } from "@/lib/sanity/image";
 import { getGoogleDriveImageUrl } from "@/lib/utils";

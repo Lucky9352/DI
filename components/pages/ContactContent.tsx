@@ -15,14 +15,7 @@ import { motion } from "framer-motion";
 import { z } from "zod";
 
 import TradeEnquiryForm from "@/components/forms/TradeEnquiryForm";
-import {
-  LeafIcon,
-  AlmondIcon,
-  NutIcon,
-  CashewIcon,
-  WalnutIcon,
-  PeanutIcon,
-} from "@/components/assets/Decorations";
+import { LeafIcon } from "@/components/assets/Decorations";
 import DecorativeBackground from "@/components/ui/DecorativeBackground";
 
 // =============================================================================

@@ -47,8 +47,8 @@ export const metadata: Metadata = {
     orientation: "portrait",
   },
   icons: {
-    icon: "/divyansh-logo.jpg",
-    apple: "/divyansh-logo.jpg",
+    icon: "/favicon.png",
+    apple: "/favicon.png",
   },
   formatDetection: {
     telephone: true,

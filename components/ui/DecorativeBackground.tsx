@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import {
   LeafIcon,
   NutIcon,
@@ -23,25 +23,27 @@ export interface DecorativeBackgroundProps {
 // =============================================================================
 
 function GoldenDust() {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
+  const isClient = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
 
   // Generate a fixed set of particles to avoid hydration mismatch on initial render
   // In a real generic random scenario, we'd seed this.
-  // Here we generate them client-side only.
-  const particles = Array.from({ length: 15 }).map((_, i) => ({
-    id: i,
-    left: `${Math.random() * 100}%`,
-    top: `${Math.random() * 100}%`,
-    size: Math.random() * 3 + 1, // 1px to 4px
-    duration: Math.random() * 10 + 10, // 10s to 20s
-    delay: Math.random() * 5,
-  }));
+  // We use useState with an initializer to ensure they are stable across re-renders.
+  const [particles] = useState(() =>
+    Array.from({ length: 15 }).map((_, i) => ({
+      id: i,
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      size: Math.random() * 3 + 1, // 1px to 4px
+      duration: Math.random() * 10 + 10, // 10s to 20s
+      delay: Math.random() * 5,
+    }))
+  );
+
+  if (!isClient) return null;
 
   return (
     <div className="absolute inset-0 pointer-events-none z-0">
@@ -312,10 +314,10 @@ export default function DecorativeBackground({
       <GoldenDust />
 
       <div className="relative z-10 w-full h-full">
-        {variant === "default" && renderDefault()}
-        {variant === "scattered" && renderScattered()}
-        {variant === "side-balanced" && renderSideBalanced()}
-        {variant === "minimal" && renderMinimal()}
+        {variant === "default" ? renderDefault() : null}
+        {variant === "scattered" ? renderScattered() : null}
+        {variant === "side-balanced" ? renderSideBalanced() : null}
+        {variant === "minimal" ? renderMinimal() : null}
       </div>
     </div>
   );

@@ -229,8 +229,8 @@ export default async function WebsiteLayout({
 
   // Derive logo URL safely
   const logoUrl = siteSettings?.seo?.siteUrl
-    ? `${siteSettings.seo.siteUrl}/divyansh-logo.jpg`
-    : "/divyansh-logo.jpg";
+    ? `${siteSettings.seo.siteUrl}/favicon.png`
+    : "/favicon.png";
 
   return (
     <>

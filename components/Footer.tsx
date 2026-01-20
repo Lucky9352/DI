@@ -317,16 +317,16 @@ export default function Footer({
             </h4>
             <div className="space-y-6">
               <div className="flex flex-wrap gap-3">
-                {labels?.isoLabel && (
+                {labels?.isoLabel ? (
                   <div className="px-4 py-2 border border-gold/40 rounded bg-gold/10 text-xs font-bold text-gold tracking-wider uppercase">
                     {labels.isoLabel}
                   </div>
-                )}
-                {labels?.fssaiLabel && (
+                ) : null}
+                {labels?.fssaiLabel ? (
                   <div className="px-4 py-2 border border-gold/40 rounded bg-gold/10 text-xs font-bold text-gold tracking-wider uppercase">
                     {labels.fssaiLabel}
                   </div>
-                )}
+                ) : null}
               </div>
 
               <button
@@ -336,11 +336,11 @@ export default function Footer({
                 Make an Enquiry
               </button>
 
-              {labels?.servingText && (
+              {labels?.servingText ? (
                 <p className="text-xs text-ivory/50! italic border-l-2 border-gold/30 pl-3">
                   {labels.servingText}
                 </p>
-              )}
+              ) : null}
             </div>
           </div>
         </div>
@@ -356,9 +356,9 @@ export default function Footer({
             >
               {labels?.privacyPolicyText || "Privacy Policy"}
             </Link>
-            {footer.privacyNote && (
+            {footer.privacyNote ? (
               <span className="text-ivory/40! hidden md:inline">| {footer.privacyNote}</span>
-            )}
+            ) : null}
           </div>
         </div>
       </div>

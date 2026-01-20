@@ -131,7 +131,6 @@ export default function VideoTestimonialsSection({
 
   const testimonials = initialTestimonials ?? [];
   const sectionId = routing?.testimonialsSectionId;
-  const hasDroneSection = sectionSettings?.droneSection;
 
   return (
     <section id={sectionId} className="py-16 bg-bg relative" aria-labelledby="testimonials-heading">

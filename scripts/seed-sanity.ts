@@ -168,11 +168,23 @@ const products = [
         name: "Nonpareil",
         code: "NP",
         imageUrl:
-          "https://drive.google.com/file/d/1wn6Bi308RhfaeJQgbk3UnhK1J5ycQI_M/view?usp=sharing",
-        shell: "Soft shell, light color, high suture opening",
-        nut: "Medium, flat shape, smooth surface",
-        characteristics: "Long and flat",
+          "https://drive.google.com/file/d/1EmjKCclYG4a4b_hN3PXgsPFNmm5LPurz/view?usp=sharing",
+        shell: "Soft shell, paper-thin, poor seal",
+        nut: "Medium, flat, elongated, smooth surface, light color",
+        characteristics: "Classic almond shape, sweet flavor, blanchable",
         classification: "Nonpareil",
+        availability: "Shelled, Inshell",
+      },
+      {
+        _key: "variety-independence",
+        name: "Independence",
+        code: "IND",
+        imageUrl:
+          "https://drive.google.com/file/d/1bGAfFfKdIoAmiKfHDuK76m5nGa24vESB/view?usp=sharing",
+        shell: "Soft shell, semi-sealed to well-sealed",
+        nut: "Large, oval shape, light color, smooth to slightly wrinkled",
+        characteristics: "Self-fertile, high quality kernel",
+        classification: "California",
         availability: "Shelled, Inshell",
       },
       {
@@ -180,47 +192,47 @@ const products = [
         name: "Carmel",
         code: "CR",
         imageUrl:
-          "https://drive.google.com/file/d/1ie7T2bX39fC2TbxVz8YksItThotc1JT-/view?usp=sharing",
-        shell: "Soft shell, good shell integrity, fair suture opening",
+          "https://drive.google.com/file/d/1S7rW2vMTg5-vxd-VFmI8t6tM8judT2_n/view?usp=sharing",
+        shell: "Soft shell, good integrity, fair suture opening",
         nut: "Medium, narrow shape, slightly wrinkled surface",
-        characteristics: "Long and flat",
+        characteristics: "Rich flavor, popular for roasting",
         classification: "California",
         availability: "Shelled",
       },
       {
-        _key: "variety-butte",
-        name: "Butte",
-        code: "BT",
+        _key: "variety-monterey",
+        name: "Monterey",
+        code: "MT",
         imageUrl:
-          "https://drive.google.com/file/d/1XzIqXu_AZQb8cYjElyOVsznRBcc_1b_K/view?usp=sharing",
-        shell: "Semi hard shell, light color, smooth surface, low suture opening",
-        nut: "Small, short plump shape, wrinkled surface",
-        characteristics: "Short and plump/round",
-        classification: "California, Mission",
+          "https://drive.google.com/file/d/1r0l4mKi3j745KNbY55qCxpFt5z1IO4M9/view?usp=sharing",
+        shell: "Semi-hard shell, well-sealed",
+        nut: "Large, long and narrow, deeply wrinkled surface",
+        characteristics: "Late harvest, intense flavor",
+        classification: "California",
         availability: "Shelled",
       },
       {
-        _key: "variety-padre",
-        name: "Padre",
-        code: "PD",
+        _key: "variety-peerless",
+        name: "Peerless",
+        code: "PL",
         imageUrl:
-          "https://drive.google.com/file/d/1hfWn20Cc-xP2CedfKeXWiGPW04wbvqjP/view?usp=sharing",
-        shell: "Hard shell, good shell integrity, no suture opening",
-        nut: "Small, short, wide shape, wrinkled surface",
-        characteristics: "Short and plump/round",
-        classification: "California, Mission",
-        availability: "Shelled",
+          "https://drive.google.com/file/d/11tlNGw2mM7ivaAUhHWu1Pozz1E89Xo60/view?usp=sharing",
+        shell: "Hard shell, thick, well-sealed, light color",
+        nut: "Medium, wide/heart-shaped, wrinkled surface",
+        characteristics: "Decorative shell, often sold in-shell",
+        classification: "Hard Shell",
+        availability: "Inshell",
       },
       {
-        _key: "variety-mission",
-        name: "Mission",
-        code: "MI",
+        _key: "variety-shasta",
+        name: "Shasta",
+        code: "SH",
         imageUrl:
-          "https://drive.google.com/file/d/1qUXBBoQNgBL38_uMwUSjqUDqBWykY9LO/view?usp=sharing",
-        shell: "Hard shell, good shell integrity, no suture opening",
-        nut: "Small, short, wide shape, dark brown, deeply wrinkled surface",
-        characteristics: "Short and plump/round",
-        classification: "Mission",
+          "https://drive.google.com/file/d/15ZtSPN1aBJUlMzx5qPKRcQL914wjkLQa/view?usp=sharing",
+        shell: "Semi-hard to semi-soft, well-sealed",
+        nut: "Medium, smooth surface, light color",
+        characteristics: "Self-fertile, early harvest",
+        classification: "California",
         availability: "Shelled",
       },
     ],
@@ -2280,7 +2292,7 @@ async function seed() {
     }
   }
 
-  const logoPath = path.join(process.cwd(), "public", "divyansh-logo.jpg");
+  const logoPath = path.join(process.cwd(), "public", "favicon.png");
   let logoAsset = null;
   if (fs.existsSync(logoPath)) {
     logoAsset = await uploadImage(logoPath);
