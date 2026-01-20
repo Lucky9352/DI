@@ -78,7 +78,7 @@ export default function GalleryContent({ data }: GalleryContentProps) {
   }, [lightboxIndex, images.length]);
 
   return (
-    <section className="py-20 md:py-24 min-h-screen bg-linear-to-b from-beige to-sand">
+    <section className="pt-28 pb-20 md:pt-32 md:pb-24 min-h-screen bg-linear-to-b from-beige to-sand">
       <div className="container mx-auto px-4 md:px-6">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 space-y-4">

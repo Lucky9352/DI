@@ -276,7 +276,7 @@ export default function HeroSlider({
       <div className="relative z-10 container mx-auto px-4 md:px-6 lg:px-10 py-16">
         <div className="grid lg:grid-cols-[1fr_0.4fr] gap-8 lg:gap-12 items-start min-h-[60vh]">
           {/* Text Content */}
-          <div className="flex flex-col">
+          <div className="flex flex-col bg-white/50 backdrop-blur-md rounded-2xl p-6 md:p-8 shadow-2xl border border-white/20">
             {currentSlide ? (
               <SlideContent slide={currentSlide} onNavigate={handleNavigation} />
             ) : null}
@@ -466,13 +466,13 @@ function SlideContent({ slide, onNavigate }: SlideContentProps) {
           }}
           className="flex items-center gap-3 mb-4 md:mb-6"
         >
-          <span className="h-px w-8 md:w-12 bg-gold" aria-hidden="true" />
-          <p className="uppercase tracking-[0.2em] md:tracking-[0.4em] text-[10px] md:text-xs text-text-muted font-semibold">
+          <span className="h-px w-8 md:w-12 bg-black!" aria-hidden="true" />
+          <p className="uppercase tracking-[0.2em] md:tracking-[0.4em] text-[10px] md:text-xs text-black! font-extrabold">
             {slide.eyebrow ?? ""}
           </p>
         </motion.div>
 
-        <div className="mb-4 md:mb-6 leading-tight font-heading text-deep-brown drop-shadow-md overflow-hidden min-h-[1.2em]">
+        <div className="mb-4 md:mb-6 leading-tight font-heading text-black! drop-shadow-none overflow-hidden min-h-[1.2em]">
           <motion.h1
             className="text-4xl md:text-6xl lg:text-7xl font-bold"
             variants={{
@@ -491,16 +491,16 @@ function SlideContent({ slide, onNavigate }: SlideContentProps) {
           }}
           className="mb-4 md:mb-6"
         >
-          <p className="text-xs md:text-sm text-gold font-bold tracking-wide uppercase border-l-4 border-gold pl-4 py-1 inline-block drop-shadow-sm">
+          <p className="text-xs md:text-sm text-black! font-bold tracking-wide uppercase border-l-4 border-black pl-4 py-1 inline-block drop-shadow-sm">
             {slide.badge}
           </p>
         </motion.div>
 
-        <div className="space-y-3 md:space-y-4 text-base md:text-lg text-deep-brown max-w-2xl mb-8 md:mb-10 leading-relaxed font-semibold">
+        <div className="space-y-3 md:space-y-4 text-base md:text-lg text-black! max-w-2xl mb-8 md:mb-10 leading-relaxed font-bold">
           {(slide.paragraphs ?? []).map((paragraph, index) => (
             <motion.p
               key={`${slide._id}-paragraph-${index}`}
-              className="drop-shadow-sm"
+              className="drop-shadow-sm text-black!"
               variants={{
                 hidden: { opacity: 0, y: 20 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
@@ -531,7 +531,7 @@ function SlideContent({ slide, onNavigate }: SlideContentProps) {
             <button
               type="button"
               onClick={() => onNavigate(slide.secondaryCta!.target)}
-              className="px-6 py-3 md:px-8 md:py-4 rounded-full text-sm md:text-base font-semibold border-2 border-deep-brown text-deep-brown hover:bg-white hover:shadow-lg transition-all hover:scale-105 duration-300"
+              className="px-6 py-3 md:px-8 md:py-4 rounded-full text-sm md:text-base font-semibold border-2 border-black! text-black! hover:bg-white hover:shadow-lg transition-all hover:scale-105 duration-300"
             >
               {slide.secondaryCta.label}
             </button>
@@ -564,20 +564,18 @@ function StatsPanel({ slideId, stats }: StatsPanelProps) {
               delay: index * 0.05 + 0.2,
               ease: "easeOut",
             }}
-            className="p-4 transition-all duration-300 group hover:translate-x-2"
+            className="p-6 transition-all duration-300 group hover:translate-x-2 bg-white/50 backdrop-blur-md rounded-xl shadow-lg border border-white/20"
           >
             <div className="flex justify-between items-start mb-1">
-              <p className="text-4xl font-bold text-deep-brown group-hover:text-gold transition-colors font-heading drop-shadow-md">
+              <p className="text-4xl font-bold text-black! group-hover:text-deep-brown transition-colors font-heading">
                 {stat.value}
               </p>
-              <LeafIcon className="w-5 h-5 text-gold drop-shadow-sm" />
+              <LeafIcon className="w-5 h-5 text-gold" />
             </div>
-            <p className="text-xs uppercase tracking-[0.3em] text-deep-brown mb-1 font-bold drop-shadow-sm">
+            <p className="text-xs uppercase tracking-[0.3em] text-black! mb-1 font-bold">
               {stat.label}
             </p>
-            <p className="text-sm text-deep-brown italic font-semibold drop-shadow-sm">
-              {stat.detail}
-            </p>
+            <p className="text-sm text-black! italic font-semibold">{stat.detail}</p>
           </motion.div>
         ))}
       </AnimatePresence>

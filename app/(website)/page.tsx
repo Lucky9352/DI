@@ -9,6 +9,7 @@ import TrustSection from "@/components/sections/TrustSection";
 import CTASection from "@/components/sections/CTASection";
 import FeaturedBanner from "@/components/sections/FeaturedBanner";
 import DroneDiaries from "@/components/sections/DroneDiaries";
+import PosterBanner from "@/components/sections/PosterBanner";
 
 import SpiralQuote from "@/components/SpiralQuote";
 import AnimationWrapper from "@/components/ui/AnimationWrapper";
@@ -235,6 +236,11 @@ export default async function Home() {
             heroConfig={siteSettings?.heroConfig}
             routing={siteSettings?.routing}
           />
+        </AnimationWrapper>
+
+        {/* Poster Banner */}
+        <AnimationWrapper delay={0.1}>
+          <PosterBanner bannerData={homePage?.posterBannerSection} />
         </AnimationWrapper>
 
         <AnimationWrapper delay={0.1}>

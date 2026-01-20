@@ -625,7 +625,7 @@ const timeline = [
     title: "The Beginning – Gujranwala",
     description:
       "A well-established quality spices business thrived in Gujranwala, Punjab (then part of undivided India, now Pakistan).",
-    imageUrl: "",
+    imageUrl: "https://drive.google.com/file/d/1tUoOzsm3DoYFuw9PIpQzvb9K5Th1Cctq/view?usp=sharing",
   },
   {
     _id: "2",
@@ -633,15 +633,15 @@ const timeline = [
     title: "Partition & New Beginnings",
     description:
       "Following Partition, the family migrated to Ludhiana, Punjab—empty-handed but rich in experience and determination. At just 11 years of age, Mr. Som Nath Sethi marked a new beginning in India by starting a quality and retail grocery store.",
-    imageUrl: "",
+    imageUrl: "https://drive.google.com/file/d/1tZr_OnkUwGfghxcFJaRzb6fr64dc8zd3/view?usp=sharing",
   },
   {
     _id: "3",
     year: 1969,
-    title: "hospitality Expansion",
+    title: "Hospitality Expansion",
     description:
       "Mr. Raman Sethi expanded operations into the hospitality (Hotel, Restaurant & Catering) segment, strengthening the business's professional footprint.",
-    imageUrl: "",
+    imageUrl: "https://drive.google.com/file/d/1FAiADYUkYaQxMlIMo0z8CWi5KKhRKYQS/view?usp=sharing",
   },
   {
     _id: "4",
@@ -649,7 +649,7 @@ const timeline = [
     title: "Third Generation Joins",
     description:
       "During the turbulent years of riots and emergency in Punjab, Mr. Sanjeev Sethi joined the business in his teenage years, dedicating himself to serving the people of Punjab—an involvement that became lifelong.",
-    imageUrl: "",
+    imageUrl: "https://drive.google.com/file/d/1kk45Id4ph8WjqEzKIXYcKiixpC0apbZ1/view?usp=sharing",
   },
   {
     _id: "5",
@@ -657,7 +657,7 @@ const timeline = [
     title: "Divyansh International – California Almonds",
     description:
       "The family branched out internationally with the launch of Divyansh International, beginning imports of California Almonds.",
-    imageUrl: "",
+    imageUrl: "https://drive.google.com/file/d/11kzSvTQo3ckqT4qiCwfAkfkP_PUS9l3x/view?usp=sharing",
   },
   {
     _id: "6",
@@ -665,7 +665,7 @@ const timeline = [
     title: "Portfolio Expansion – Walnuts",
     description:
       "Mr. Divyansh Sethi, with a next-generation approach, expanded the portfolio to include Walnuts, scaling operations with a strong foundation in finance and marketing.",
-    imageUrl: "",
+    imageUrl: "https://drive.google.com/file/d/1pVDGhsdO3om9LCkgWedrxPeDUqxC1XPJ/view?usp=sharing",
   },
   {
     _id: "7",
@@ -673,7 +673,7 @@ const timeline = [
     title: "Zonaar Global – International Trade",
     description:
       "Divyansh International further expanded its global footprint by initiating international trade facilitation and brokerage under the name Zonaar Global, connecting markets and partners across borders with trust, expertise, and efficiency.",
-    imageUrl: "",
+    imageUrl: "https://drive.google.com/file/d/1osoAeltGXeS0UzETc9l9VHnbVRG2Pz1V/view?usp=sharing",
   },
   {
     _id: "8",
@@ -681,7 +681,7 @@ const timeline = [
     title: "State-of-the-Art Facility – Mullapur",
     description:
       "Operations expanded to a state-of-the-art facility in Mullapur, Ludhiana—ISO & FSSAI certified—marking a major infrastructural milestone and reinforcing the group's commitment to quality and compliance.",
-    imageUrl: "",
+    imageUrl: "https://drive.google.com/file/d/1evN1Leaxmslb2jOQRlTCRgKK6VATHysQ/view?usp=sharing",
   },
   {
     _id: "9",
@@ -689,7 +689,7 @@ const timeline = [
     title: "The Badam Factory – Heritage Retail",
     description:
       "Launched a heritage retail outlet, 'The Badam Factory', at the original workplace—reviving the name affectionately given by the people.",
-    imageUrl: "",
+    imageUrl: "https://drive.google.com/file/d/1K_kRTkrzhFULIVSWLkMWVuR4cV-tzIBB/view?usp=sharing",
   },
   {
     _id: "10",
@@ -697,7 +697,7 @@ const timeline = [
     title: "The Betternut Co. – Modern Conscious Living",
     description:
       "Launch of The Betternut Co., ushering the legacy into a modern, conscious-living brand—focused on mindfulness and well-being through food.",
-    imageUrl: "",
+    imageUrl: "https://drive.google.com/file/d/1csHJ9I-a-7CUT6XjWazx9GYTMJVvcFPn/view?usp=sharing",
   },
 ];
 
@@ -1240,6 +1240,28 @@ const values = [
 const aboutData = {
   _id: "about",
   _type: "about",
+
+  // =============================================================================
+  // POSTER SLIDER SECTION - Hero-like slider at top of About page
+  // =============================================================================
+  posterSliderSection: {
+    enabled: true,
+    autoPlayInterval: 5000,
+    posters: [
+      {
+        _key: "poster-1",
+        imageUrl:
+          "https://drive.google.com/file/d/17nLL3JJTGQbJnbZjHmEzSokG6FXttMr4/view?usp=sharing",
+        alt: "Divyansh International promotional poster 1",
+      },
+      {
+        _key: "poster-2",
+        imageUrl:
+          "https://drive.google.com/file/d/1oe2K30hnGjQDC2gwHkMlQ3EcIVRGcJ3J/view?usp=sharing",
+        alt: "Divyansh International promotional poster 2",
+      },
+    ],
+  },
 
   header: {
     eyebrow: "Premium Dry Fruits and Nuts Importer & Supplier in India | Since 1999",
@@ -2122,6 +2144,16 @@ const homePageData = {
   spiralQuoteSection: {
     buttonText: "Discover Our Story",
   },
+
+  // =============================================================================
+  // POSTER BANNER SECTION - Full-width poster between Hero and Quote
+  // =============================================================================
+  posterBannerSection: {
+    imageUrl: "https://drive.google.com/file/d/1f-4yXDVZ6-_PygqbH359oJf-YBEEL4Qj/view?usp=sharing",
+    alt: "Quality at Every Step - Divyansh International",
+    title: "",
+  },
+
   featuredBanner: {
     imageUrl: "PLACEHOLDER_FEATURED_BANNER_URL",
     title: "25 Years of Excellence",

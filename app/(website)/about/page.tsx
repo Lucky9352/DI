@@ -289,6 +289,7 @@ async function getData(): Promise<{
   about: AboutData | null;
   siteSettings: unknown;
   capabilities: Capability[];
+  posterSliderSection: unknown;
 }> {
   const [rawTeamMembers, rawTimeline, rawAbout, rawSiteSettings, rawCapabilities] =
     await Promise.all([
@@ -352,6 +353,7 @@ async function getData(): Promise<{
     capabilities: capabilitiesResult.success
       ? (capabilitiesResult.data as unknown as Capability[])
       : [],
+    posterSliderSection: rawAbout?.posterSliderSection ?? null,
   };
 }
 
@@ -376,6 +378,7 @@ export default async function AboutPage() {
           initialAbout={data.about}
           siteSettings={data.siteSettings}
           capabilities={data.capabilities}
+          posterSliderSection={data.posterSliderSection}
         />
       </div>
     </div>

@@ -47,7 +47,7 @@
     "@t3-oss/env-nextjs": "^0.13.10",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "framer-motion": "^12.27.1",
+    "framer-motion": "^12.27.2",
     "js-cookie": "^3.0.5",
     "jspdf": "^4.0.0",
     "jspdf-autotable": "^5.0.7",

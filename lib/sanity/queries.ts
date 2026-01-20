@@ -77,10 +77,18 @@ export const footerQuery = groq`
 export const ctaQuery = groq`
   *[_type == "cta"][0] {
     _id,
-    walkthrough,
+    walkthrough {
+      "subtitle": coalesce(subtitle, ""),
+      "title": coalesce(title, ""),
+      "description": coalesce(description, ""),
+      "buttonText": coalesce(buttonText, "Start Journey")
+    },
     pricing {
-      ...,
-      emailPlaceholder
+      "subtitle": coalesce(subtitle, ""),
+      "title": coalesce(title, ""),
+      "description": coalesce(description, ""),
+      "buttonText": coalesce(buttonText, "Contact Sales"),
+      "emailPlaceholder": coalesce(emailPlaceholder, "Enter your email")
     }
   }
 `;
@@ -109,6 +117,7 @@ export const homePageQuery = groq`
     trustSection,
     productShowcaseSection,
     spiralQuoteSection,
+    posterBannerSection,
     aboutSection
   }
 `;
@@ -367,6 +376,7 @@ export const catalogueSettingsQuery = groq`
 export const aboutQuery = groq`
   *[_type == "about"][0] {
     _id,
+    posterSliderSection,
     header,
     openingStory,
     anjeerStory,

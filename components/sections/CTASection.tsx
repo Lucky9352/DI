@@ -33,8 +33,8 @@ const PricingCTASchema = z.object({
 });
 
 const CTADataSchema = z.object({
-  walkthrough: WalkthroughCTASchema.optional(),
-  pricing: PricingCTASchema.optional(),
+  walkthrough: WalkthroughCTASchema.nullish(),
+  pricing: PricingCTASchema.nullish(),
 });
 
 const RoutingSchema = z.object({

@@ -25,6 +25,7 @@ import {
 } from "@/components/assets/Decorations";
 import DecorativeBackground from "@/components/ui/DecorativeBackground";
 import InfographicsSection from "@/components/sections/InfographicsSection";
+import AboutPosterSlider from "@/components/sections/AboutPosterSlider";
 
 // =============================================================================
 // ZOD VALIDATION SCHEMAS
@@ -35,6 +36,8 @@ const TimelineEntrySchema = z.object({
   year: z.number(),
   title: z.string(),
   description: z.string(),
+  image: z.any().optional(),
+  imageUrl: z.string().optional().nullable(),
 });
 
 const DistributionRegionSchema = z.object({
@@ -195,6 +198,7 @@ interface AboutContentProps {
   initialAbout?: unknown;
   siteSettings?: unknown;
   capabilities?: Capability[];
+  posterSliderSection?: unknown;
 }
 
 // =============================================================================
@@ -238,6 +242,7 @@ export default function AboutContent({
   initialAbout,
   siteSettings: rawSiteSettings,
   capabilities = [],
+  posterSliderSection,
 }: AboutContentProps) {
   // Validate and parse all incoming data with Zod
   const about = parseAboutData(initialAbout);
@@ -253,106 +258,190 @@ export default function AboutContent({
   }
 
   return (
-    <div className="bg-linear-to-b from-ivory via-cashew-cream to-beige min-h-screen pt-32 pb-20 relative">
-      {/* Decorative Background Icons */}
-      <DecorativeBackground variant="side-balanced" />
+    <>
+      {/* Poster Slider - Hero-like section at the top */}
+      <AboutPosterSlider
+        sliderData={
+          posterSliderSection as {
+            enabled?: boolean;
+            autoPlayInterval?: number;
+            posters?: { _key?: string; imageUrl?: string; alt?: string }[];
+          } | null
+        }
+      />
 
-      <div className="container mx-auto px-4 md:px-6 lg:px-10">
-        {/* Header */}
-        {about.header ? (
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: false, amount: 0.3 }}
-            className="text-center mb-20 relative"
-          >
-            {/* Decorative blob in background */}
-            <div
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 w-[600px] h-[300px] opacity-20"
-              style={{
-                background: "linear-gradient(135deg, #f5f0e8 0%, #efe3d2 50%, #e8dcc8 100%)",
-                borderRadius: "60% 40% 55% 45% / 55% 60% 40% 45%",
-                filter: "blur(40px)",
-              }}
-            />
+      <div className="bg-linear-to-b from-ivory via-cashew-cream to-beige min-h-screen pt-32 pb-20 relative">
+        {/* Decorative Background Icons */}
+        <DecorativeBackground variant="side-balanced" />
 
-            <motion.p
-              className="uppercase tracking-[0.4em] text-xs text-text-muted mb-4"
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0 },
-              }}
-              transition={{ duration: 0.6, ease: "easeOut" as const }}
-            >
-              {about.header.eyebrow}
-            </motion.p>
-            <motion.h1
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-deep-brown mb-6 font-heading"
-              variants={{
-                hidden: { opacity: 0, y: 30 },
-                visible: { opacity: 1, y: 0 },
-              }}
-              transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" as const }}
-            >
-              {about.header.title}
-            </motion.h1>
-            <motion.p
-              className="text-lg text-text-muted max-w-3xl mx-auto leading-relaxed"
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0 },
-              }}
-              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" as const }}
-            >
-              {about.header.subtitle}
-            </motion.p>
-
-            {/* Decorative icons */}
+        <div className="container mx-auto px-4 md:px-6 lg:px-10">
+          {/* Header */}
+          {about.header ? (
             <motion.div
-              className="absolute top-0 right-0 md:right-20 -z-10 opacity-15"
-              variants={{
-                hidden: { opacity: 0, rotate: -20 },
-                visible: { opacity: 0.15, rotate: 12 },
-              }}
-              transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" as const }}
-              aria-hidden="true"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.3 }}
+              className="text-center mb-20 relative"
             >
-              <LeafIcon className="w-48 h-48 md:w-64 md:h-64 text-gold" />
+              {/* Decorative blob in background */}
+              <div
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 w-[600px] h-[300px] opacity-20"
+                style={{
+                  background: "linear-gradient(135deg, #f5f0e8 0%, #efe3d2 50%, #e8dcc8 100%)",
+                  borderRadius: "60% 40% 55% 45% / 55% 60% 40% 45%",
+                  filter: "blur(40px)",
+                }}
+              />
+
+              <motion.p
+                className="uppercase tracking-[0.4em] text-xs text-text-muted mb-4"
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+                transition={{ duration: 0.6, ease: "easeOut" as const }}
+              >
+                {about.header.eyebrow}
+              </motion.p>
+              <motion.h1
+                className="text-4xl md:text-5xl lg:text-6xl font-bold text-deep-brown mb-6 font-heading"
+                variants={{
+                  hidden: { opacity: 0, y: 30 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+                transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" as const }}
+              >
+                {about.header.title}
+              </motion.h1>
+              <motion.p
+                className="text-lg text-text-muted max-w-3xl mx-auto leading-relaxed"
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+                transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" as const }}
+              >
+                {about.header.subtitle}
+              </motion.p>
+
+              {/* Decorative icons */}
+              <motion.div
+                className="absolute top-0 right-0 md:right-20 -z-10 opacity-15"
+                variants={{
+                  hidden: { opacity: 0, rotate: -20 },
+                  visible: { opacity: 0.15, rotate: 12 },
+                }}
+                transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" as const }}
+                aria-hidden="true"
+              >
+                <LeafIcon className="w-48 h-48 md:w-64 md:h-64 text-gold" />
+              </motion.div>
+              <motion.div
+                className="absolute bottom-0 left-0 md:left-20 -z-10 opacity-10"
+                variants={{
+                  hidden: { opacity: 0, rotate: 20 },
+                  visible: { opacity: 0.1, rotate: -15 },
+                }}
+                transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" as const }}
+                aria-hidden="true"
+              >
+                <AlmondIcon className="w-32 h-32 md:w-40 md:h-40 text-almond-gold" />
+              </motion.div>
             </motion.div>
+          ) : null}
+
+          {/* The Anjeer Story */}
+          {about.anjeerStory ? (
             <motion.div
-              className="absolute bottom-0 left-0 md:left-20 -z-10 opacity-10"
-              variants={{
-                hidden: { opacity: 0, rotate: 20 },
-                visible: { opacity: 0.1, rotate: -15 },
-              }}
-              transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" as const }}
-              aria-hidden="true"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.2 }}
+              className="mb-16 relative"
             >
-              <AlmondIcon className="w-32 h-32 md:w-40 md:h-40 text-almond-gold" />
+              {/* Organic blob background */}
+              <div
+                className="absolute -inset-4 -z-10"
+                style={{
+                  background: "linear-gradient(135deg, #f5f0e8 0%, #efe3d2 50%, #e8dcc8 100%)",
+                  borderRadius: "45% 55% 50% 50% / 50% 45% 55% 50%",
+                  transform: "rotate(2deg)",
+                }}
+              />
+
+              <div className="bg-white/90 backdrop-blur-sm p-10 rounded-2xl border border-gold-light shadow-lg">
+                <div className="max-w-4xl mx-auto text-center">
+                  {/* Decorative Icon */}
+                  <motion.div
+                    className="flex justify-center mb-6"
+                    variants={{
+                      hidden: { opacity: 0, scale: 0.8 },
+                      visible: { opacity: 1, scale: 1 },
+                    }}
+                    transition={{ duration: 0.5, ease: "easeOut" as const }}
+                  >
+                    <CashewIcon className="w-12 h-12 text-almond-gold/50" />
+                  </motion.div>
+
+                  <motion.h2
+                    className="text-3xl font-bold text-deep-brown mb-8 font-heading"
+                    variants={{
+                      hidden: { opacity: 0, y: 20 },
+                      visible: { opacity: 1, y: 0 },
+                    }}
+                    transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" as const }}
+                  >
+                    {about.anjeerStory.title}
+                  </motion.h2>
+
+                  <div className="space-y-6 text-lg text-text-muted leading-relaxed">
+                    {about.anjeerStory.paragraphs[0] ? (
+                      <motion.p
+                        variants={{
+                          hidden: { opacity: 0, y: 20 },
+                          visible: { opacity: 1, y: 0 },
+                        }}
+                        transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" as const }}
+                      >
+                        {about.anjeerStory.paragraphs[0]}
+                      </motion.p>
+                    ) : null}
+                    {about.anjeerStory.paragraphs[1] ? (
+                      <motion.p
+                        className="text-xl font-semibold text-almond-gold italic"
+                        variants={{
+                          hidden: { opacity: 0, x: 30 },
+                          visible: { opacity: 1, x: 0 },
+                        }}
+                        transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" as const }}
+                      >
+                        {about.anjeerStory.paragraphs[1]}
+                      </motion.p>
+                    ) : null}
+                  </div>
+                </div>
+              </div>
             </motion.div>
-          </motion.div>
-        ) : null}
+          ) : null}
 
-        {/* The Anjeer Story */}
-        {about.anjeerStory ? (
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: false, amount: 0.2 }}
-            className="mb-16 relative"
-          >
-            {/* Organic blob background */}
-            <div
-              className="absolute -inset-4 -z-10"
-              style={{
-                background: "linear-gradient(135deg, #f5f0e8 0%, #efe3d2 50%, #e8dcc8 100%)",
-                borderRadius: "45% 55% 50% 50% / 50% 45% 55% 50%",
-                transform: "rotate(2deg)",
-              }}
-            />
+          {/* Our Philosophy */}
+          {about.philosophySection ? (
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.2 }}
+              className="text-center mb-16 relative"
+            >
+              {/* Organic blob background */}
+              <div
+                className="absolute -inset-6 -z-10"
+                style={{
+                  background: "linear-gradient(135deg, #f5f0e8 0%, #efe3d2 50%, #e8dcc8 100%)",
+                  borderRadius: "55% 45% 50% 50% / 50% 55% 45% 50%",
+                  transform: "rotate(2deg)",
+                }}
+              />
 
-            <div className="bg-white/90 backdrop-blur-sm p-10 rounded-2xl border border-gold-light shadow-lg">
-              <div className="max-w-4xl mx-auto text-center">
+              <div className="bg-white/85 backdrop-blur-sm p-12 rounded-2xl border border-almond-gold/30 shadow-lg relative overflow-hidden">
                 {/* Decorative Icon */}
                 <motion.div
                   className="flex justify-center mb-6"
@@ -362,287 +451,216 @@ export default function AboutContent({
                   }}
                   transition={{ duration: 0.5, ease: "easeOut" as const }}
                 >
-                  <CashewIcon className="w-12 h-12 text-almond-gold/50" />
+                  <PeanutIcon className="w-14 h-14 text-almond-gold/50" />
                 </motion.div>
 
                 <motion.h2
-                  className="text-3xl font-bold text-deep-brown mb-8 font-heading"
+                  className="text-3xl md:text-4xl font-bold text-deep-brown mb-6 font-heading"
                   variants={{
                     hidden: { opacity: 0, y: 20 },
                     visible: { opacity: 1, y: 0 },
                   }}
                   transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" as const }}
                 >
-                  {about.anjeerStory.title}
+                  {about.philosophySection.title}
                 </motion.h2>
 
-                <div className="space-y-6 text-lg text-text-muted leading-relaxed">
-                  {about.anjeerStory.paragraphs[0] ? (
+                <div className="max-w-4xl mx-auto space-y-6 text-lg text-text-muted leading-relaxed">
+                  <motion.p
+                    className="text-xl font-semibold text-almond-gold"
+                    variants={{
+                      hidden: { opacity: 0, x: -30 },
+                      visible: { opacity: 1, x: 0 },
+                    }}
+                    transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" as const }}
+                  >
+                    {about.philosophySection.highlight}
+                  </motion.p>
+                  {about.philosophySection.paragraphs.map((p, i) => (
                     <motion.p
+                      key={i}
+                      className={i === 1 ? "italic" : ""}
                       variants={{
                         hidden: { opacity: 0, y: 20 },
                         visible: { opacity: 1, y: 0 },
                       }}
-                      transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" as const }}
+                      transition={{ duration: 0.5, delay: 0.3 + i * 0.1, ease: "easeOut" as const }}
                     >
-                      {about.anjeerStory.paragraphs[0]}
+                      {p}
                     </motion.p>
-                  ) : null}
-                  {about.anjeerStory.paragraphs[1] ? (
-                    <motion.p
-                      className="text-xl font-semibold text-almond-gold italic"
-                      variants={{
-                        hidden: { opacity: 0, x: 30 },
-                        visible: { opacity: 1, x: 0 },
-                      }}
-                      transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" as const }}
-                    >
-                      {about.anjeerStory.paragraphs[1]}
-                    </motion.p>
-                  ) : null}
+                  ))}
+                </div>
+
+                <DecorativeCorners />
+              </div>
+            </motion.div>
+          ) : null}
+
+          {/* Infographics / Capabilities Section */}
+          {capabilities && capabilities.length > 0 ? (
+            <InfographicsSection capabilities={capabilities} />
+          ) : null}
+
+          {/* Our Brands */}
+          {about.brandsSection ? (
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.2 }}
+              className="mb-16 relative"
+            >
+              {/* Section blob background */}
+              <div
+                className="absolute -inset-6 -z-10"
+                style={{
+                  background: "linear-gradient(135deg, #f5f0e8 0%, #efe3d2 50%, #e8dcc8 100%)",
+                  borderRadius: "50% 50% 45% 55% / 45% 50% 50% 55%",
+                }}
+              />
+
+              <div className="bg-white/90 backdrop-blur-sm p-10 rounded-2xl border border-gold-light shadow-xl">
+                <motion.h2
+                  className="text-3xl font-bold text-deep-brown mb-10 text-center font-heading"
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { opacity: 1, y: 0 },
+                  }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                >
+                  {about.brandsSection.title}
+                </motion.h2>
+
+                <div className="grid md:grid-cols-2 gap-8">
+                  {/* Partners Card */}
+                  <motion.div
+                    className="relative"
+                    variants={{
+                      hidden: { opacity: 0, x: -40 },
+                      visible: { opacity: 1, x: 0 },
+                    }}
+                    transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+                  >
+                    <div className="absolute -top-3 -left-3 z-10">
+                      <div className="w-8 h-8 rounded-full bg-linear-to-br from-gold to-almond-gold flex items-center justify-center text-white font-bold text-[8px] shadow-md ring-2 ring-white">
+                        Partners
+                      </div>
+                    </div>
+
+                    <div className="text-center p-8 bg-white rounded-2xl border border-sand shadow-lg relative overflow-hidden">
+                      <WalnutIcon className="w-10 h-10 text-almond-gold/40 mx-auto mb-4" />
+
+                      <h3 className="text-xl font-bold text-almond-gold mb-4">
+                        {about.brandsSection.partners.title}
+                      </h3>
+                      <div className="space-y-2 mb-4">
+                        {about.brandsSection.partners.names.map((name) => (
+                          <p key={name} className="text-lg font-semibold text-deep-brown">
+                            {name}
+                          </p>
+                        ))}
+                      </div>
+                      <p className="text-sm text-text-muted">
+                        {about.brandsSection.partners.description}
+                      </p>
+                    </div>
+                  </motion.div>
+
+                  {/* Retail Card */}
+                  <motion.div
+                    className="relative"
+                    variants={{
+                      hidden: { opacity: 0, x: 40 },
+                      visible: { opacity: 1, x: 0 },
+                    }}
+                    transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+                  >
+                    <div className="absolute -top-3 -left-3 z-10">
+                      <div className="w-8 h-8 rounded-full bg-linear-to-br from-gold to-almond-gold flex items-center justify-center text-white font-bold text-[10px] shadow-md ring-2 ring-white">
+                        Retail
+                      </div>
+                    </div>
+
+                    <div className="text-center p-8 bg-white rounded-2xl border border-sand shadow-lg relative overflow-hidden">
+                      <PeanutIcon className="w-10 h-10 text-almond-gold/40 mx-auto mb-4" />
+
+                      <h3 className="text-xl font-bold text-almond-gold mb-4">
+                        {about.brandsSection.retail.title}
+                      </h3>
+                      <a
+                        href="https://thebetternut.co/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-lg font-semibold text-deep-brown mb-4 hover:text-gold transition-colors inline-flex items-center gap-1"
+                      >
+                        {about.brandsSection.retail.name}
+                        <svg
+                          className="w-3.5 h-3.5 opacity-60"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                          />
+                        </svg>
+                      </a>
+                      <p className="text-sm text-text-muted">
+                        {about.brandsSection.retail.description}
+                      </p>
+                    </div>
+                  </motion.div>
                 </div>
               </div>
-            </div>
-          </motion.div>
-        ) : null}
+            </motion.div>
+          ) : null}
 
-        {/* Our Philosophy */}
-        {about.philosophySection ? (
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: false, amount: 0.2 }}
-            className="text-center mb-16 relative"
-          >
-            {/* Organic blob background */}
-            <div
-              className="absolute -inset-6 -z-10"
-              style={{
-                background: "linear-gradient(135deg, #f5f0e8 0%, #efe3d2 50%, #e8dcc8 100%)",
-                borderRadius: "55% 45% 50% 50% / 50% 55% 45% 50%",
-                transform: "rotate(2deg)",
-              }}
-            />
-
-            <div className="bg-white/85 backdrop-blur-sm p-12 rounded-2xl border border-almond-gold/30 shadow-lg relative overflow-hidden">
-              {/* Decorative Icon */}
-              <motion.div
-                className="flex justify-center mb-6"
-                variants={{
-                  hidden: { opacity: 0, scale: 0.8 },
-                  visible: { opacity: 1, scale: 1 },
-                }}
-                transition={{ duration: 0.5, ease: "easeOut" as const }}
-              >
-                <PeanutIcon className="w-14 h-14 text-almond-gold/50" />
-              </motion.div>
-
-              <motion.h2
-                className="text-3xl md:text-4xl font-bold text-deep-brown mb-6 font-heading"
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0 },
-                }}
-                transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" as const }}
-              >
-                {about.philosophySection.title}
-              </motion.h2>
-
-              <div className="max-w-4xl mx-auto space-y-6 text-lg text-text-muted leading-relaxed">
-                <motion.p
-                  className="text-xl font-semibold text-almond-gold"
-                  variants={{
-                    hidden: { opacity: 0, x: -30 },
-                    visible: { opacity: 1, x: 0 },
-                  }}
-                  transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" as const }}
+          {/* Journey / Legacy Animation */}
+          {timelineEntries.length > 0 && about.journeySection ? (
+            <section className="mb-16" aria-labelledby="journey-heading">
+              <div className="text-center mb-12">
+                <p className="uppercase tracking-[0.4em] text-xs text-text-muted mb-3">
+                  {about.journeySection.eyebrow}
+                </p>
+                <h2
+                  id="journey-heading"
+                  className="text-3xl md:text-4xl font-bold text-deep-brown font-heading"
                 >
-                  {about.philosophySection.highlight}
-                </motion.p>
-                {about.philosophySection.paragraphs.map((p, i) => (
-                  <motion.p
-                    key={i}
-                    className={i === 1 ? "italic" : ""}
-                    variants={{
-                      hidden: { opacity: 0, y: 20 },
-                      visible: { opacity: 1, y: 0 },
-                    }}
-                    transition={{ duration: 0.5, delay: 0.3 + i * 0.1, ease: "easeOut" as const }}
-                  >
-                    {p}
-                  </motion.p>
-                ))}
+                  {about.journeySection.title}
+                </h2>
               </div>
+              <Timeline entries={timelineEntries} />
+            </section>
+          ) : null}
 
-              <DecorativeCorners />
-            </div>
-          </motion.div>
-        ) : null}
-
-        {/* Infographics / Capabilities Section */}
-        {capabilities && capabilities.length > 0 ? (
-          <InfographicsSection capabilities={capabilities} />
-        ) : null}
-
-        {/* Our Brands */}
-        {about.brandsSection ? (
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: false, amount: 0.2 }}
-            className="mb-16 relative"
-          >
-            {/* Section blob background */}
-            <div
-              className="absolute -inset-6 -z-10"
-              style={{
-                background: "linear-gradient(135deg, #f5f0e8 0%, #efe3d2 50%, #e8dcc8 100%)",
-                borderRadius: "50% 50% 45% 55% / 45% 50% 50% 55%",
-              }}
-            />
-
-            <div className="bg-white/90 backdrop-blur-sm p-10 rounded-2xl border border-gold-light shadow-xl">
-              <motion.h2
-                className="text-3xl font-bold text-deep-brown mb-10 text-center font-heading"
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0 },
-                }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-              >
-                {about.brandsSection.title}
-              </motion.h2>
-
-              <div className="grid md:grid-cols-2 gap-8">
-                {/* Partners Card */}
-                <motion.div
-                  className="relative"
-                  variants={{
-                    hidden: { opacity: 0, x: -40 },
-                    visible: { opacity: 1, x: 0 },
-                  }}
-                  transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+          {/* Distribution Map */}
+          {about.distributionRegions && about.distributionRegions.length > 0 ? (
+            <section className="mb-16" aria-labelledby="distribution-heading">
+              <div className="text-center mb-12">
+                <h2
+                  id="distribution-heading"
+                  className="text-3xl md:text-4xl font-bold text-deep-brown font-heading"
                 >
-                  <div className="absolute -top-3 -left-3 z-10">
-                    <div className="w-8 h-8 rounded-full bg-linear-to-br from-gold to-almond-gold flex items-center justify-center text-white font-bold text-[8px] shadow-md ring-2 ring-white">
-                      Partners
-                    </div>
-                  </div>
-
-                  <div className="text-center p-8 bg-white rounded-2xl border border-sand shadow-lg relative overflow-hidden">
-                    <WalnutIcon className="w-10 h-10 text-almond-gold/40 mx-auto mb-4" />
-
-                    <h3 className="text-xl font-bold text-almond-gold mb-4">
-                      {about.brandsSection.partners.title}
-                    </h3>
-                    <div className="space-y-2 mb-4">
-                      {about.brandsSection.partners.names.map((name) => (
-                        <p key={name} className="text-lg font-semibold text-deep-brown">
-                          {name}
-                        </p>
-                      ))}
-                    </div>
-                    <p className="text-sm text-text-muted">
-                      {about.brandsSection.partners.description}
-                    </p>
-                  </div>
-                </motion.div>
-
-                {/* Retail Card */}
-                <motion.div
-                  className="relative"
-                  variants={{
-                    hidden: { opacity: 0, x: 40 },
-                    visible: { opacity: 1, x: 0 },
-                  }}
-                  transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
-                >
-                  <div className="absolute -top-3 -left-3 z-10">
-                    <div className="w-8 h-8 rounded-full bg-linear-to-br from-gold to-almond-gold flex items-center justify-center text-white font-bold text-[10px] shadow-md ring-2 ring-white">
-                      Retail
-                    </div>
-                  </div>
-
-                  <div className="text-center p-8 bg-white rounded-2xl border border-sand shadow-lg relative overflow-hidden">
-                    <PeanutIcon className="w-10 h-10 text-almond-gold/40 mx-auto mb-4" />
-
-                    <h3 className="text-xl font-bold text-almond-gold mb-4">
-                      {about.brandsSection.retail.title}
-                    </h3>
-                    <a
-                      href="https://thebetternut.co/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-lg font-semibold text-deep-brown mb-4 hover:text-gold transition-colors inline-flex items-center gap-1"
-                    >
-                      {about.brandsSection.retail.name}
-                      <svg
-                        className="w-3.5 h-3.5 opacity-60"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                        />
-                      </svg>
-                    </a>
-                    <p className="text-sm text-text-muted">
-                      {about.brandsSection.retail.description}
-                    </p>
-                  </div>
-                </motion.div>
+                  {siteSettings?.distribution?.heading ?? "Distribution Regions"}
+                </h2>
               </div>
-            </div>
-          </motion.div>
-        ) : null}
-
-        {/* Journey / Legacy Animation */}
-        {timelineEntries.length > 0 && about.journeySection ? (
-          <section className="mb-16" aria-labelledby="journey-heading">
-            <div className="text-center mb-12">
-              <p className="uppercase tracking-[0.4em] text-xs text-text-muted mb-3">
-                {about.journeySection.eyebrow}
-              </p>
-              <h2
-                id="journey-heading"
-                className="text-3xl md:text-4xl font-bold text-deep-brown font-heading"
-              >
-                {about.journeySection.title}
-              </h2>
-            </div>
-            <Timeline entries={timelineEntries} />
-          </section>
-        ) : null}
-
-        {/* Distribution Map */}
-        {about.distributionRegions && about.distributionRegions.length > 0 ? (
-          <section className="mb-16" aria-labelledby="distribution-heading">
-            <div className="text-center mb-12">
-              <h2
-                id="distribution-heading"
-                className="text-3xl md:text-4xl font-bold text-deep-brown font-heading"
-              >
-                {siteSettings?.distribution?.heading ?? "Distribution Regions"}
-              </h2>
-            </div>
-            <DistributionMap
-              locations={(about.distributionRegions || []).map((r) => ({
-                name: r.name,
-                lat: r.lat ?? 28.6139,
-                lng: r.lng ?? 77.209,
-                radius: r.radius ?? 50000,
-                _id: r._id,
-              }))}
-              heading={siteSettings?.distribution?.heading}
-            />
-          </section>
-        ) : null}
+              <DistributionMap
+                locations={(about.distributionRegions || []).map((r) => ({
+                  name: r.name,
+                  lat: r.lat ?? 28.6139,
+                  lng: r.lng ?? 77.209,
+                  radius: r.radius ?? 50000,
+                  _id: r._id,
+                }))}
+                heading={siteSettings?.distribution?.heading}
+              />
+            </section>
+          ) : null}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

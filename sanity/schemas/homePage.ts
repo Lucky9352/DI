@@ -192,6 +192,38 @@ export default defineType({
     }),
 
     // =========================================================================
+    // POSTER BANNER SECTION
+    // =========================================================================
+    defineField({
+      name: "posterBannerSection",
+      title: "Poster Banner Section",
+      type: "object",
+      group: "media",
+      description: "Promotional poster banner displayed between Hero and Quote sections",
+      fields: [
+        {
+          name: "imageUrl",
+          type: "url",
+          title: "Poster Image URL",
+          description: "Google Drive or direct URL to the poster image",
+          validation: (Rule) => Rule.uri({ scheme: ["http", "https"] }),
+        },
+        {
+          name: "alt",
+          type: "string",
+          title: "Alt Text",
+          description: "Accessibility description of the poster",
+        },
+        {
+          name: "title",
+          type: "string",
+          title: "Overlay Title (Optional)",
+          description: "Optional text overlay on the poster",
+        },
+      ],
+    }),
+
+    // =========================================================================
     // DRONE DIARIES SECTION
     // =========================================================================
     defineField({

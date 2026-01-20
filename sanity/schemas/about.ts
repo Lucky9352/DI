@@ -5,6 +5,7 @@ export default defineType({
   title: "About",
   type: "document",
   groups: [
+    { name: "posters", title: "Poster Slider" },
     { name: "header", title: "Page Header" },
     { name: "storySections", title: "Story Sections" },
     { name: "coreValues", title: "Core Values" },
@@ -13,6 +14,58 @@ export default defineType({
     { name: "distribution", title: "Distribution" },
   ],
   fields: [
+    // =========================================================================
+    // POSTER SLIDER SECTION
+    // =========================================================================
+    defineField({
+      name: "posterSliderSection",
+      title: "Poster Slider Section",
+      type: "object",
+      group: "posters",
+      description: "Hero-like slider for promotional posters at the top of the About page",
+      fields: [
+        {
+          name: "enabled",
+          type: "boolean",
+          title: "Enable Poster Slider",
+          description: "Show/hide the poster slider section",
+          initialValue: true,
+        },
+        {
+          name: "autoPlayInterval",
+          type: "number",
+          title: "Auto-play Interval (ms)",
+          description: "Time between slides in milliseconds (default: 5000)",
+          initialValue: 5000,
+        },
+        {
+          name: "posters",
+          title: "Posters",
+          type: "array",
+          of: [
+            {
+              type: "object",
+              fields: [
+                {
+                  name: "imageUrl",
+                  type: "url",
+                  title: "Poster Image URL",
+                  description: "Google Drive or direct URL to the poster image",
+                  validation: (Rule) => Rule.uri({ scheme: ["http", "https"] }),
+                },
+                {
+                  name: "alt",
+                  type: "string",
+                  title: "Alt Text",
+                  description: "Accessibility description of the poster",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    }),
+
     // =========================================================================
     // PAGE HEADER
     // =========================================================================

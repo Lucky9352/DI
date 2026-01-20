@@ -1100,6 +1100,15 @@ export type About = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  posterSliderSection?: {
+    enabled?: boolean;
+    autoPlayInterval?: number;
+    posters?: Array<{
+      imageUrl?: string;
+      alt?: string;
+      _key: string;
+    }>;
+  };
   header?: {
     eyebrow?: string;
     title?: string;
@@ -1245,6 +1254,11 @@ export type HomePage = {
     imageUrl?: string;
     title?: string;
     subtitle?: string;
+  };
+  posterBannerSection?: {
+    imageUrl?: string;
+    alt?: string;
+    title?: string;
   };
   droneDiaries?: {
     eyebrow?: string;

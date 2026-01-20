@@ -64,9 +64,11 @@ export default function AlmondVarietiesSection({ varieties }: AlmondVarietiesSec
       </motion.div>
 
       {/* Varieties Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
         {varieties.map((variety, index) => (
-          <VarietyCard key={variety._key || index} variety={variety} index={index} />
+          <div key={variety._key || index} className="break-inside-avoid">
+            <VarietyCard variety={variety} index={index} />
+          </div>
         ))}
       </div>
     </section>
@@ -101,7 +103,7 @@ function VarietyCard({ variety, index }: { variety: AlmondVariety; index: number
     >
       {/* Card Header with Name */}
       <div className="bg-bg px-5 py-4 border-b border-border">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-2 items-start sm:flex-row sm:items-center sm:justify-between">
           <h3 className="text-xl font-bold text-deep-brown">
             {variety.name}
             {variety.code ? (

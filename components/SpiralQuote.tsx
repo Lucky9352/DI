@@ -89,9 +89,9 @@ export default function SpiralQuote({ initialQuote, labels }: SpiralQuoteProps) 
             <Link href={aboutUrl} className="relative z-20 group cursor-pointer">
               <div className="w-48 h-48 rounded-full bg-deep-brown flex items-center justify-center relative overflow-hidden transition-transform duration-500 group-hover:scale-105 shadow-xl">
                 <NutIcon className="w-20 h-20 text-gold/30 absolute" />
-                <p className="text-ivory text-center px-6 font-heading text-xl leading-tight relative z-10 group-hover:scale-110 transition-transform drop-shadow-md">
+                <span className="text-gold text-center px-6 font-heading text-xl leading-tight relative z-10 group-hover:scale-110 transition-transform drop-shadow-md">
                   {buttonText}
-                </p>
+                </span>
               </div>
               <div className="absolute inset-0 rounded-full border-2 border-gold scale-110 opacity-0 group-hover:opacity-100 group-hover:scale-125 transition-all duration-500" />
             </Link>
