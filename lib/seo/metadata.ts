@@ -14,7 +14,7 @@ export const GeoCoordinatesSchema = z.object({
 });
 
 export const SeoSettingsSchema = z.object({
-  siteUrl: z.string().url().optional().default("https://divyanshinternational.com"),
+  siteUrl: z.string().url().optional().default("https://divyanshint.com"),
   metaTitle: z.string().optional().default("Divyansh International"),
   metaTitleSuffix: z.string().optional().default("| Premium Dry Fruits & Nuts"),
   metaDescription: z

@@ -13,9 +13,6 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "type-check": "tsc --noEmit",
-    "test": "vitest",
-    "test:run": "vitest run",
-    "test:coverage": "vitest run --coverage",
     "clean": "rm -rf .next node_modules/.cache",
     "analyze": "ANALYZE=true next build",
     "audit": "pnpm audit --audit-level=moderate",
@@ -80,7 +77,6 @@
     "@types/react": "^19.2.9",
     "@types/react-dom": "^19.2.3",
     "@types/styled-components": "^5.1.36",
-    "@vitest/coverage-v8": "^4.0.17",
     "dotenv-cli": "^11.0.0",
     "eslint": "^9.39.2",
     "eslint-config-next": "^16.1.4",
@@ -90,8 +86,7 @@
     "styled-components": "^6.3.8",
     "tailwindcss": "^4.1.18",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3",
-    "vitest": "^4.0.17"
+    "typescript": "^5.9.3"
   },
   "engines": {
     "node": ">=22.0.0",

@@ -11,28 +11,30 @@ import { getGoogleDriveImageUrl } from "@/lib/utils";
 // TYPES
 // =============================================================================
 
-export type AlmondVariety = {
+export type ProductVariety = {
   _key?: string;
   name: string;
-  code?: string;
   imageUrl?: string | null;
   image?: SanityImageSource;
-  shell?: string;
-  nut?: string;
-  characteristics?: string;
-  classification?: string;
-  availability?: string;
 };
 
-interface AlmondVarietiesSectionProps {
-  varieties: AlmondVariety[];
+interface ProductVarietiesSectionProps {
+  varieties: ProductVariety[];
+  title?: string;
+  subtitle?: string;
+  badge?: string;
 }
 
 // =============================================================================
 // COMPONENT
 // =============================================================================
 
-export default function AlmondVarietiesSection({ varieties }: AlmondVarietiesSectionProps) {
+export default function ProductVarietiesSection({
+  varieties,
+  title = "Our Varieties",
+  subtitle,
+  badge = "Premium Varieties",
+}: ProductVarietiesSectionProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -41,7 +43,7 @@ export default function AlmondVarietiesSection({ varieties }: AlmondVarietiesSec
   return (
     <section
       ref={ref}
-      className="py-24 bg-bg relative overflow-hidden"
+      className="py-8 md:py-12 bg-bg relative overflow-hidden"
       aria-labelledby="varieties-heading"
     >
       {/* Section Header */}
@@ -49,27 +51,22 @@ export default function AlmondVarietiesSection({ varieties }: AlmondVarietiesSec
         initial={{ opacity: 0, y: 20 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 0.5 }}
-        className="text-center mb-10"
+        className="text-center mb-16"
       >
         <span className="inline-block px-4 py-1.5 bg-amber-100 text-amber-800 rounded-full text-sm font-medium mb-3">
-          Premium Varieties
+          {badge}
         </span>
-        <h2 className="text-2xl md:text-3xl font-bold text-deep-brown mb-3">
-          California Almond Varieties
-        </h2>
-        <p className="text-text-muted max-w-2xl mx-auto">
-          We source the finest California almonds, each variety offering unique characteristics
-          perfect for different applications.
-        </p>
+        <h2 className="text-2xl md:text-3xl font-bold text-deep-brown mb-3">{title}</h2>
+        {subtitle ? <p className="text-text-muted max-w-2xl mx-auto">{subtitle}</p> : null}
       </motion.div>
 
-      {/* Varieties Grid */}
-      <div className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
-        {varieties.map((variety, index) => (
-          <div key={variety._key || index} className="break-inside-avoid">
-            <VarietyCard variety={variety} index={index} />
-          </div>
-        ))}
+      {/* Varieties Grid - Clean Image Grid */}
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 md:gap-10 max-w-5xl mx-auto items-start">
+          {varieties.map((variety, index) => (
+            <VarietyCard key={variety._key || index} variety={variety} index={index} />
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -79,15 +76,16 @@ export default function AlmondVarietiesSection({ varieties }: AlmondVarietiesSec
 // VARIETY CARD COMPONENT
 // =============================================================================
 
-function VarietyCard({ variety, index }: { variety: AlmondVariety; index: number }) {
+function VarietyCard({ variety, index }: { variety: ProductVariety; index: number }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
 
   // Get image URL (Google Drive or Sanity)
+  // Use our proxy for Google Drive images to avoid 403s
   const imageUrl = variety.imageUrl
     ? getGoogleDriveImageUrl(variety.imageUrl)
     : variety.image
-      ? urlFor(variety.image).width(400).height(300).url()
+      ? urlFor(variety.image).width(400).url()
       : null;
 
   const isPlaceholder = variety.imageUrl?.startsWith("PLACEHOLDER");
@@ -96,120 +94,44 @@ function VarietyCard({ variety, index }: { variety: AlmondVariety; index: number
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="bg-white rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-lg transition-all duration-300 group"
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.4, delay: index * 0.05 }}
+      className="relative flex flex-col items-center group w-full"
     >
-      {/* Card Header with Name */}
-      <div className="bg-bg px-5 py-4 border-b border-border">
-        <div className="flex flex-col gap-2 items-start sm:flex-row sm:items-center sm:justify-between">
-          <h3 className="text-xl font-bold text-deep-brown">
-            {variety.name}
-            {variety.code ? (
-              <span className="ml-2 text-sm font-medium text-amber-600">({variety.code})</span>
-            ) : null}
-          </h3>
-          {variety.characteristics ? (
-            <span className="px-3 py-1 bg-white text-amber-700 text-xs font-medium rounded-full border border-amber-200 shadow-sm">
-              {variety.characteristics}
-            </span>
-          ) : null}
-        </div>
-      </div>
-
-      {/* Image Section */}
-      <div className="relative bg-amber-50 overflow-hidden">
+      {/* Image Container - Dynamic Height */}
+      <div className="relative w-full flex items-center justify-center min-h-[180px]">
         {imageUrl && !isPlaceholder ? (
           isProxyUrl ? (
             /* eslint-disable-next-line @next/next/no-img-element */
             <img
               src={imageUrl}
-              alt={`${variety.name} almonds`}
-              className="w-full h-auto object-contain p-4 group-hover:scale-105 transition-transform duration-500"
+              alt={`${variety.name} variety`}
+              className="w-auto h-auto max-w-full max-h-[400px] object-contain transition-transform duration-500 group-hover:scale-105"
             />
           ) : (
             <Image
               src={imageUrl}
-              alt={`${variety.name} almonds`}
+              alt={`${variety.name} variety`}
               width={400}
-              height={300}
-              className="w-full h-auto object-contain p-4 group-hover:scale-105 transition-transform duration-500"
+              height={400}
+              className="w-auto h-auto max-w-full max-h-[400px] object-contain transition-transform duration-500 group-hover:scale-105"
             />
           )
         ) : (
-          <div className="flex flex-col items-center justify-center py-12 text-amber-400">
-            <div className="w-20 h-20 rounded-full bg-amber-100 flex items-center justify-center mb-2">
-              <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-              </svg>
-            </div>
-            <span className="text-sm font-medium text-amber-500">Image Coming Soon</span>
+          <div className="flex flex-col items-center justify-center w-full h-[200px] text-amber-300 bg-amber-50/50 rounded-xl">
+            <svg className="w-10 h-10 mb-2" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+            </svg>
+            <span className="text-xs font-medium text-amber-500">No Image</span>
           </div>
         )}
       </div>
 
-      {/* Specifications */}
-      <div className="p-5 space-y-4">
-        {/* Shell & Nut Info */}
-        <div className="space-y-3">
-          {variety.shell ? (
-            <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center shrink-0">
-                <span className="text-sm">🥜</span>
-              </div>
-              <div>
-                <span className="text-xs font-semibold text-amber-700 uppercase tracking-wide">
-                  Shell
-                </span>
-                <p className="text-sm text-text-light leading-snug">{variety.shell}</p>
-              </div>
-            </div>
-          ) : null}
-
-          {variety.nut ? (
-            <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-lg bg-orange-100 flex items-center justify-center shrink-0">
-                <span className="text-sm">🌰</span>
-              </div>
-              <div>
-                <span className="text-xs font-semibold text-orange-700 uppercase tracking-wide">
-                  Nut
-                </span>
-                <p className="text-sm text-text-light leading-snug">{variety.nut}</p>
-              </div>
-            </div>
-          ) : null}
-        </div>
-
-        {/* Footer Info */}
-        <div className="pt-3 border-t border-border flex flex-wrap gap-2">
-          {variety.classification ? (
-            <span className="inline-flex items-center px-2.5 py-1 bg-bg text-text-muted text-xs font-medium rounded-md border border-border">
-              <svg className="w-3 h-3 mr-1 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fillRule="evenodd"
-                  d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              {variety.classification}
-            </span>
-          ) : null}
-          {variety.availability ? (
-            <span className="inline-flex items-center px-2.5 py-1 bg-green-50 text-green-700 text-xs font-medium rounded-md">
-              <svg className="w-3 h-3 mr-1 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fillRule="evenodd"
-                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              {variety.availability}
-            </span>
-          ) : null}
-        </div>
-      </div>
+      {/* Variety Name - Below Image */}
+      <h3 className="mt-2 md:mt-4 text-deep-brown font-bold text-sm md:text-xl text-center font-heading group-hover:text-almond-gold transition-colors duration-300 w-full px-1 wrap-break-word leading-tight">
+        {variety.name}
+      </h3>
     </motion.div>
   );
 }

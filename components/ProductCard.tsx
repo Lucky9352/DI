@@ -170,15 +170,7 @@ export default function ProductCard({ product, onAddToEnquiry, labels }: Product
         <span className="inline-flex items-center px-3 py-1 text-xs uppercase tracking-[0.3em] text-text-muted bg-white rounded-full border border-sand mb-4">
           {product.category}
         </span>
-        <motion.h3
-          className="text-xl font-bold text-deep-brown mb-3"
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
-        >
-          {heroHeading || productTitle}
-        </motion.h3>
+        <h3 className="text-xl font-bold text-deep-brown mb-3">{heroHeading || productTitle}</h3>
         <p className="text-text-muted text-sm mb-4 leading-relaxed line-clamp-3">{intro}</p>
 
         {/* Product Specifications Card */}

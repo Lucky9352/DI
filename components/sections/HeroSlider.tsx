@@ -226,7 +226,7 @@ export default function HeroSlider({
   return (
     <section
       id={routing?.heroSectionId}
-      className="hero-slider relative overflow-hidden min-h-screen flex items-center"
+      className="hero-slider relative overflow-hidden min-h-screen flex items-center pt-[72px] md:pt-24"
       aria-label={accessibility?.heroSectionAria}
     >
       {/* Video Background with Light Overlay */}
@@ -323,7 +323,7 @@ function VideoBackground({
   isMuted,
 }: VideoBackgroundProps) {
   return (
-    <div className="absolute inset-0">
+    <div className="absolute top-[72px] md:top-24 left-0 right-0 bottom-0">
       <AnimatePresence mode="wait">
         {slides.map(
           (slide, index) =>

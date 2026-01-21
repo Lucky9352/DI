@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState, useSyncExternalStore } from "react";
+import { useState, useSyncExternalStore, memo } from "react";
 import {
   LeafIcon,
   NutIcon,
@@ -117,7 +117,7 @@ function FloatingElement({
 // MAIN COMPONENT
 // =============================================================================
 
-export default function DecorativeBackground({
+export default memo(function DecorativeBackground({
   variant = "default",
   className = "",
 }: DecorativeBackgroundProps) {
@@ -321,4 +321,4 @@ export default function DecorativeBackground({
       </div>
     </div>
   );
-}
+});

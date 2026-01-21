@@ -84,15 +84,15 @@ const products = [
         _key: "ls-1",
         title: createLocaleString("Grades & Size Options"),
         items: [
-          createLocaleString("Sui / Single / Double"),
-          createLocaleString("Broken / Chipped / Blanched"),
+          createLocaleString("Sui / Single / MST"),
+          createLocaleString("Broken / Diced / Sliced / Blanched"),
         ],
       },
       {
         _key: "ls-2",
         title: createLocaleString("Packaging Formats Available"),
         items: [
-          createLocaleString("Inshell 22.6 kg bag and Kernels in 25 kg"),
+          createLocaleString("Inshell 50 Lbs (22.680 Kg)"),
           createLocaleString("Vacuum pouches for professional supply"),
         ],
       },
@@ -160,111 +160,61 @@ const products = [
       "Export and international trade",
       "Confectionery and bakery applications",
     ],
-    varieties: [
-      {
-        name: "Nonpareil",
-        description:
-          "Most popular California variety, known for its smooth appearance and mild flavor",
-        grade: "Premium",
-        color: "bg-amber-100",
-      },
-      {
-        name: "Carmel",
-        description: "Excellent flavor with soft shell, ideal for processing",
-        grade: "Premium",
-        color: "bg-orange-100",
-      },
-      {
-        name: "Butte",
-        description: "Small, plump shape with wrinkled surface, great for snacking",
-        grade: "Standard",
-        color: "bg-yellow-100",
-      },
-      {
-        name: "Padre",
-        description: "Hard shell variety, known for durability and extended shelf life",
-        grade: "Standard",
-        color: "bg-amber-100",
-      },
-      {
-        name: "Mission",
-        description: "Dark brown kernels with intense flavor, preferred for roasting",
-        grade: "Premium",
-        color: "bg-orange-100",
-      },
-    ],
+
     almondVarieties: [
       {
         _key: "variety-nonpareil",
         name: "Nonpareil",
-        code: "NP",
         imageUrl:
           "https://drive.google.com/file/d/1EmjKCclYG4a4b_hN3PXgsPFNmm5LPurz/view?usp=sharing",
-        shell: "Soft shell, paper-thin, poor seal",
-        nut: "Medium, flat, elongated, smooth surface, light color",
-        characteristics: "Classic almond shape, sweet flavor, blanchable",
-        classification: "Nonpareil",
-        availability: "Shelled, Inshell",
       },
       {
         _key: "variety-independence",
         name: "Independence",
-        code: "IND",
         imageUrl:
           "https://drive.google.com/file/d/1bGAfFfKdIoAmiKfHDuK76m5nGa24vESB/view?usp=sharing",
-        shell: "Soft shell, semi-sealed to well-sealed",
-        nut: "Large, oval shape, light color, smooth to slightly wrinkled",
-        characteristics: "Self-fertile, high quality kernel",
-        classification: "California",
-        availability: "Shelled, Inshell",
+      },
+      {
+        _key: "variety-sonora",
+        name: "Sonora",
+        imageUrl:
+          "https://drive.google.com/file/d/1kVmIa1ZHCSTksk3iSXM3JJ-w0rhKM_5X/view?usp=sharing",
       },
       {
         _key: "variety-carmel",
         name: "Carmel",
-        code: "CR",
         imageUrl:
           "https://drive.google.com/file/d/1S7rW2vMTg5-vxd-VFmI8t6tM8judT2_n/view?usp=sharing",
-        shell: "Soft shell, good integrity, fair suture opening",
-        nut: "Medium, narrow shape, slightly wrinkled surface",
-        characteristics: "Rich flavor, popular for roasting",
-        classification: "California",
-        availability: "Shelled",
+      },
+      {
+        _key: "variety-price",
+        name: "Price",
+        imageUrl:
+          "https://drive.google.com/file/d/1SHlUEWY8acYKwNG_NGSKH-vjf_d5Q_mo/view?usp=sharing",
       },
       {
         _key: "variety-monterey",
         name: "Monterey",
-        code: "MT",
         imageUrl:
           "https://drive.google.com/file/d/1r0l4mKi3j745KNbY55qCxpFt5z1IO4M9/view?usp=sharing",
-        shell: "Semi-hard shell, well-sealed",
-        nut: "Large, long and narrow, deeply wrinkled surface",
-        characteristics: "Late harvest, intense flavor",
-        classification: "California",
-        availability: "Shelled",
-      },
-      {
-        _key: "variety-peerless",
-        name: "Peerless",
-        code: "PL",
-        imageUrl:
-          "https://drive.google.com/file/d/11tlNGw2mM7ivaAUhHWu1Pozz1E89Xo60/view?usp=sharing",
-        shell: "Hard shell, thick, well-sealed, light color",
-        nut: "Medium, wide/heart-shaped, wrinkled surface",
-        characteristics: "Decorative shell, often sold in-shell",
-        classification: "Hard Shell",
-        availability: "Inshell",
       },
       {
         _key: "variety-shasta",
         name: "Shasta",
-        code: "SH",
         imageUrl:
           "https://drive.google.com/file/d/15ZtSPN1aBJUlMzx5qPKRcQL914wjkLQa/view?usp=sharing",
-        shell: "Semi-hard to semi-soft, well-sealed",
-        nut: "Medium, smooth surface, light color",
-        characteristics: "Self-fertile, early harvest",
-        classification: "California",
-        availability: "Shelled",
+      },
+      {
+        _key: "variety-peerless",
+        name: "Peerless",
+        imageUrl:
+          "https://drive.google.com/file/d/11tlNGw2mM7ivaAUhHWu1Pozz1E89Xo60/view?usp=sharing",
+      },
+      {
+        _key: "variety-supareil",
+        name: "Supareil",
+        imageUrl:
+          "https://drive.google.com/file/d/1BVcyx2n--VU31YjJRLUOS_YVPuEKSH0N/view?usp=sharing",
       },
     ],
   },
@@ -1583,8 +1533,8 @@ const siteSettingsData = {
   },
   organization: {
     name: "Divyansh International",
-    url: "https://www.divyanshinternational.com",
-    logoUrl: "https://www.divyanshinternational.com/logo.png",
+    url: "https://www.divyanshint.com",
+    logoUrl: "https://www.divyanshint.com/logo.png",
     description: "Leading importer, processor and distributor of premium dry fruits in India.",
     address: {
       streetAddress: "K-2, Kismat Complex, Miller Ganj, G.T. Road",
@@ -1639,7 +1589,7 @@ const siteSettingsData = {
     catalogueUrl: "/catalogue",
   },
   seo: {
-    siteUrl: "https://www.divyanshinternational.com",
+    siteUrl: "https://www.divyanshint.com",
     htmlLang: "en",
     metaTitle: "Divyansh International - Processors & Handlers",
     metaTitleSuffix: " | Divyansh International",
@@ -1958,7 +1908,7 @@ const contactPageData = {
   contactDetails: {
     address: "K-2, Kismat Complex, Miller Ganj, G.T. Road,\nLudhiana – 141003, Punjab, India",
     phone: ["+91-9878122400", "+91-161-4662156"],
-    email: "Care@divyanshinternational.com",
+    email: "Care@divyanshint.com",
   },
   businessHours: {
     weekdays: "Monday – Saturday: 9:00 AM – 6:00 PM",
@@ -2479,7 +2429,6 @@ async function seed() {
         order: product.order,
       };
 
-      // Add almondVarieties if present (for almonds product)
       if ("almondVarieties" in product && product.almondVarieties) {
         doc["almondVarieties"] = product.almondVarieties;
       }

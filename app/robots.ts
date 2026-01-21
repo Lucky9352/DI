@@ -40,7 +40,7 @@ const DEFAULTS = {
   allowPath: "/",
   disallowPath: "/studio",
   sitemapPath: "/sitemap.xml",
-  siteUrl: "https://divyanshinternational.com",
+  siteUrl: "https://divyanshint.com",
 } as const;
 
 // =============================================================================

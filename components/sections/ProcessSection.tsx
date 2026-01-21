@@ -104,7 +104,7 @@ export default function ProcessSection({
   if (steps.length === 0) return null;
 
   return (
-    <section id={sectionId} className="py-20 bg-paper relative" aria-labelledby="process-heading">
+    <section id={sectionId} className="py-12 bg-paper relative" aria-labelledby="process-heading">
       {/* Floating Decorations */}
       <DecorativeBackground variant="side-balanced" />
 

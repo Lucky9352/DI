@@ -562,12 +562,18 @@ html.hydrated {
 
   /* Better tap targets */
   button,
-  a,
+  a:not(nav a),
   input,
   select,
   textarea {
     min-height: 44px;
     min-width: 44px;
+  }
+
+  /* Breadcrumb nav links don't need min-width */
+  nav a {
+    min-height: 44px;
+    min-width: auto;
   }
 
   /* Improve touch scrolling */
@@ -814,4 +820,13 @@ html.hydrated {
     height: 100vh;
     transform: translate(-50%, -50%) scale(3.5);
   }
+}
+
+/* Utility to hide scrollbar but keep functionality */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
 }

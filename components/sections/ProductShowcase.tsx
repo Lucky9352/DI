@@ -10,7 +10,7 @@
  * Data is validated with Zod schemas for runtime type safety.
  */
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useSyncExternalStore, memo } from "react";
 import { motion } from "framer-motion";
 import { z } from "zod";
 import { Package } from "lucide-react";
@@ -18,7 +18,7 @@ import { Package } from "lucide-react";
 import ProductCard from "@/components/ProductCard";
 import ProductModal from "@/components/ProductModal";
 import DecorativeBackground from "@/components/ui/DecorativeBackground";
-import { useLanguage, type Language } from "@/context/LanguageContext";
+import { useLanguage } from "@/context/LanguageContext";
 import { getLocalized, type LocaleString, type LocaleText } from "@/lib/i18n";
 import type { SanityImageSource } from "@sanity/image-url";
 
@@ -129,7 +129,12 @@ export default function ProductShowcase({
   siteSettings,
   headerData,
 }: ProductShowcaseProps) {
-  const { language } = useLanguage();
+  // Hydration-safe client detection using useSyncExternalStore (React 18 pattern)
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
 
   // Validate props in development
   if (process.env.NODE_ENV === "development") {
@@ -166,29 +171,43 @@ export default function ProductShowcase({
   if (products.length === 0) return null;
 
   return (
-    <section id={sectionId} className="py-16 bg-bg relative" aria-labelledby="products-heading">
+    <section
+      id={sectionId}
+      className="py-10 md:py-16 bg-bg relative"
+      aria-labelledby="products-heading"
+    >
       {/* Floating Dry Fruits Decorations */}
       <DecorativeBackground variant="scattered" />
 
       <div className="container mx-auto px-4 md:px-6 lg:px-10 relative z-10">
         {/* Section Header */}
-        {headerData ? <SectionHeader headerData={headerData} language={language} /> : null}
+        {headerData ? <SectionHeader headerData={headerData} /> : null}
 
-        {/* Products Grid */}
-        <ProductsGrid
-          products={products}
-          siteSettings={siteSettings}
-          onAddToEnquiry={handleAddToEnquiry}
-        />
+        {/* Products Grid - Render only after hydration to prevent mobile SSR mismatch */}
+        {mounted ? (
+          <ProductsGrid
+            products={products}
+            siteSettings={siteSettings}
+            onAddToEnquiry={handleAddToEnquiry}
+          />
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+            {products.slice(0, 3).map((p) => (
+              <div key={p._id} className="bg-sand/30 rounded-3xl h-[400px] animate-pulse" />
+            ))}
+          </div>
+        )}
 
-        {/* Product Modal */}
-        <ProductModal
-          product={selectedProduct}
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-          onAddToEnquiry={handleModalAddToEnquiry}
-          labels={siteSettings}
-        />
+        {/* Product Modal - Render only after hydration */}
+        {mounted ? (
+          <ProductModal
+            product={selectedProduct}
+            isOpen={isModalOpen}
+            onClose={handleCloseModal}
+            onAddToEnquiry={handleModalAddToEnquiry}
+            labels={siteSettings}
+          />
+        ) : null}
       </div>
     </section>
   );
@@ -200,18 +219,17 @@ export default function ProductShowcase({
 
 interface SectionHeaderProps {
   headerData: HeaderData;
-  language: Language;
 }
 
-function SectionHeader({ headerData, language }: SectionHeaderProps) {
+const SectionHeader = memo(function SectionHeader({ headerData }: SectionHeaderProps) {
+  const { language } = useLanguage();
   return (
-    <div className="text-center mb-16 max-w-3xl mx-auto">
+    <div className="text-center mb-10 md:mb-16 max-w-3xl mx-auto">
       {/* Icon */}
       <motion.div
         className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-50 text-gold mb-6"
         initial={{ scale: 0, rotate: -180 }}
-        whileInView={{ scale: 1, rotate: 0 }}
-        viewport={{ once: true }}
+        animate={{ scale: 1, rotate: 0 }}
         transition={{ type: "spring", stiffness: 200, damping: 15 }}
       >
         <Package className="w-8 h-8" />
@@ -221,8 +239,7 @@ function SectionHeader({ headerData, language }: SectionHeaderProps) {
         <motion.div
           className="flex items-center justify-center gap-2 mb-4"
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
           <span className="h-px w-8 bg-gold" />
@@ -238,9 +255,8 @@ function SectionHeader({ headerData, language }: SectionHeaderProps) {
           id="products-heading"
           className="text-3xl md:text-4xl lg:text-5xl font-bold text-deep-brown mb-6 font-heading leading-tight"
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
         >
           {getLocalized(headerData.title, language)}
         </motion.h2>
@@ -250,8 +266,7 @@ function SectionHeader({ headerData, language }: SectionHeaderProps) {
         <motion.p
           className="text-lg text-text-muted leading-relaxed"
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           {getLocalized(headerData.description, language)}
@@ -259,7 +274,7 @@ function SectionHeader({ headerData, language }: SectionHeaderProps) {
       ) : null}
     </div>
   );
-}
+});
 
 interface ProductsGridProps {
   products: Product[];
@@ -271,14 +286,13 @@ interface ProductsGridProps {
 function ProductsGrid({ products, siteSettings, onAddToEnquiry }: ProductsGridProps) {
   return (
     <motion.div
-      className="columns-1 md:columns-2 lg:columns-3 gap-8"
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.1, margin: "0px 0px -50px 0px" }}
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8"
+      initial="show"
+      animate="show"
       variants={staggerContainer}
     >
       {products.map((product) => (
-        <motion.div key={product._id} variants={fadeInUp} className="break-inside-avoid mb-8">
+        <motion.div key={product._id} variants={fadeInUp} initial="show" animate="show">
           <ProductCard
             product={product}
             onAddToEnquiry={() => onAddToEnquiry(product)}

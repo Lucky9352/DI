@@ -110,7 +110,7 @@ const DEFAULTS = {
     rateLimitWindowMs: 60000,
     enquiryTypeTrade: "trade",
     enquiryStatusNew: "new",
-    fallbackEmail: "trade@divyanshinternational.com",
+    fallbackEmail: "trade@divyanshint.com",
     listSeparator: ", ",
   },
   validation: {

@@ -62,7 +62,7 @@ const siteSettingsSchema = z
 // =============================================================================
 
 const DEFAULTS = {
-  siteUrl: "https://divyanshinternational.com",
+  siteUrl: "https://divyanshint.com",
   productDefaults: {
     changeFrequency: "weekly" as const,
     priority: 0.8,

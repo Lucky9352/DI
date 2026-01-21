@@ -9,15 +9,11 @@ import Image from "next/image";
 import { urlFor } from "@/lib/sanity/client-browser";
 import type { SanityImageSource } from "@sanity/image-url";
 import { useState } from "react";
-import {
-  HeroVisualElements,
-  SectionVisualElements,
-  ProductVisual,
-} from "@/components/VisualElements";
+import { HeroVisualElements, SectionVisualElements } from "@/components/VisualElements";
 import { z } from "zod";
 import { getGoogleDriveImageUrl } from "@/lib/utils";
-import AlmondVarietiesSection, {
-  type AlmondVariety,
+import ProductVarietiesSection, {
+  type ProductVariety,
 } from "@/components/sections/AlmondVarietiesSection";
 
 // =============================================================================
@@ -88,7 +84,7 @@ const ProductSchema = z.object({
   applications: z.array(z.string()).optional(),
   varieties: z.array(VarietySchema).optional(),
   grades: z.array(z.string()).optional(), // Fallback legacy
-  almondVarieties: z.array(z.custom<AlmondVariety>()).optional(),
+  almondVarieties: z.array(z.custom<ProductVariety>()).optional(),
 });
 
 // Labels from Site Settings
@@ -136,17 +132,6 @@ interface ProductDetailProps {
 }
 
 // =============================================================================
-// HELPER FUNCTIONS
-// =============================================================================
-
-function extractVisualType(title: string): "almonds" | "coconut" | "nuts" {
-  const t = title.toLowerCase();
-  if (t.includes("almond")) return "almonds";
-  if (t.includes("coconut")) return "coconut";
-  return "nuts";
-}
-
-// =============================================================================
 // COMPONENT
 // =============================================================================
 
@@ -163,10 +148,7 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
 
   // Contacts (Should ideally come from siteSettings, hardcoded fallbacks for now if not passed)
   const whatsappNumber = "+919876543210";
-  const contactEmail = "info@divyanshinternational.com";
-
-  // Data Normalization
-  const productType = extractVisualType(productTitle);
+  const contactEmail = "info@divyanshint.com";
 
   // Build unified image array supporting both URL and Sanity images
   type ProductImage =
@@ -242,7 +224,7 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
       <div className="relative z-10">
         {/* Breadcrumb */}
         <div className="container mx-auto px-4 md:px-6 lg:px-8 py-4">
-          <nav className="flex items-center gap-2 text-sm text-text-muted">
+          <nav className="flex gap-1 text-sm text-text-muted whitespace-nowrap overflow-x-auto no-scrollbar">
             <Link
               href={labels.navigation.homeUrl || "/"}
               className="hover:text-gold transition-colors"
@@ -251,7 +233,7 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
             </Link>
             <span>{labels.apiConfig.breadcrumbSeparator || "/"}</span>
             <Link
-              href={`${labels.navigation.homeUrl || ""}${labels.routing.productsHash || "#products"}`}
+              href={labels.navigation.productsUrl || "/products"}
               className="hover:text-gold transition-colors"
             >
               {labels.navigation.products || "Products"}
@@ -271,17 +253,17 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
             className="bg-white rounded-2xl shadow-lg overflow-hidden relative"
           >
             {/* Main Product Section */}
-            <div className="grid lg:grid-cols-2 gap-8 p-6 md:p-8">
+            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 p-4 md:p-8">
               {/* Product Images */}
               <div className="space-y-4">
-                <div className="rounded-2xl overflow-hidden bg-ivory border border-sand">
+                <div className="rounded-2xl overflow-hidden relative flex items-center justify-center max-h-[50vh] md:max-h-[600px] w-fit mx-auto">
                   {productImages[selectedImage] ? (
                     productImages[selectedImage].type === "url" ? (
                       /* eslint-disable-next-line @next/next/no-img-element */
                       <img
                         src={productImages[selectedImage].url}
                         alt={productImages[selectedImage].alt}
-                        className="w-full h-auto object-contain"
+                        className="w-auto h-auto max-h-[50vh] md:max-h-[600px] max-w-full object-contain"
                       />
                     ) : (
                       <Image
@@ -292,7 +274,7 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
                         alt={productImages[selectedImage].alt}
                         width={800}
                         height={1000}
-                        className="w-full h-auto object-contain"
+                        className="w-auto h-auto max-h-[50vh] md:max-h-[600px] max-w-full object-contain"
                         priority
                       />
                     )
@@ -309,14 +291,14 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
                 </div>
 
                 {productImages.length > 1 ? (
-                  <div className="flex gap-2 overflow-x-auto pb-2">
+                  <div className="flex gap-4 overflow-x-auto px-4 py-3 no-scrollbar">
                     {productImages.map((img, index) => (
                       <button
                         key={index}
                         onClick={() => setSelectedImage(index)}
-                        className={`shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
+                        className={`shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden border-2 transition-all ${
                           selectedImage === index
-                            ? "border-gold shadow-md scale-105"
+                            ? "border-gold shadow-md scale-110 z-10"
                             : "border-sand hover:border-gold/50"
                         }`}
                       >
@@ -325,7 +307,7 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
                           <img
                             src={img.url}
                             alt={`${productTitle} ${index + 1}`}
-                            className="w-full h-full object-contain"
+                            className="w-full h-full object-cover"
                           />
                         ) : (
                           <Image
@@ -333,7 +315,7 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
                             alt={`${productTitle} ${index + 1}`}
                             width={80}
                             height={80}
-                            className="w-full h-full object-contain"
+                            className="w-full h-full object-cover"
                           />
                         )}
                       </button>
@@ -354,7 +336,7 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
                 </div>
 
                 <div>
-                  <h1 className="text-3xl font-bold text-deep-brown mb-2">
+                  <h1 className="text-2xl md:text-3xl font-bold text-deep-brown mb-2 wrap-break-word leading-tight">
                     {heroHeading || productTitle}
                   </h1>
                   <p className="text-text-muted uppercase tracking-wide text-sm mb-2">
@@ -399,7 +381,9 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
                     {specs.map((spec, index) => (
                       <div key={index} className="flex justify-between text-sm">
                         <span className="text-text-muted">{spec.label}:</span>
-                        <span className="font-medium text-deep-brown">{spec.value}</span>
+                        <span className="font-medium text-deep-brown text-right pl-4">
+                          {spec.value}
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -426,12 +410,12 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
 
             {/* Tabs */}
             <div className="border-t border-sand">
-              <div className="flex border-b border-sand overflow-x-auto">
+              <div className="flex border-b border-sand overflow-x-auto no-scrollbar">
                 {(["description", "packaging", "forms"] as const).map((tab) => (
                   <button
                     key={tab}
                     onClick={() => setActiveTab(tab)}
-                    className={`px-6 py-4 font-medium text-sm transition-colors whitespace-nowrap ${
+                    className={`px-4 md:px-6 py-4 font-medium text-sm transition-colors whitespace-nowrap shrink-0 ${
                       activeTab === tab
                         ? "border-b-2 border-gold text-gold"
                         : "text-text-muted hover:text-deep-brown"
@@ -465,47 +449,24 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
                       </div>
                     ))}
 
-                    {/* California Almond Varieties Section (Almonds only) */}
-                    {product.category === "almonds" &&
-                    product.almondVarieties &&
-                    product.almondVarieties.length > 0 ? (
-                      <AlmondVarietiesSection varieties={product.almondVarieties} />
-                    ) : null}
-
-                    {/* Varieties Grid (For non-almonds or if no almondVarieties) */}
-                    {product.varieties &&
-                    product.varieties.length > 0 &&
-                    (product.category !== "almonds" ||
-                      !product.almondVarieties ||
-                      product.almondVarieties.length === 0) ? (
-                      <div>
-                        <h3 className="text-xl font-semibold text-deep-brown mb-4">
-                          Available Varieties
-                        </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                          {product.varieties.map((v, i) => (
-                            <div
-                              key={i}
-                              className={`rounded-xl p-4 border border-sand hover:shadow-md transition-all bg-white ${v.color || "bg-white"}`}
-                            >
-                              <div className="flex items-center gap-3 mb-2">
-                                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-xs">
-                                  <ProductVisual productType={productType} size="sm" />
-                                </div>
-                                <div>
-                                  <h4 className="font-semibold text-deep-brown text-sm">
-                                    {v.name}
-                                  </h4>
-                                  <span className="text-xs px-2 py-0.5 bg-white/50 rounded-full border border-sand">
-                                    {v.grade}
-                                  </span>
-                                </div>
-                              </div>
-                              <p className="text-xs text-text-muted">{v.description}</p>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
+                    {/* Product Varieties Section (Generic for all products) */}
+                    {product.almondVarieties && product.almondVarieties.length > 0 ? (
+                      <ProductVarietiesSection
+                        varieties={product.almondVarieties}
+                        title={
+                          product.category === "almonds"
+                            ? "California Almond Varieties"
+                            : `${productTitle} Varieties`
+                        }
+                        subtitle={
+                          product.category === "almonds"
+                            ? "We source the finest California almonds, each variety offering unique characteristics perfect for different applications."
+                            : `Explore our premium selection of ${productTitle} varieties.`
+                        }
+                        badge={
+                          product.category === "almonds" ? "Premium Varieties" : "Our Selection"
+                        }
+                      />
                     ) : null}
 
                     {/* Applications List */}
@@ -530,7 +491,7 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
                     <h2 className="text-2xl font-bold text-deep-brown mb-4">
                       Packaging Information
                     </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="flex flex-col md:grid md:grid-cols-3 gap-6">
                       {/* Visual Cards */}
                       {[
                         {

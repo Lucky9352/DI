@@ -13,7 +13,7 @@ const cspHeader = `
     connect-src 'self' https://*.sanity.io https://*.supabase.co https://cdnjs.cloudflare.com;
     media-src 'self' https://drive.google.com https://*.googlevideo.com blob:;
     worker-src 'self' blob: https://cdnjs.cloudflare.com;
-    frame-src 'self' https://cdn.sanity.io https://*.sanity.io https://www.youtube.com https://youtube.com;
+    frame-src 'self' https://cdn.sanity.io https://*.sanity.io https://www.youtube.com https://youtube.com https://www.youtube-nocookie.com;
     object-src 'none';
     base-uri 'self';
     form-action 'self';

@@ -82,7 +82,11 @@ export default function GA4() {
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', '${ga4Id}');
+          gtag('config', '${ga4Id}', {
+            allow_google_signals: false,
+            allow_ad_personalization_signals: false,
+            anonymize_ip: true
+          });
         `}
       </Script>
     </>

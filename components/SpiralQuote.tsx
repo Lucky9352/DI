@@ -51,14 +51,14 @@ export default function SpiralQuote({ initialQuote, labels }: SpiralQuoteProps) 
   const aboutUrl = labels.navigation?.aboutUrl || "/about";
 
   return (
-    <section className="py-16 bg-bg relative">
+    <section className="py-10 bg-bg relative">
       {/* Floating Decorations */}
       <DecorativeBackground variant="minimal" />
 
       <div className="container mx-auto px-4 md:px-6 lg:px-10 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-center">
           {/* Spiral Animation */}
-          <div className="relative flex justify-center items-center h-[500px]">
+          <div className="relative flex justify-center items-center h-[350px] lg:h-[450px]">
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 20, repeat: Infinity, ease: "linear" }}

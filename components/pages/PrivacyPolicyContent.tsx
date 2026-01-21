@@ -91,7 +91,7 @@ const COUNTRY_NAME_MAP: Record<string, string> = {
   AU: "Australia",
 };
 
-const DEFAULT_EMAIL = "Care@divyanshinternational.com";
+const DEFAULT_EMAIL = "Care@divyanshint.com";
 
 // =============================================================================
 // VALIDATION & DATA PARSING

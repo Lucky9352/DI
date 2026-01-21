@@ -89,7 +89,7 @@ const arrayDataSchema = z.array(z.unknown());
 
 const DEFAULTS = {
   organizationName: "Divyansh International",
-  siteUrl: "https://divyanshinternational.com",
+  siteUrl: "https://divyanshint.com",
 } as const;
 
 // =============================================================================

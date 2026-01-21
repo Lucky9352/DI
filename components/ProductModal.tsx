@@ -171,7 +171,7 @@ export default function ProductModal({
       description: productDescription || "",
       ...(product.slug?.current ? { slug: { current: product.slug.current } } : {}),
     },
-    labels.seo?.siteUrl || "https://divyanshinternational.com"
+    labels.seo?.siteUrl || "https://divyanshint.com"
   );
 
   return (

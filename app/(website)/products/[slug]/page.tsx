@@ -37,6 +37,17 @@ const productSchema = z
     heroImage: z.unknown().optional(),
     gallery: z.array(z.unknown()).nullable().optional(),
     microVideo: z.string().nullable().optional(),
+    almondVarieties: z
+      .array(
+        z.object({
+          _key: z.string().optional(),
+          name: z.string(),
+          imageUrl: z.string().nullable().optional(),
+          image: z.unknown().optional(),
+        })
+      )
+      .nullable()
+      .optional(),
   })
   .passthrough()
   .nullable();

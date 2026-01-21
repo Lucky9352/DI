@@ -100,7 +100,7 @@ const productListItemSchema = z
 // =============================================================================
 
 const DEFAULT_META = {
-  siteUrl: "https://divyanshinternational.com",
+  siteUrl: "https://divyanshint.com",
   title: "Divyansh International | Premium Dry Fruits & Nuts",
   description:
     "Leading exporter and supplier of premium quality dry fruits, nuts, and specialty products. Quality sourcing from trusted suppliers worldwide.",

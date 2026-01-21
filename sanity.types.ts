@@ -403,7 +403,6 @@ export type Product = {
   ctaLine?: LocaleString;
   almondVarieties?: Array<{
     name?: string;
-    code?: string;
     imageUrl?: string;
     image?: {
       asset?: SanityImageAssetReference;
@@ -412,11 +411,6 @@ export type Product = {
       crop?: SanityImageCrop;
       _type: "image";
     };
-    shell?: string;
-    nut?: string;
-    characteristics?: string;
-    classification?: string;
-    availability?: string;
     _key: string;
   }>;
   heroImage?: {
