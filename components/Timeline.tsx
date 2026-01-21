@@ -7,6 +7,7 @@ import { z } from "zod";
 import type { SanityImageSource } from "@sanity/image-url";
 import { AlmondIcon, CashewIcon, WalnutIcon, LeafIcon } from "@/components/assets/Decorations";
 import { getGoogleDriveImageUrl } from "@/lib/utils";
+import OptimizedImage from "@/components/ui/OptimizedImage";
 
 // =============================================================================
 // ZOD SCHEMAS
@@ -112,11 +113,12 @@ export default function Timeline({ entries }: TimelineProps) {
                     }}
                   >
                     {entry.imageUrl ? (
-                      /* eslint-disable-next-line @next/next/no-img-element */
-                      <img
+                      <OptimizedImage
                         src={getGoogleDriveImageUrl(entry.imageUrl) || ""}
                         alt={`${entry.title} - ${entry.year}`}
-                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        sizes="(max-width: 768px) 320px, (max-width: 1024px) 420px, 480px"
                       />
                     ) : entry.image ? (
                       <Image

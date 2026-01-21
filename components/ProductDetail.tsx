@@ -5,13 +5,13 @@ import Link from "next/link";
 import { trackEvent } from "@/components/analytics/GA4";
 import { useLanguage } from "@/context/LanguageContext";
 import { getLocalized, type LocaleString, type LocaleText } from "@/lib/i18n";
-import Image from "next/image";
 import { urlFor } from "@/lib/sanity/client-browser";
 import type { SanityImageSource } from "@sanity/image-url";
 import { useState } from "react";
 import { HeroVisualElements, SectionVisualElements } from "@/components/VisualElements";
 import { z } from "zod";
 import { getGoogleDriveImageUrl } from "@/lib/utils";
+import OptimizedImage from "@/components/ui/OptimizedImage";
 import ProductVarietiesSection, {
   type ProductVariety,
 } from "@/components/sections/AlmondVarietiesSection";
@@ -259,14 +259,16 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
                 <div className="rounded-2xl overflow-hidden relative flex items-center justify-center max-h-[50vh] md:max-h-[600px] w-fit mx-auto">
                   {productImages[selectedImage] ? (
                     productImages[selectedImage].type === "url" ? (
-                      /* eslint-disable-next-line @next/next/no-img-element */
-                      <img
+                      <OptimizedImage
                         src={productImages[selectedImage].url}
                         alt={productImages[selectedImage].alt}
+                        width={800}
+                        height={1000}
                         className="w-auto h-auto max-h-[50vh] md:max-h-[600px] max-w-full object-contain"
+                        priority
                       />
                     ) : (
-                      <Image
+                      <OptimizedImage
                         src={urlFor(productImages[selectedImage].image)
                           .width(800)
                           .height(1000)
@@ -303,18 +305,19 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
                         }`}
                       >
                         {img.type === "url" ? (
-                          /* eslint-disable-next-line @next/next/no-img-element */
-                          <img
+                          <OptimizedImage
                             src={img.url}
                             alt={`${productTitle} ${index + 1}`}
+                            width={160}
+                            height={160}
                             className="w-full h-full object-cover"
                           />
                         ) : (
-                          <Image
+                          <OptimizedImage
                             src={urlFor(img.image).width(160).height(160).url()}
                             alt={`${productTitle} ${index + 1}`}
-                            width={80}
-                            height={80}
+                            width={160}
+                            height={160}
                             className="w-full h-full object-cover"
                           />
                         )}

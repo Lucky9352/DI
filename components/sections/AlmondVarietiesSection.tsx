@@ -6,6 +6,7 @@ import Image from "next/image";
 import { urlFor } from "@/lib/sanity/client-browser";
 import type { SanityImageSource } from "@sanity/image-url";
 import { getGoogleDriveImageUrl } from "@/lib/utils";
+import OptimizedImage from "@/components/ui/OptimizedImage";
 
 // =============================================================================
 // TYPES
@@ -103,10 +104,11 @@ function VarietyCard({ variety, index }: { variety: ProductVariety; index: numbe
       <div className="relative w-full flex items-center justify-center min-h-[180px]">
         {imageUrl && !isPlaceholder ? (
           isProxyUrl ? (
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img
+            <OptimizedImage
               src={imageUrl}
               alt={`${variety.name} variety`}
+              width={400}
+              height={400}
               className="w-auto h-auto max-w-full max-h-[400px] object-contain transition-transform duration-500 group-hover:scale-105"
             />
           ) : (

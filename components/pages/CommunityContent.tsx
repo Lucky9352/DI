@@ -12,6 +12,7 @@
  */
 
 import { getGoogleDriveImageUrl } from "@/lib/utils";
+import OptimizedImage from "@/components/ui/OptimizedImage";
 import { motion, AnimatePresence } from "framer-motion";
 import { z } from "zod";
 import { LeafIcon, NutIcon, CashewIcon, PeanutIcon } from "@/components/assets/Decorations";
@@ -389,10 +390,11 @@ export default function CommunityContent({ initialCommunity }: CommunityContentP
                 {/* Image Side */}
                 {community.womenEmpowerment.imageUrl ? (
                   <div className="w-full md:w-1/2 relative flex items-center justify-center">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <OptimizedImage
                       src={getGoogleDriveImageUrl(community.womenEmpowerment.imageUrl) || ""}
                       alt={community.womenEmpowerment.title}
+                      width={600}
+                      height={400}
                       className="w-auto h-auto max-w-full hover:scale-[1.02] transition-transform duration-700"
                     />
                   </div>
@@ -453,10 +455,11 @@ export default function CommunityContent({ initialCommunity }: CommunityContentP
               {/* Image Side - Left */}
               {community.childcareSection.imageUrl ? (
                 <div className="w-full md:w-1/2 relative flex items-center justify-center">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <OptimizedImage
                     src={getGoogleDriveImageUrl(community.childcareSection.imageUrl) || ""}
                     alt={community.childcareSection.title}
+                    width={600}
+                    height={400}
                     className="w-auto h-auto max-w-full hover:scale-[1.02] transition-transform duration-700"
                   />
                 </div>
@@ -529,10 +532,11 @@ export default function CommunityContent({ initialCommunity }: CommunityContentP
               <div className="rounded-2xl overflow-hidden flex flex-col md:flex-row-reverse">
                 {community.industryCollaboration.imageUrl ? (
                   <div className="w-full md:w-1/2 relative flex items-center justify-center">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <OptimizedImage
                       src={getGoogleDriveImageUrl(community.industryCollaboration.imageUrl) || ""}
                       alt={community.industryCollaboration.title}
+                      width={600}
+                      height={400}
                       className="w-auto h-auto max-w-full hover:scale-[1.02] transition-transform duration-700"
                     />
                   </div>
@@ -572,10 +576,11 @@ export default function CommunityContent({ initialCommunity }: CommunityContentP
               <div className="rounded-2xl overflow-hidden flex flex-col md:flex-row">
                 {community.environmentalSection.imageUrl ? (
                   <div className="w-full md:w-1/2 relative flex items-center justify-center">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <OptimizedImage
                       src={getGoogleDriveImageUrl(community.environmentalSection.imageUrl) || ""}
                       alt={community.environmentalSection.title}
+                      width={600}
+                      height={400}
                       className="w-auto h-auto max-w-full hover:scale-[1.02] transition-transform duration-700"
                     />
                   </div>
@@ -718,10 +723,11 @@ function TradeEventCard({ event, index }: TradeEventCardProps) {
       <div className="rounded-2xl transition-all duration-300 overflow-hidden">
         {event.imageUrl ? (
           <div className="w-full relative">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <OptimizedImage
               src={getGoogleDriveImageUrl(event.imageUrl) || ""}
               alt={event.name}
+              width={600}
+              height={400}
               className="w-auto h-auto max-w-full mx-auto transition-transform duration-700 hover:scale-105"
             />
           </div>
@@ -792,16 +798,22 @@ function EducationCarousel({ images }: { images: string[] }) {
       onMouseLeave={() => setIsPaused(false)}
     >
       <AnimatePresence>
-        <motion.img
+        <motion.div
           key={currentIndex}
-          src={getGoogleDriveImageUrl(validImages[currentIndex] ?? "") || ""}
-          alt={`Education slide ${currentIndex + 1}`}
-          className="col-start-1 row-start-1 w-auto h-auto max-w-full object-contain"
+          className="col-start-1 row-start-1 w-full flex justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
-        />
+        >
+          <OptimizedImage
+            src={getGoogleDriveImageUrl(validImages[currentIndex] ?? "") || ""}
+            alt={`Education slide ${currentIndex + 1}`}
+            width={800}
+            height={600}
+            className="w-auto h-auto max-w-full object-contain"
+          />
+        </motion.div>
       </AnimatePresence>
 
       {validImages.length > 1 ? (

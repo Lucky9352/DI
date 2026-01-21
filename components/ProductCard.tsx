@@ -10,6 +10,7 @@ import type { SanityImageSource } from "@sanity/image-url";
 import { getLocalized, type LocaleString, type LocaleText } from "@/lib/i18n";
 import { useLanguage, type Language } from "@/context/LanguageContext";
 import { getGoogleDriveImageUrl } from "@/lib/utils";
+import OptimizedImage from "@/components/ui/OptimizedImage";
 
 // =============================================================================
 // ZOD VALIDATION SCHEMAS
@@ -143,10 +144,11 @@ export default function ProductCard({ product, onAddToEnquiry, labels }: Product
         {/* Hero Image */}
         <div className="relative w-full rounded-2xl overflow-hidden">
           {product.heroImageUrl ? (
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img
+            <OptimizedImage
               src={getGoogleDriveImageUrl(product.heroImageUrl) || ""}
               alt={productTitle}
+              width={600}
+              height={750}
               className="w-full h-auto block rounded-2xl"
             />
           ) : product.heroImage ? (

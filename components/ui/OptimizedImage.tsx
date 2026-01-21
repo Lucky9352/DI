@@ -28,6 +28,8 @@ const OptimizedImagePropsSchema = z.object({
   fill: z.boolean().optional(),
   sizes: z.string().optional(),
   quality: z.number().min(1).max(100).optional(),
+  onLoad: z.any().optional(),
+  onError: z.any().optional(),
 });
 
 // =============================================================================
@@ -68,9 +70,23 @@ export default function OptimizedImage({
   fill = false,
   sizes,
   quality = 85,
+  onLoad,
+  onError,
 }: OptimizedImageProps) {
   // Validate props in dev
-  validateProps({ src, alt, width, height, className, priority, fill, sizes, quality });
+  validateProps({
+    src,
+    alt,
+    width,
+    height,
+    className,
+    priority,
+    fill,
+    sizes,
+    quality,
+    onLoad,
+    onError,
+  });
 
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -98,7 +114,11 @@ export default function OptimizedImage({
           // particularly for potential utility classes like 'rounded-xl'
           className
         )}
-        onLoad={() => setIsLoaded(true)}
+        onLoad={(e) => {
+          setIsLoaded(true);
+          onLoad?.(e);
+        }}
+        onError={onError}
       />
     </div>
   );

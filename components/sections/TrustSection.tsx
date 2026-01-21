@@ -26,6 +26,7 @@ import {
 import type { SanityImageSource } from "@sanity/image-url";
 import { urlForImage } from "@/lib/sanity/image";
 import { getGoogleDriveImageUrl } from "@/lib/utils";
+import OptimizedImage from "@/components/ui/OptimizedImage";
 
 // =============================================================================
 // ZOD VALIDATION SCHEMAS
@@ -165,15 +166,12 @@ export default function TrustSection({
       {/* Dynamic Background Image */}
       {bgImage ? (
         <div className="absolute inset-0 z-0">
-          <div
-            className="absolute inset-0 w-full h-full pointer-events-none scale-110"
-            style={{
-              backgroundImage: `url(${bgImage})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              filter: "blur(5px)",
-              opacity: 1,
-            }}
+          <OptimizedImage
+            src={bgImage}
+            alt=""
+            fill
+            className="pointer-events-none scale-110 blur-[5px] opacity-100 object-cover"
+            sizes="100vw"
           />
         </div>
       ) : null}
@@ -289,11 +287,12 @@ function CertificateCard({ certificate }: CertificateCardProps) {
       >
         {certificate.imageUrl ? (
           <div className="w-16 h-16 relative transition-all duration-500">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <OptimizedImage
               src={getGoogleDriveImageUrl(certificate.imageUrl) || ""}
               alt=""
-              className="w-full h-full object-contain"
+              fill
+              className="object-contain"
+              sizes="64px"
             />
           </div>
         ) : certificate.image ? (

@@ -7,12 +7,12 @@ import Script from "next/script";
 import { generateProductSchema } from "@/lib/seo/schema";
 
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import { urlFor } from "@/lib/sanity/client-browser";
 import type { SanityImageSource } from "@sanity/image-url";
 import { useLanguage } from "@/context/LanguageContext";
 import { getLocalized, type LocaleString, type LocaleText } from "@/lib/i18n";
 import { z } from "zod";
+import OptimizedImage from "@/components/ui/OptimizedImage";
 
 // =============================================================================
 // ZOD SCHEMAS
@@ -244,7 +244,7 @@ export default function ProductModal({
                       className="w-full h-full object-cover"
                     />
                   ) : product.heroImage ? (
-                    <Image
+                    <OptimizedImage
                       src={urlFor(product.heroImage).width(1200).height(675).url()}
                       alt={productTitle}
                       fill
@@ -275,7 +275,7 @@ export default function ProductModal({
                   <div className="grid grid-cols-4 md:grid-cols-5 gap-3">
                     {product.heroImage ? (
                       <div className="relative aspect-square rounded-lg overflow-hidden border border-sand cursor-pointer">
-                        <Image
+                        <OptimizedImage
                           src={urlFor(product.heroImage).width(200).url()}
                           alt={productTitle}
                           fill
@@ -288,7 +288,7 @@ export default function ProductModal({
                         key={index}
                         className="relative aspect-square rounded-lg overflow-hidden border border-sand cursor-pointer"
                       >
-                        <Image
+                        <OptimizedImage
                           src={urlFor(image).width(200).url()}
                           alt={`${productTitle} ${index + 1}`}
                           fill

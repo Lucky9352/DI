@@ -10,6 +10,7 @@
 
 import { motion } from "framer-motion";
 import { getGoogleDriveImageUrl } from "@/lib/utils";
+import OptimizedImage from "@/components/ui/OptimizedImage";
 
 // =============================================================================
 // TYPE DEFINITIONS
@@ -51,25 +52,23 @@ export default function PosterBanner({ bannerData }: PosterBannerProps) {
       >
         {/* Blurred background wrapper for clipping */}
         <div className="absolute inset-0 overflow-hidden rounded-lg">
-          <div
-            className="absolute inset-0 pointer-events-none scale-110"
-            style={{
-              backgroundImage: `url(${imageUrl})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              filter: "blur(5px)", // Adjustable
-              opacity: 1, // Adjustable
-              zIndex: 0,
-            }}
+          <OptimizedImage
+            src={imageUrl}
+            alt=""
+            fill
+            className="scale-110 blur-[5px] opacity-100 object-cover z-0"
+            sizes="100vw"
           />
         </div>
 
-        {/* Poster Image - using img tag like ProductCard for Google Drive URLs */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        {/* Poster Image */}
+        <OptimizedImage
           src={imageUrl}
           alt={bannerData.alt ?? "Divyansh International promotional poster"}
+          width={1200}
+          height={800}
           className="relative z-10 w-auto h-full max-h-full object-contain shadow-2xl rounded-lg"
+          priority
         />
 
         {/* Optional Title Overlay - Kept for compatibility but styled consistently */}

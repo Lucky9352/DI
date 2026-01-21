@@ -14,6 +14,7 @@ import { motion } from "framer-motion";
 import { z } from "zod";
 
 import { getGoogleDriveImageUrl } from "@/lib/utils";
+import OptimizedImage from "@/components/ui/OptimizedImage";
 
 import Timeline from "@/components/Timeline";
 import DistributionMap from "@/components/DistributionMap";
@@ -553,12 +554,13 @@ export default function AboutContent({
                     <div className="bg-white rounded-2xl border border-sand shadow-lg relative overflow-hidden h-full flex flex-col">
                       {about.brandsSection.partners.imageUrl ? (
                         <div className="w-full relative overflow-hidden">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
+                          <OptimizedImage
                             src={
                               getGoogleDriveImageUrl(about.brandsSection.partners.imageUrl) || ""
                             }
                             alt={about.brandsSection.partners.title}
+                            width={600}
+                            height={400}
                             className="w-full h-auto object-cover transition-transform duration-700 hover:scale-105"
                           />
                         </div>
@@ -601,10 +603,11 @@ export default function AboutContent({
                     <div className="bg-white rounded-2xl border border-sand shadow-lg relative overflow-hidden h-full flex flex-col">
                       {about.brandsSection.retail.imageUrl ? (
                         <div className="w-full relative overflow-hidden">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
+                          <OptimizedImage
                             src={getGoogleDriveImageUrl(about.brandsSection.retail.imageUrl) || ""}
                             alt={about.brandsSection.retail.title}
+                            width={600}
+                            height={400}
                             className="w-full h-auto object-cover transition-transform duration-700 hover:scale-105"
                           />
                         </div>

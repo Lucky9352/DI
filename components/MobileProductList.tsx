@@ -1,11 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import { z } from "zod";
 import { urlForImage } from "@/lib/sanity/image";
 import type { SanityImageSource } from "@sanity/image-url";
 import { useLanguage } from "@/context/LanguageContext";
 import { getLocalized, type LocaleString, type LocaleText } from "@/lib/i18n";
+import OptimizedImage from "@/components/ui/OptimizedImage";
 
 // =============================================================================
 // ZOD VALIDATION SCHEMAS
@@ -93,7 +93,7 @@ export default function MobileProductList({
             {/* Image & Selection Toggle */}
             <div className="relative aspect-video w-full bg-sand">
               {product.heroImage ? (
-                <Image
+                <OptimizedImage
                   src={urlForImage(product.heroImage).width(600).height(400).url()}
                   alt={productTitle}
                   fill

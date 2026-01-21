@@ -11,6 +11,7 @@
 import { useState, useEffect, useCallback, useMemo, useSyncExternalStore } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { getGoogleDriveImageUrl } from "@/lib/utils";
+import OptimizedImage from "@/components/ui/OptimizedImage";
 
 // =============================================================================
 // TYPE DEFINITIONS
@@ -133,11 +134,14 @@ export default function AboutPosterSlider({ sliderData }: AboutPosterSliderProps
           {imageUrl ? (
             <div className="relative w-full h-auto flex items-center justify-center">
               {/* Main Image - Scaled horizontally to take the area */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <OptimizedImage
                 src={imageUrl}
                 alt={currentPoster?.alt ?? "Promotional poster"}
+                width={1920}
+                height={1080}
                 className="relative z-10 w-full h-auto object-cover shadow-lg"
+                sizes="100vw"
+                priority={activeSlide === 0}
               />
             </div>
           ) : (

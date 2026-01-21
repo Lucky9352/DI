@@ -4,6 +4,7 @@ import { useState, useCallback, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { getGoogleDriveImageUrl } from "@/lib/utils";
 import { cn } from "@/lib/utils";
+import OptimizedImage from "@/components/ui/OptimizedImage";
 
 interface GalleryImage {
   _key: string;
@@ -186,20 +187,22 @@ function GalleryItem({
         ) : null}
 
         {/* Actual Image */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        {/* Actual Image */}
+        <OptimizedImage
           src={driveUrl}
           alt={image.title || "Gallery image"}
+          width={600}
+          height={400}
           className={cn(
             "w-full h-auto object-cover transform transition-all duration-700",
             "group-hover:scale-105",
-            isLoading || hasError ? "opacity-0 absolute" : "opacity-100"
+            hasError ? "opacity-0 absolute" : "opacity-100"
           )}
-          onLoad={() => setIsLoading(false)}
           onError={() => {
             setIsLoading(false);
             setHasError(true);
           }}
+          onLoad={() => setIsLoading(false)}
         />
 
         {/* Gradient Overlay */}
@@ -321,10 +324,11 @@ function Lightbox({
           </div>
         ) : null}
         {driveUrl ? (
-          /* eslint-disable-next-line @next/next/no-img-element */
-          <img
+          <OptimizedImage
             src={driveUrl}
             alt={image.title || "Gallery image"}
+            width={1200}
+            height={800}
             className={cn(
               "max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl transition-opacity duration-300",
               isLoading ? "opacity-0" : "opacity-100"

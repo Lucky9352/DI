@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
+import OptimizedImage from "@/components/ui/OptimizedImage";
 import { motion, AnimatePresence } from "framer-motion";
 import { urlForImage } from "@/lib/sanity/image";
 import { getGoogleDriveVideoUrl, getYouTubeEmbedUrl, isYouTubeUrl } from "@/lib/utils";
@@ -131,7 +131,7 @@ export default function VideoShowcase({ data }: VideoShowcaseProps) {
                 exit={{ opacity: 0 }}
                 className="relative w-full h-full"
               >
-                <Image
+                <OptimizedImage
                   src={urlForImage(activeVideo.thumbnail).url()}
                   alt={activeVideo.title}
                   fill

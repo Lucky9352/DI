@@ -17,6 +17,7 @@ import { z } from "zod";
 import DecorativeBackground from "@/components/ui/DecorativeBackground";
 import { urlForImage } from "@/lib/sanity/image";
 import { getGoogleDriveImageUrl } from "@/lib/utils";
+import OptimizedImage from "@/components/ui/OptimizedImage";
 
 // =============================================================================
 // ZOD VALIDATION SCHEMAS
@@ -144,15 +145,12 @@ export default function CapabilitiesSection({
       {/* Dynamic Background Image */}
       {bgImage ? (
         <div className="absolute inset-0 z-0">
-          <div
-            className="absolute inset-0 w-full h-full pointer-events-none scale-110"
-            style={{
-              backgroundImage: `url(${bgImage})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              filter: "blur(5px)",
-              opacity: 1,
-            }}
+          <OptimizedImage
+            src={bgImage}
+            alt=""
+            fill
+            className="pointer-events-none scale-110 blur-[5px] opacity-100 object-cover"
+            sizes="100vw"
           />
         </div>
       ) : null}
@@ -356,11 +354,12 @@ function CertificateCard({ certificate }: CertificateCardProps) {
       <div className="w-24 h-24 relative bg-white rounded-full shadow-sm border border-border p-4 flex items-center justify-center overflow-hidden">
         {driveImageUrl ? (
           <div className="relative w-full h-full">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <OptimizedImage
               src={driveImageUrl}
               alt={certificate.name}
-              className="w-full h-full object-contain"
+              fill
+              className="object-contain"
+              sizes="96px"
             />
           </div>
         ) : sanityImageUrl ? (

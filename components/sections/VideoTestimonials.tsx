@@ -12,6 +12,7 @@ import { z } from "zod";
 import { Quote, Star } from "lucide-react";
 import DecorativeBackground from "@/components/ui/DecorativeBackground";
 import { getGoogleDriveImageUrl } from "@/lib/utils";
+import OptimizedImage from "@/components/ui/OptimizedImage";
 
 import type { SanityImageSource } from "@sanity/image-url";
 
@@ -148,15 +149,12 @@ export default function VideoTestimonialsSection({
       {/* Dynamic Background Image */}
       {bgImage ? (
         <div className="absolute inset-0 z-0">
-          <div
-            className="absolute inset-0 w-full h-full pointer-events-none scale-110"
-            style={{
-              backgroundImage: `url(${bgImage})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              filter: "blur(5px)",
-              opacity: 1,
-            }}
+          <OptimizedImage
+            src={bgImage}
+            alt=""
+            fill
+            className="pointer-events-none scale-110 blur-[5px] opacity-100 object-cover"
+            sizes="100vw"
           />
         </div>
       ) : null}

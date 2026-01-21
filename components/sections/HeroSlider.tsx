@@ -18,6 +18,7 @@ import { z } from "zod";
 import { LeafIcon } from "@/components/assets/Decorations";
 import { urlForImage } from "@/lib/sanity/image";
 import { getGoogleDriveImageUrl } from "@/lib/utils";
+import OptimizedImage from "@/components/ui/OptimizedImage";
 
 // =============================================================================
 // ZOD VALIDATION SCHEMAS
@@ -404,13 +405,17 @@ function FallbackBackground({ slide }: FallbackBackgroundProps) {
       : slide.posterUrl;
 
   return (
-    <div
-      className="w-full h-full bg-cover bg-center bg-no-repeat bg-paper"
-      style={{
-        backgroundImage: posterUrl ? `url(${posterUrl})` : undefined,
-      }}
-    >
-      {!posterUrl ? (
+    <div className="w-full h-full bg-paper relative">
+      {posterUrl ? (
+        <OptimizedImage
+          src={posterUrl}
+          alt={slide.headline ?? "Slide background"}
+          fill
+          className="object-cover"
+          sizes="100vw"
+          priority
+        />
+      ) : (
         <div className="absolute inset-0 flex items-center justify-center bg-paper">
           <div className="text-center text-text-muted">
             <svg
@@ -430,7 +435,7 @@ function FallbackBackground({ slide }: FallbackBackgroundProps) {
             <p className="text-sm">Media loading...</p>
           </div>
         </div>
-      ) : null}
+      )}
     </div>
   );
 }
