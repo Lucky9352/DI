@@ -23,6 +23,7 @@ export interface ContentBannerData {
   image?: SanityImageSource;
   bgOverlay?: "none" | "black-10" | "black-20" | "black-40" | "white-10";
   theme?: "light" | "dark";
+  paragraphs?: string[];
 }
 
 interface ContentBannerProps {
@@ -114,6 +115,7 @@ export default function ContentBanner({ data, className, priority = false }: Con
     features = [],
     layout = "bottom-image",
     imageUrl,
+    paragraphs,
     image,
     bgOverlay = "black-20",
     theme = "light",
@@ -403,8 +405,20 @@ export default function ContentBanner({ data, className, priority = false }: Con
           <div className="w-20 h-1.5 bg-gold mx-auto rounded-full opacity-80" />
         ) : null}
 
-        {/* Description */}
-        {description ? (
+        {/* Description or Paragraphs */}
+        {paragraphs && paragraphs.length > 0 ? (
+          <div
+            className={cn(
+              "text-lg md:text-xl leading-relaxed max-w-xl space-y-4",
+              layout === "bottom-image" || layout === "text-only" ? "mx-auto" : "",
+              descColor
+            )}
+          >
+            {paragraphs.map((p, i) => (
+              <p key={i}>{p}</p>
+            ))}
+          </div>
+        ) : description ? (
           <p
             className={cn(
               "text-lg md:text-xl leading-relaxed max-w-xl",
@@ -455,15 +469,15 @@ export default function ContentBanner({ data, className, priority = false }: Con
   const ImageBlock = processedImageUrl ? (
     <div
       className={cn(
-        "relative overflow-hidden isolate",
+        "relative isolate flex justify-center", // Removed overflow-hidden for split layouts
         // Different styling per layout
         layout === "bottom-image"
-          ? "mt-16 w-full max-w-5xl mx-auto rounded-2xl shadow-2xl aspect-video"
+          ? "mt-16 w-full max-w-5xl mx-auto rounded-2xl shadow-2xl aspect-video overflow-hidden" // Keep overflow-hidden for bottom/aspect-video
           : "",
         layout === "right-image" || layout === "left-image"
-          ? "w-full flex items-center justify-center p-4 lg:p-12"
+          ? "w-full p-4 lg:p-12 items-center"
           : "",
-        layout === "background-image" ? "absolute inset-0 z-0" : ""
+        layout === "background-image" ? "absolute inset-0 z-0 overflow-hidden" : ""
       )}
     >
       <OptimizedImage

@@ -61,7 +61,7 @@ const nextConfig = {
       { protocol: "https", hostname: "i.ytimg.com" },
       { protocol: "https", hostname: "*.ytimg.com" },
     ],
-    qualities: [100, 75, 85],
+    qualities: [100, 75, 85, 90],
   },
 
   logging: {

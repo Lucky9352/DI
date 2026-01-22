@@ -1326,8 +1326,21 @@ const aboutData = {
   // =============================================================================
   posterSliderSection: {
     enabled: true,
-    autoPlayInterval: 5000,
+    autoPlayInterval: 15000,
     posters: [
+      {
+        _key: "poster-memory",
+        _type: "contentBanner",
+        eyebrow: "ABOUT US",
+        title: "A Memory That Defines Us",
+        highlight: "",
+        paragraphs: [
+          "There's a memory that still defines the brand today. Children who accompanied their parents to the factory were always offered a piece of anjeer. A small, thoughtful gesture that quietly reflected what the business stood for: care beyond the transaction.",
+          "That spirit continues to shape how Divyansh International works with customers, partners, and suppliers.",
+        ],
+        layout: "text-only",
+        theme: "dark",
+      },
       {
         _key: "poster-1",
         _type: "contentBanner",
@@ -1348,11 +1361,7 @@ const aboutData = {
     ],
   },
 
-  header: {
-    eyebrow: "Premium Dry Fruits and Nuts Importer & Supplier in India | Since 1999",
-    title: "About Us",
-    subtitle: "A Trusted Dry Fruits and Nuts Importer in India Since 1999",
-  },
+  header: undefined,
 
   openingStory: {
     title: "Every bag of dry fruits has a beginning.",
@@ -1362,13 +1371,7 @@ const aboutData = {
       "After moving from Gujranwala to Ludhiana, he began working with dry fruits and nuts, slowly building a reputation for honesty and consistency. Customers didn't just come for quality almonds, cashews, anjeer, and other dry fruits. They returned because they felt valued.",
     ],
   },
-  anjeerStory: {
-    title: "A Memory That Defines Us",
-    paragraphs: [
-      "There's a memory that still defines the brand today. Children who accompanied their parents to the factory were always offered a piece of anjeer. A small, thoughtful gesture that quietly reflected what the business stood for: care beyond the transaction.",
-      "That spirit continues to shape how Divyansh International works with customers, partners, and suppliers.",
-    ],
-  },
+  anjeerStory: undefined,
   birthSection: {
     title: "The Birth of Divyansh International in 1999",
     paragraphs: [

@@ -78,97 +78,113 @@ const ProductRangeSectionSchema = z.object({
   description: z.string(),
 });
 
-const AboutDataSchema = z.object({
-  header: z
-    .object({
-      eyebrow: z.string(),
-      title: z.string(),
-      subtitle: z.string(),
-    })
-    .optional(),
-  openingStory: z
-    .object({
-      title: z.string(),
-      highlight: z.string(),
-      paragraphs: z.array(z.string()),
-    })
-    .optional(),
-  anjeerStory: z
-    .object({
-      title: z.string(),
-      paragraphs: z.array(z.string()),
-    })
-    .optional(),
-  birthSection: z
-    .object({
-      title: z.string(),
-      paragraphs: z.array(z.string()),
-      boxTitle: z.string(),
-      boxText: z.string(),
-    })
-    .optional(),
-  growingSection: z
-    .object({
-      title: z.string(),
-      paragraphs: z.array(z.string()),
-    })
-    .optional(),
-  philosophySection: z
-    .object({
-      title: z.string(),
-      highlight: z.string(),
-      paragraphs: z.array(z.string()),
-    })
-    .optional(),
-  timelineSummaryCards: z.array(TimelineSummaryCardSchema).optional(),
-  brandsSection: BrandsSectionSchema.optional(),
-  productRangeSection: ProductRangeSectionSchema.optional(),
-  whoWeAre: z
-    .object({
-      title: z.string(),
-      description: z.string(),
-      image: z.unknown().optional(),
-    })
-    .optional(),
-  mission: z
-    .object({
-      title: z.string(),
-      description: z.string(),
-    })
-    .optional(),
-  vision: z
-    .object({
-      title: z.string(),
-      description: z.string(),
-    })
-    .optional(),
-  ourStory: z
-    .object({
-      eyebrow: z.string(),
-      title: z.string(),
-      description: z.string(),
-    })
-    .optional(),
-  commitment: z
-    .object({
-      title: z.string(),
-      description: z.string(),
-    })
-    .optional(),
-  teamSection: z
-    .object({
-      eyebrow: z.string(),
-      title: z.string(),
-    })
-    .optional(),
-  journeySection: z
-    .object({
-      eyebrow: z.string(),
-      title: z.string(),
-    })
-    .optional(),
-  distributionRegions: z.array(DistributionRegionSchema).optional(),
-});
+const AboutDataSchema = z
+  .object({
+    header: z
+      .object({
+        eyebrow: z.string(),
+        title: z.string(),
+        subtitle: z.string(),
+      })
+      .nullable()
+      .optional(),
+    openingStory: z
+      .object({
+        title: z.string(),
+        highlight: z.string(),
+        paragraphs: z.array(z.string()),
+      })
+      .nullable()
+      .optional(),
+    anjeerStory: z
+      .object({
+        title: z.string(),
+        paragraphs: z.array(z.string()),
+      })
+      .nullable()
+      .optional(),
+    birthSection: z
+      .object({
+        title: z.string(),
+        paragraphs: z.array(z.string()),
+        boxTitle: z.string(),
+        boxText: z.string(),
+      })
+      .nullable()
+      .optional(),
+    growingSection: z
+      .object({
+        title: z.string(),
+        paragraphs: z.array(z.string()),
+      })
+      .nullable()
+      .optional(),
+    philosophySection: z
+      .object({
+        title: z.string(),
+        highlight: z.string(),
+        paragraphs: z.array(z.string()),
+      })
+      .nullable()
+      .optional(),
+    timelineSummaryCards: z.array(TimelineSummaryCardSchema).nullable().optional(),
+    brandsSection: BrandsSectionSchema.nullable().optional(),
+    productRangeSection: ProductRangeSectionSchema.nullable().optional(),
+    whoWeAre: z
+      .object({
+        title: z.string(),
+        description: z.string(),
+        image: z.unknown().optional(),
+      })
+      .nullable()
+      .optional(),
+    mission: z
+      .object({
+        title: z.string(),
+        description: z.string(),
+      })
+      .nullable()
+      .optional(),
+    vision: z
+      .object({
+        title: z.string(),
+        description: z.string(),
+      })
+      .nullable()
+      .optional(),
+    ourStory: z
+      .object({
+        eyebrow: z.string(),
+        title: z.string(),
+        description: z.string(),
+      })
+      .nullable()
+      .optional(),
+    commitment: z
+      .object({
+        title: z.string(),
+        description: z.string(),
+      })
+      .nullable()
+      .optional(),
+    teamSection: z
+      .object({
+        eyebrow: z.string(),
+        title: z.string(),
+      })
+      .nullable()
+      .optional(),
+    journeySection: z
+      .object({
+        eyebrow: z.string(),
+        title: z.string(),
+      })
+      .nullable()
+      .optional(),
+    distributionRegions: z.array(DistributionRegionSchema).nullable().optional(),
+  })
+  .nullable()
+  .optional();
 
 const SiteSettingsSchema = z.object({
   distribution: z
