@@ -1230,6 +1230,8 @@ const ctaData = {
     buttonText: "Contact Us",
     emailPlaceholder: "Enter your business email",
   },
+  backgroundImageUrl:
+    "https://drive.google.com/file/d/1Qk9xTJzUzo-7K_Sa_twzOManDxUEI1ap/view?usp=sharing",
 };
 
 const testimonialsSectionData = {
@@ -2200,8 +2202,7 @@ const homePageData = {
     description:
       "We extend the value chain beyond purchase to farmer livelihoods, renewable operations, and inclusive hiring.",
     infographicImageUrl: "",
-    backgroundImageUrl:
-      "https://drive.google.com/file/d/1y1vzbs-XLG92z37EPKgYrVlMtE_2WMiS/view?usp=sharing",
+    backgroundImageUrl: "",
   },
   trustSection: {
     eyebrow: "Partners & Certifications",
