@@ -37,6 +37,21 @@ export default defineType({
       description: "Bullet points or key features",
     }),
     defineField({
+      name: "stats",
+      title: "Statistics",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            { name: "value", type: "string", title: "Value" },
+            { name: "label", type: "string", title: "Label" },
+          ],
+        },
+      ],
+      description: "Key statistics (e.g. 100% Recyclable)",
+    }),
+    defineField({
       name: "layout",
       title: "Layout Style",
       type: "string",

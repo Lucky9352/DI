@@ -356,6 +356,24 @@ export default function AboutContent({
             </motion.div>
           ) : null}
 
+          {/* Timeline / Journey Section */}
+          {timelineEntries.length > 0 && about.journeySection ? (
+            <section className="mb-16 md:mb-24" aria-labelledby="journey-heading">
+              <div className="text-center mb-16 md:mb-24">
+                <p className="uppercase tracking-[0.4em] text-xs text-text-muted mb-3">
+                  {about.journeySection.eyebrow}
+                </p>
+                <h2
+                  id="journey-heading"
+                  className="text-3xl md:text-4xl font-bold text-deep-brown font-heading"
+                >
+                  {about.journeySection.title}
+                </h2>
+              </div>
+              <Timeline entries={timelineEntries} />
+            </section>
+          ) : null}
+
           {/* The Anjeer Story */}
           {about.anjeerStory ? (
             <motion.div
@@ -438,91 +456,11 @@ export default function AboutContent({
             </motion.div>
           ) : null}
 
-          {/* Our Philosophy */}
-          {about.philosophySection ? (
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: false, amount: 0.2 }}
-              className="text-center mb-16 md:mb-24 relative"
-            >
-              {/* Organic blob background */}
-              <div
-                className="absolute -inset-6 -z-10"
-                style={{
-                  background: "#f5f0e8",
-                  borderRadius: "55% 45% 50% 50% / 50% 55% 45% 50%",
-                  transform: "rotate(2deg)",
-                }}
-              />
-
-              <div className="bg-white/85 backdrop-blur-sm p-12 rounded-2xl border border-almond-gold/30 shadow-lg relative overflow-hidden">
-                {/* Decorative Icon */}
-                <motion.div
-                  className="flex justify-center mb-6"
-                  variants={{
-                    hidden: { opacity: 0, scale: 0.8 },
-                    visible: { opacity: 1, scale: 1 },
-                  }}
-                  transition={{ duration: 0.5, ease: "easeOut" as const }}
-                >
-                  <div className="relative w-14 h-14">
-                    <OptimizedImage
-                      src="/dates.png"
-                      alt=""
-                      fill
-                      className="object-scale-down opacity-40 grayscale-[0.2]"
-                      sizes="56px"
-                      quality={100}
-                    />
-                  </div>
-                </motion.div>
-
-                <motion.h2
-                  className="text-3xl md:text-4xl font-bold text-deep-brown mb-6 font-heading"
-                  variants={{
-                    hidden: { opacity: 0, y: 20 },
-                    visible: { opacity: 1, y: 0 },
-                  }}
-                  transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" as const }}
-                >
-                  {about.philosophySection.title}
-                </motion.h2>
-
-                <div className="max-w-4xl mx-auto space-y-6 text-lg text-text-muted leading-relaxed">
-                  <motion.p
-                    className="text-xl font-semibold text-almond-gold"
-                    variants={{
-                      hidden: { opacity: 0, x: -30 },
-                      visible: { opacity: 1, x: 0 },
-                    }}
-                    transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" as const }}
-                  >
-                    {about.philosophySection.highlight}
-                  </motion.p>
-                  {about.philosophySection.paragraphs.map((p, i) => (
-                    <motion.p
-                      key={i}
-                      className={i === 1 ? "italic" : ""}
-                      variants={{
-                        hidden: { opacity: 0, y: 20 },
-                        visible: { opacity: 1, y: 0 },
-                      }}
-                      transition={{ duration: 0.5, delay: 0.3 + i * 0.1, ease: "easeOut" as const }}
-                    >
-                      {p}
-                    </motion.p>
-                  ))}
-                </div>
-
-                <DecorativeCorners />
-              </div>
-            </motion.div>
-          ) : null}
-
           {/* Infographics / Capabilities Section */}
           {capabilities && capabilities.length > 0 ? (
-            <InfographicsSection capabilities={capabilities} />
+            <div className="relative left-[calc(-50vw+50%)] w-screen">
+              <InfographicsSection capabilities={capabilities} />
+            </div>
           ) : null}
 
           {/* Our Brands */}
@@ -531,20 +469,14 @@ export default function AboutContent({
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false, amount: 0.2 }}
-              className="mb-16 md:mb-24 relative"
+              className="relative w-screen left-[calc(-50vw+50%)] py-16 md:py-24"
             >
               {/* Section blob background */}
-              <div
-                className="absolute -inset-6 -z-10"
-                style={{
-                  background: "#f5f0e8",
-                  borderRadius: "50% 50% 45% 55% / 45% 50% 50% 55%",
-                }}
-              />
+              <div className="absolute inset-0 z-0 opacity-5" />
 
-              <div className="bg-white/90 backdrop-blur-sm p-10 rounded-2xl border border-gold-light shadow-xl">
+              <div className="container mx-auto px-4 md:px-6 lg:px-10 relative z-10">
                 <motion.h2
-                  className="text-3xl font-bold text-deep-brown mb-16 md:mb-24 text-center font-heading"
+                  className="text-3xl md:text-5xl font-bold text-white mb-16 md:mb-24 text-center font-heading"
                   variants={{
                     hidden: { opacity: 0, y: 20 },
                     visible: { opacity: 1, y: 0 },
@@ -554,25 +486,19 @@ export default function AboutContent({
                   {about.brandsSection.title}
                 </motion.h2>
 
-                <div className="grid md:grid-cols-2 gap-8">
-                  {/* Partners Card */}
+                <div className="flex flex-col gap-16 md:gap-24">
+                  {/* Partners Section */}
                   <motion.div
                     className="relative"
                     variants={{
                       hidden: { opacity: 0, x: -40 },
                       visible: { opacity: 1, x: 0 },
                     }}
-                    transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+                    transition={{ duration: 0.7, ease: "easeOut" }}
                   >
-                    <div className="absolute -top-3 -left-3 z-10">
-                      <div className="w-8 h-8 rounded-full bg-gold flex items-center justify-center text-white font-bold text-[8px] shadow-md ring-2 ring-white">
-                        Partners
-                      </div>
-                    </div>
-
-                    <div className="bg-white rounded-2xl border border-sand shadow-lg relative overflow-hidden h-full flex flex-col">
+                    <div className="rounded-2xl overflow-hidden flex flex-col md:flex-row">
                       {about.brandsSection.partners.imageUrl ? (
-                        <div className="w-full relative overflow-hidden flex justify-center p-4">
+                        <div className="w-full md:w-1/2 relative flex items-center justify-center bg-gray-50/50">
                           <OptimizedImage
                             src={
                               getGoogleDriveImageUrl(about.brandsSection.partners.imageUrl) || ""
@@ -580,92 +506,99 @@ export default function AboutContent({
                             alt={about.brandsSection.partners.title}
                             width={600}
                             height={400}
-                            className="w-auto h-auto max-w-full hover:scale-[1.02] transition-transform duration-700 object-scale-down"
+                            className="w-auto h-auto max-h-[400px] max-w-full mix-blend-multiply"
+                            imageClassName="hover:scale-[1.02] transition-transform duration-700 object-scale-down"
                             quality={100}
                           />
                         </div>
                       ) : null}
-                      <div className="p-8 text-center flex-1 flex flex-col">
-                        <div className="relative w-10 h-10 mx-auto mb-4">
-                          <OptimizedImage
-                            src="/raisin.png"
-                            alt=""
-                            fill
-                            className="object-scale-down opacity-40 grayscale-[0.2]"
-                            sizes="40px"
-                            quality={100}
-                          />
+
+                      <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+                        <div className="mb-6">
+                          <div className="w-12 h-12 mb-4 p-0">
+                            <OptimizedImage
+                              src="/raisin.png"
+                              alt=""
+                              fill
+                              className="object-scale-down opacity-80"
+                              sizes="48px"
+                              quality={100}
+                            />
+                          </div>
+                          <h2 className="text-3xl md:text-4xl font-bold text-deep-brown mb-4 font-heading">
+                            {about.brandsSection.partners.title}
+                          </h2>
                         </div>
 
-                        <h3 className="text-xl font-bold text-almond-gold mb-4">
-                          {about.brandsSection.partners.title}
-                        </h3>
-                        <div className="space-y-2 mb-4 flex-1">
+                        <div className="space-y-4 mb-6">
                           {about.brandsSection.partners.names.map((name) => (
-                            <p key={name} className="text-lg font-semibold text-deep-brown">
+                            <p
+                              key={name}
+                              className="text-xl font-medium text-text-muted flex items-center gap-3"
+                            >
+                              <span className="w-1.5 h-1.5 rounded-full bg-gold shrink-0" />
                               {name}
                             </p>
                           ))}
                         </div>
-                        <p className="text-sm text-text-muted mt-auto">
+
+                        <p className="text-lg text-text-muted/80 leading-relaxed">
                           {about.brandsSection.partners.description}
                         </p>
                       </div>
                     </div>
                   </motion.div>
 
-                  {/* Retail Card */}
+                  {/* Retail Section */}
                   <motion.div
                     className="relative"
                     variants={{
                       hidden: { opacity: 0, x: 40 },
                       visible: { opacity: 1, x: 0 },
                     }}
-                    transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+                    transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
                   >
-                    <div className="absolute -top-3 -left-3 z-10">
-                      <div className="w-8 h-8 rounded-full bg-gold flex items-center justify-center text-white font-bold text-[10px] shadow-md ring-2 ring-white">
-                        Retail
-                      </div>
-                    </div>
-
-                    <div className="bg-white rounded-2xl border border-sand shadow-lg relative overflow-hidden h-full flex flex-col">
+                    <div className="rounded-2xl overflow-hidden flex flex-col md:flex-row-reverse">
                       {about.brandsSection.retail.imageUrl ? (
-                        <div className="w-full relative overflow-hidden flex justify-center p-4">
+                        <div className="w-full md:w-1/2 relative flex items-center justify-center bg-gray-50/50">
                           <OptimizedImage
                             src={getGoogleDriveImageUrl(about.brandsSection.retail.imageUrl) || ""}
                             alt={about.brandsSection.retail.title}
                             width={600}
                             height={400}
-                            className="w-auto h-auto max-w-full hover:scale-[1.02] transition-transform duration-700 object-scale-down"
+                            className="w-auto h-auto max-h-[400px] max-w-full mix-blend-multiply"
+                            imageClassName="hover:scale-[1.02] transition-transform duration-700 object-scale-down"
                             quality={100}
                           />
                         </div>
                       ) : null}
-                      <div className="p-8 text-center flex-1 flex flex-col">
-                        <div className="relative w-10 h-10 mx-auto mb-4">
-                          <OptimizedImage
-                            src="/cashewsingle.png"
-                            alt=""
-                            fill
-                            className="object-scale-down opacity-40 grayscale-[0.2]"
-                            sizes="40px"
-                            quality={100}
-                          />
+
+                      <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+                        <div className="mb-6">
+                          <div className="w-12 h-12 mb-4 p-0">
+                            <OptimizedImage
+                              src="/cashewsingle.png"
+                              alt=""
+                              fill
+                              className="object-scale-down opacity-80"
+                              sizes="48px"
+                              quality={100}
+                            />
+                          </div>
+                          <h2 className="text-3xl md:text-4xl font-bold text-deep-brown mb-4 font-heading">
+                            {about.brandsSection.retail.title}
+                          </h2>
                         </div>
 
-                        <h3 className="text-xl font-bold text-almond-gold mb-4">
-                          {about.brandsSection.retail.title}
-                        </h3>
                         <a
                           href="https://thebetternut.co/"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-lg font-semibold text-deep-brown mb-4 hover:text-gold transition-colors inline-flex items-center justify-center gap-1 flex-1"
+                          className="text-2xl font-semibold text-gold mb-6 hover:text-gold-dark transition-colors inline-flex items-center gap-2 group/link w-fit"
                         >
                           {about.brandsSection.retail.name}
                           <svg
-                            className="w-3.5 h-3.5 opacity-60"
+                            className="w-5 h-5 transform group-hover/link:translate-x-1 transition-transform"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -678,7 +611,8 @@ export default function AboutContent({
                             />
                           </svg>
                         </a>
-                        <p className="text-sm text-text-muted mt-auto">
+
+                        <p className="text-lg text-text-muted/80 leading-relaxed">
                           {about.brandsSection.retail.description}
                         </p>
                       </div>
@@ -688,70 +622,8 @@ export default function AboutContent({
               </div>
             </motion.div>
           ) : null}
-
-          {timelineEntries.length > 0 && about.journeySection ? (
-            <section className="mb-16 md:mb-24" aria-labelledby="journey-heading">
-              <div className="text-center mb-16 md:mb-24">
-                <p className="uppercase tracking-[0.4em] text-xs text-text-muted mb-3">
-                  {about.journeySection.eyebrow}
-                </p>
-                <h2
-                  id="journey-heading"
-                  className="text-3xl md:text-4xl font-bold text-deep-brown font-heading"
-                >
-                  {about.journeySection.title}
-                </h2>
-              </div>
-              <Timeline entries={timelineEntries} />
-            </section>
-          ) : null}
         </div>
       </div>
-    </>
-  );
-}
-
-// =============================================================================
-// HELPER COMPONENTS
-// =============================================================================
-
-function DecorativeCorners() {
-  return (
-    <>
-      <motion.div
-        animate={{ rotate: [0, 360] }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        className="absolute top-4 right-4 opacity-20"
-        aria-hidden="true"
-      >
-        <div className="relative w-24 h-24">
-          <OptimizedImage
-            src="/raisin.png"
-            alt=""
-            fill
-            className="object-scale-down grayscale-[0.2] brightness-110"
-            sizes="96px"
-            quality={100}
-          />
-        </div>
-      </motion.div>
-      <motion.div
-        animate={{ rotate: [0, -360] }}
-        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-        className="absolute bottom-4 left-4 opacity-20"
-        aria-hidden="true"
-      >
-        <div className="relative w-20 h-20">
-          <OptimizedImage
-            src="/dates.png"
-            alt=""
-            fill
-            className="object-scale-down grayscale-[0.2] brightness-110"
-            sizes="80px"
-            quality={100}
-          />
-        </div>
-      </motion.div>
     </>
   );
 }

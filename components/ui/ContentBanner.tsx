@@ -24,6 +24,7 @@ export interface ContentBannerData {
   bgOverlay?: "none" | "black-10" | "black-20" | "black-40" | "white-10";
   theme?: "light" | "dark";
   paragraphs?: string[];
+  stats?: { value: string; label: string }[];
 }
 
 interface ContentBannerProps {
@@ -469,6 +470,37 @@ export default function ContentBanner({ data, className, priority = false }: Con
                 >
                   {feature}
                 </span>
+              </div>
+            ))}
+          </div>
+        ) : null}
+
+        {/* Stats Grid */}
+        {data.stats && data.stats.length > 0 ? (
+          <div
+            className={cn(
+              "grid grid-cols-2 md:grid-cols-3 gap-6 pt-8 border-t border-gold/20 mt-8",
+              layout === "bottom-image" || layout === "text-only" ? "max-w-2xl mx-auto" : ""
+            )}
+          >
+            {data.stats.map((stat, idx) => (
+              <div key={idx} className="text-center space-y-1">
+                <p
+                  className={cn(
+                    "text-3xl md:text-4xl font-bold",
+                    isLightText ? textColor : "text-gold"
+                  )}
+                >
+                  {stat.value}
+                </p>
+                <p
+                  className={cn(
+                    "text-xs md:text-sm font-bold tracking-[0.2em] uppercase",
+                    descColor
+                  )}
+                >
+                  {stat.label}
+                </p>
               </div>
             ))}
           </div>

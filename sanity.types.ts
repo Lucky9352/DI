@@ -61,6 +61,11 @@ export type ContentBanner = {
   highlight?: string;
   description?: string;
   features?: Array<string>;
+  stats?: Array<{
+    value?: string;
+    label?: string;
+    _key: string;
+  }>;
   layout?: "bottom-image" | "right-image" | "left-image" | "background-image" | "text-only";
   imageUrl?: string;
   image?: {

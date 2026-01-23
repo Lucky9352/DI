@@ -172,7 +172,7 @@ export default function ProcessFlowSection({
 
       <div className="container mx-auto px-4 md:px-6 lg:px-8 relative z-10">
         <motion.div
-          className="text-center max-w-4xl mx-auto mb-16 md:mb-24 bg-white/60 backdrop-blur-md p-8 md:p-12 rounded-3xl shadow-xl border border-white/20"
+          className="text-center max-w-4xl mx-auto mb-16 md:mb-24 bg-sand/90 backdrop-blur-md p-8 md:p-12 rounded-3xl shadow-xl border border-sand/50"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

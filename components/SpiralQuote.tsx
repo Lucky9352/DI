@@ -109,7 +109,7 @@ export default function SpiralQuote({ initialQuote, labels }: SpiralQuoteProps) 
           </div>
 
           {/* Quote with Glass Protection */}
-          <div className="text-center lg:text-left bg-white/60 backdrop-blur-md p-8 md:p-12 rounded-3xl shadow-xl border border-white/20">
+          <div className="text-center lg:text-left bg-sand/90 backdrop-blur-md p-8 md:p-12 rounded-3xl shadow-xl border border-sand/50">
             <motion.span
               className="text-6xl text-gold font-serif leading-none block mb-2"
               initial={{ opacity: 0, scale: 0.5 }}

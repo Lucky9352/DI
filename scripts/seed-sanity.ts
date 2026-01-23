@@ -1358,6 +1358,24 @@ const aboutData = {
           "https://drive.google.com/file/d/1lmKKKIt5gJqJKKgCVDLHrP-kW1ZfSXWP/view?usp=sharing",
         theme: "dark",
       },
+      {
+        _key: "poster-nuts",
+        _type: "contentBanner",
+        eyebrow: "OUR PHILOSOPHY",
+        title: "We Are All Nuts in Here! 🥜",
+        highlight: "We feel happier when our clients succeed...",
+        paragraphs: [
+          "We love to share their joy ensuring that in this ecosystem - we are all thriving. Clients & suppliers - our partners... we believe in building relationships that go beyond transactions.",
+          "Similar to how different nuts complement each other in a premium mix, we create an ecosystem where everyone flourishes together.",
+        ],
+        stats: [
+          { value: "100%", label: "Commitment" },
+          { value: "25+", label: "Years of Trust" },
+          { value: "15+", label: "Global Partners" },
+        ],
+        layout: "text-only",
+        theme: "dark",
+      },
     ],
   },
 

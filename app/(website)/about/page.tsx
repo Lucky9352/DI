@@ -125,6 +125,7 @@ const contentBannerSchema = z.object({
   bgOverlay: z.enum(["none", "black-10", "black-20", "black-40", "white-10"]).optional(),
   theme: z.enum(["light", "dark"]).optional(),
   paragraphs: z.array(z.string()).optional(),
+  stats: z.array(z.object({ value: z.string(), label: z.string() })).optional(),
 });
 
 /**

@@ -45,24 +45,26 @@ export default function InfographicsSection({ capabilities }: InfographicsSectio
   if (!capabilities || capabilities.length === 0) return null;
 
   return (
-    <section className="py-16 md:py-24 relative" aria-labelledby="infographics-heading">
-      <div className="text-center mb-16 md:mb-24">
-        <h2
-          id="infographics-heading"
-          className="text-3xl md:text-4xl font-bold text-deep-brown font-heading mb-4"
-        >
-          Our Capabilities
-        </h2>
-        <p className="text-(--color-slate) max-w-2xl mx-auto">
-          Delivering excellence through a robust global network and rigorous quality standards to
-          support your business growth.
-        </p>
-      </div>
+    <section className="py-16 md:py-24 relative bg-sand/90" aria-labelledby="infographics-heading">
+      <div className="container mx-auto px-4 md:px-6 lg:px-10">
+        <div className="text-center mb-16 md:mb-24">
+          <h2
+            id="infographics-heading"
+            className="text-3xl md:text-4xl font-bold text-deep-brown font-heading mb-4"
+          >
+            Our Capabilities
+          </h2>
+          <p className="text-deep-brown/80 max-w-2xl mx-auto">
+            Delivering excellence through a robust global network and rigorous quality standards to
+            support your business growth.
+          </p>
+        </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-        {capabilities.map((item, index) => (
-          <StatCard key={item._id} item={item} index={index} />
-        ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {capabilities.map((item, index) => (
+            <StatCard key={item._id} item={item} index={index} />
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -82,17 +84,17 @@ function StatCard({ item, index }: { item: Capability; index: number }) {
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group"
+      className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-white/50 shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden group"
     >
       {/* Decorative background element */}
-      <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity transform group-hover:scale-110 duration-500">
-        {createElement(Icon, { className: "w-24 h-24 text-gold" })}
+      <div className="absolute -right-4 -top-4 p-4 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity transform group-hover:scale-110 duration-500 rotate-12">
+        {createElement(Icon, { className: "w-32 h-32 text-deep-brown" })}
       </div>
 
       <div className="relative z-10">
-        <div className="flex items-center gap-4 mb-4">
-          <div className="w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center text-gold group-hover:bg-gold group-hover:text-white transition-colors duration-300">
-            {createElement(Icon, { className: "w-6 h-6" })}
+        <div className="flex items-center gap-4 mb-6">
+          <div className="w-14 h-14 rounded-2xl bg-linear-to-br from-gold/10 to-gold/20 flex items-center justify-center text-gold group-hover:from-gold group-hover:to-gold-dark group-hover:text-white transition-all duration-300 shadow-inner group-hover:shadow-lg">
+            {createElement(Icon, { className: "w-7 h-7" })}
           </div>
 
           {item.metric ? (
@@ -103,15 +105,17 @@ function StatCard({ item, index }: { item: Capability; index: number }) {
                 <>
                   {prefix}
                   <Counter from={0} to={number} duration={2} start={isInView} />
-                  <span className="text-lg ml-1 text-gold">{suffix}</span>
+                  <span className="text-lg ml-1 text-gold font-serif italic">{suffix}</span>
                 </>
               )}
             </div>
           ) : null}
         </div>
 
-        <h3 className="text-xl font-bold text-gray-900 mb-2">{item.title}</h3>
-        <p className="text-gray-600 text-sm leading-relaxed">{item.description}</p>
+        <h3 className="text-xl font-bold text-deep-brown mb-3 group-hover:text-gold-dark transition-colors">
+          {item.title}
+        </h3>
+        <p className="text-deep-brown/70 text-sm leading-relaxed">{item.description}</p>
       </div>
     </motion.div>
   );

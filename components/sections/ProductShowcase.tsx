@@ -183,7 +183,7 @@ export default function ProductShowcase({
 
       <div className="container mx-auto px-4 md:px-6 lg:px-10 relative z-10">
         {headerData ? (
-          <div className="text-center mb-16 md:mb-24 max-w-4xl mx-auto bg-white/60 backdrop-blur-md p-8 md:p-12 rounded-3xl shadow-xl border border-white/20">
+          <div className="text-center mb-16 md:mb-24 max-w-4xl mx-auto bg-sand/90 backdrop-blur-md p-8 md:p-12 rounded-3xl shadow-xl border border-sand/50">
             <SectionHeader headerData={headerData} />
           </div>
         ) : null}
