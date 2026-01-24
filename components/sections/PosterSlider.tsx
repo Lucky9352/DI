@@ -134,7 +134,7 @@ export default function PosterSlider({ sliderData }: PosterSliderProps) {
             </button>
 
             {/* Dots */}
-            <div className="absolute bottom-2 md:bottom-6 left-1/2 -translate-x-1/2 z-30 flex gap-1 md:gap-2 px-4">
+            <div className="absolute bottom-2 md:bottom-6 left-1/2 -translate-x-1/2 z-30 hidden md:flex gap-1 md:gap-2 px-4">
               {posters.map((_, index) => (
                 <button
                   key={index}

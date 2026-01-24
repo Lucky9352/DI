@@ -160,7 +160,6 @@ function GalleryItem({
 
   return (
     <motion.div
-      layout
       className="break-inside-avoid relative group rounded-2xl overflow-hidden mb-4 cursor-pointer"
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -315,7 +314,7 @@ function Lightbox({
 
       {/* Image container */}
       <div
-        className="relative max-w-[90vw] max-h-[85vh] flex items-center justify-center"
+        className="relative max-w-[90vw] max-h-[85vh] min-w-[300px] min-h-[300px] flex items-center justify-center"
         onClick={(e) => e.stopPropagation()}
       >
         {isLoading ? (
@@ -330,19 +329,15 @@ function Lightbox({
             width={1200}
             height={800}
             className={cn(
-              "max-w-full max-h-[85vh] object-scale-down rounded-lg shadow-2xl transition-opacity duration-300",
+              "transition-opacity duration-300",
               isLoading ? "opacity-0" : "opacity-100"
             )}
+            imageClassName="max-w-full max-h-[85vh] w-auto h-auto object-contain rounded-lg shadow-2xl"
             onLoad={() => setIsLoading(false)}
             quality={100}
+            overflowVisible={true}
+            skeletonClassName="bg-transparent"
           />
-        ) : null}
-
-        {/* Title overlay */}
-        {image.title && !isLoading ? (
-          <div className="absolute bottom-0 left-0 right-0 p-6 bg-black/60 rounded-b-lg">
-            <h3 className="text-white text-xl font-medium">{image.title}</h3>
-          </div>
         ) : null}
       </div>
 

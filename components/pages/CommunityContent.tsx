@@ -11,6 +11,7 @@
  * for runtime type safety.
  */
 
+import { Calendar } from "lucide-react";
 import { getGoogleDriveImageUrl } from "@/lib/utils";
 import OptimizedImage from "@/components/ui/OptimizedImage";
 import { motion, AnimatePresence } from "framer-motion";
@@ -668,6 +669,34 @@ interface TradeEventCardProps {
 }
 
 function TradeEventCard({ event, index }: TradeEventCardProps) {
+  const dateString = event.date;
+  const isRange = dateString.includes(" to ");
+  const [startDateStr, endDateStr] = isRange ? dateString.split(" to ") : [dateString, null];
+
+  const startDate = new Date(startDateStr);
+  const endDate = endDateStr ? new Date(endDateStr) : null;
+
+  const isValidDate = !isNaN(startDate.getTime());
+  const year = isValidDate ? startDate.getFullYear() : "";
+
+  // Format date string
+  const formattedDate = isValidDate
+    ? startDate.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    : dateString; // Fallback to raw string if invalid
+
+  const formattedEndDate =
+    endDate && !isNaN(endDate.getTime())
+      ? endDate.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
+      : null;
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -693,19 +722,19 @@ function TradeEventCard({ event, index }: TradeEventCardProps) {
         <div className="p-6">
           <div className="flex items-start space-x-4">
             <div className="shrink-0 w-16 h-16 bg-gold rounded-full flex items-center justify-center text-white font-bold shadow-md text-lg">
-              {new Date(event.date).getFullYear()}
+              {year}
             </div>
             <div className="flex-1">
               <h3 className="font-bold text-deep-brown mb-2 text-lg">{event.name}</h3>
               <p className="text-sm text-(--color-slate) mb-2 flex items-center">
                 <span className="mr-1">📍</span> {event.location}
               </p>
-              <p className="text-sm text-almond-gold font-semibold mb-3">
-                {new Date(event.date).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
+              <p className="text-sm text-almond-gold font-semibold mb-3 flex items-center">
+                <Calendar className="w-4 h-4 mr-2" />
+                <span>
+                  {formattedDate}
+                  {formattedEndDate ? ` - ${formattedEndDate}` : ""}
+                </span>
               </p>
               {event.description ? (
                 <p className="text-sm text-(--color-slate)/80 leading-relaxed border-t border-sand/50 pt-3">

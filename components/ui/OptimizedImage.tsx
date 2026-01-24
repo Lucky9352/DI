@@ -33,6 +33,7 @@ const OptimizedImagePropsSchema = z.object({
   onLoad: z.any().optional(),
   onError: z.any().optional(),
   overflowVisible: z.boolean().optional(),
+  skeletonClassName: z.string().optional(),
 });
 
 // =============================================================================
@@ -78,6 +79,7 @@ export default function OptimizedImage({
   onLoad,
   onError,
   overflowVisible = false,
+  skeletonClassName,
 }: OptimizedImageProps) {
   // Validate props in dev
   validateProps({
@@ -95,9 +97,16 @@ export default function OptimizedImage({
     onLoad,
     onError,
     overflowVisible,
+    skeletonClassName,
   });
 
   const [isLoaded, setIsLoaded] = useState(false);
+  const [prevSrc, setPrevSrc] = useState(src);
+
+  if (src !== prevSrc) {
+    setPrevSrc(src);
+    setIsLoaded(false);
+  }
 
   return (
     <div
@@ -110,7 +119,10 @@ export default function OptimizedImage({
     >
       {!isLoaded ? (
         <div
-          className="absolute inset-0 bg-gray-200 animate-pulse rounded-[inherit]"
+          className={cn(
+            "absolute inset-0 bg-gray-200 animate-pulse rounded-[inherit]",
+            skeletonClassName
+          )}
           aria-hidden="true"
         />
       ) : null}
