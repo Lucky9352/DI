@@ -2252,14 +2252,20 @@ const homePageData = {
       detail: "Leading the industry since 1999",
     },
     {
-      _key: "partners",
+      _key: "countries",
       value: "15+",
-      label: "Global Partners",
+      label: "Countries Sourced",
       detail: "Sourcing from 15+ countries",
     },
     {
+      _key: "partners",
+      value: "1000+",
+      label: "Global Partners",
+      detail: "From across the globe",
+    },
+    {
       _key: "quality",
-      value: "100%",
+      value: "99%",
       label: "Quality Guarantee",
       detail: "ISO 22000 & HACCP Certified",
     },
