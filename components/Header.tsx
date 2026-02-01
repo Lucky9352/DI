@@ -175,7 +175,7 @@ export default function Header({ initialHeader, products, siteSettings }: Header
             >
               <Link
                 href={homeUrl}
-                className="text-foreground hover:text-gold transition-colors focus:outline-2 focus:outline-gold focus:rounded px-2 py-1"
+                className="text-foreground hover:text-gold transition-colors focus:outline-2 focus:outline-gold focus:rounded px-2 py-1 whitespace-nowrap"
               >
                 {homeLabel}
               </Link>
@@ -191,7 +191,7 @@ export default function Header({ initialHeader, products, siteSettings }: Header
 
               <Link
                 href="/catalogue"
-                className="text-foreground hover:text-gold transition-colors focus:outline-2 focus:outline-gold focus:rounded px-2 py-1"
+                className="text-foreground hover:text-gold transition-colors focus:outline-2 focus:outline-gold focus:rounded px-2 py-1 whitespace-nowrap"
               >
                 Catalogue
               </Link>
@@ -200,7 +200,7 @@ export default function Header({ initialHeader, products, siteSettings }: Header
                 <Link
                   key={index}
                   href={link.url}
-                  className="text-foreground hover:text-gold transition-colors focus:outline-2 focus:outline-gold focus:rounded px-2 py-1"
+                  className="text-foreground hover:text-gold transition-colors focus:outline-2 focus:outline-gold focus:rounded px-2 py-1 whitespace-nowrap"
                 >
                   {link.label}
                 </Link>
@@ -243,7 +243,11 @@ export default function Header({ initialHeader, products, siteSettings }: Header
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
         products={products || []}
-        menuItems={[{ label: homeLabel, url: homeUrl }, ...(header.navLinks ?? [])]}
+        menuItems={[
+          { label: homeLabel, url: homeUrl },
+          { label: "Catalogue", url: "/catalogue" },
+          ...(header.navLinks ?? []),
+        ]}
         productsLabel={productsLabel}
         closeMenuAriaLabel={header.closeMenuAriaLabel || "Close menu"}
       />

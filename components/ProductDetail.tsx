@@ -217,7 +217,6 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
 
   const specs = [
     { label: "Origin", value: product.specifications?.origin || "Multiple Origins" },
-    { label: "Variety", value: product.specifications?.variety || "Premium" },
     { label: "Packaging", value: product.specifications?.packaging || "Bulk" },
     { label: "Shelf Life", value: product.specifications?.shelfLife || "12 Months" },
     { label: "Storage", value: product.specifications?.storage || "Cool & Dry" },

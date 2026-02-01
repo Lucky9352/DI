@@ -5,7 +5,7 @@
  */
 
 import React, { useState, useRef, useCallback, useEffect, forwardRef } from "react";
-import Link from "next/link";
+import _Link from "next/link";
 import OptimizedImage from "@/components/ui/OptimizedImage";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
@@ -173,12 +173,6 @@ const ProductPage = forwardRef<HTMLDivElement, ProductPageProps>(
                 <div className="grid grid-cols-3">
                   <dt className="font-semibold text-[#6B5B4F]">Origin</dt>
                   <dd className="col-span-2 text-[#3A2A1E]">{product.specifications.origin}</dd>
-                </div>
-              ) : null}
-              {product.specifications?.variety ? (
-                <div className="grid grid-cols-3">
-                  <dt className="font-semibold text-[#6B5B4F]">Variety</dt>
-                  <dd className="col-span-2 text-[#3A2A1E]">{product.specifications.variety}</dd>
                 </div>
               ) : null}
               {product.specifications?.packaging ? (
@@ -429,44 +423,44 @@ export default function CatalogueViewer({ products }: CatalogueViewerProps) {
     flipBookRef.current?.pageFlip()?.flipPrev();
   };
 
-  if (isMobile) {
-    return (
-      <div className="min-h-screen bg-sand/20 flex flex-col items-center justify-start p-6 pt-32 pb-12 text-center overflow-y-auto">
-        <div className="max-w-md w-full bg-white p-8 rounded-2xl shadow-xl border border-gold/20 flex flex-col items-center">
-          <div className="w-20 h-20 bg-gold/10 rounded-full flex items-center justify-center mb-6">
-            <svg
-              className="w-10 h-10 text-gold"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.5}
-                d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-              />
-            </svg>
-          </div>
-          <h2 className="text-2xl font-bold text-deep-brown mb-4 font-heading">
-            Desktop Experience Only
-          </h2>
-          <p className="text-text-light mb-8 italic">
-            Our interactive product catalogue is designed for larger screens to provide the best
-            reading experience. Please switch to a larger screen to view it.
-          </p>
-          <div className="w-full mt-2">
-            <Link
-              href="/"
-              className="inline-block bg-gold hover:bg-gold-dark text-white px-10 py-3.5 rounded-full font-bold transition-all shadow-md active:scale-95"
-            >
-              Back To Home
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // if (isMobile) {
+  //   return (
+  //     <div className="min-h-screen bg-sand/20 flex flex-col items-center justify-start p-6 pt-32 pb-12 text-center overflow-y-auto">
+  //       <div className="max-w-md w-full bg-white p-8 rounded-2xl shadow-xl border border-gold/20 flex flex-col items-center">
+  //         <div className="w-20 h-20 bg-gold/10 rounded-full flex items-center justify-center mb-6">
+  //           <svg
+  //             className="w-10 h-10 text-gold"
+  //             fill="none"
+  //             stroke="currentColor"
+  //             viewBox="0 0 24 24"
+  //           >
+  //             <path
+  //               strokeLinecap="round"
+  //               strokeLinejoin="round"
+  //               strokeWidth={1.5}
+  //               d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+  //             />
+  //           </svg>
+  //         </div>
+  //         <h2 className="text-2xl font-bold text-deep-brown mb-4 font-heading">
+  //           Desktop Experience Only
+  //         </h2>
+  //         <p className="text-text-light mb-8 italic">
+  //           Our interactive product catalogue is designed for larger screens to provide the best
+  //           reading experience. Please switch to a larger screen to view it.
+  //         </p>
+  //         <div className="w-full mt-2">
+  //           <Link
+  //             href="/"
+  //             className="inline-block bg-gold hover:bg-gold-dark text-white px-10 py-3.5 rounded-full font-bold transition-all shadow-md active:scale-95"
+  //           >
+  //             Back To Home
+  //           </Link>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   if (!products || products.length === 0) {
     return (

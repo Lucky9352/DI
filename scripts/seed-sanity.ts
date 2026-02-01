@@ -76,7 +76,7 @@ const products = [
         "Divyansh International is one of India's most reliable importers of premium almonds, offering the finest varieties from California and around the world."
       ),
       createLocaleText(
-        "We directly source high-quality raw almonds from trusted growers in Australia and Kashmir — ensuring consistency, freshness and the best quality for our customers."
+        "We directly source high-quality raw almonds from trusted growers in California, Kashmir(India), Iran, Afghanistan, and Australia — ensuring consistency, freshness and the best quality for our customers."
       ),
     ],
     listSections: [
@@ -283,10 +283,10 @@ const products = [
     category: "cashews",
     slug: { current: "cashews" },
     order: 2,
-    heroHeading: createLocaleString("Premium Cashews – W180, W240 & More"),
+    heroHeading: createLocaleString("Premium Cashews – W150, W180, W240 & More"),
     introParagraphs: [
       createLocaleText(
-        "Divyansh International brings you the creamiest, crunchiest cashews sourced from the finest processing centres in India and Africa."
+        "Divyansh International brings you the creamiest, crunchiest cashews sourced from the finest processing centres in India, Vietnam, and West Africa."
       ),
       createLocaleText(
         "Graded for perfection, our cashews are ideal for namkeen manufacturers, sweet marts, luxury gifting and retail packs."
@@ -329,7 +329,9 @@ const products = [
     ctaLine: createLocaleString(
       "Require bulk cashews? Contact us for the best daily rates and supply continuity."
     ),
-    description: createLocaleText("Premium W180, W240 & W320 Cashews for retail & wholesale."),
+    description: createLocaleText(
+      "Premium W150, W180, W210, W240 & W320 Cashews for retail & wholesale."
+    ),
     heroImageUrl:
       "https://drive.google.com/file/d/1GbqwbSpHLPff4mjSIIdSi0HeehvSG0BE/view?usp=sharing",
     gallery: [],
@@ -513,9 +515,6 @@ const products = [
           createLocaleString("Direct importers with year-round availability"),
           createLocaleString("Multiple origins for price & flavour flexibility"),
           createLocaleString("Size-graded, hygienically packed, ready for retail or bulk use"),
-          createLocaleString(
-            "Strong supply chain across Punjab, Delhi-NCR, Mumbai, Bangalore & export markets"
-          ),
         ],
       },
     ],

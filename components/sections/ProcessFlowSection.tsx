@@ -51,6 +51,35 @@ interface ProcessFlowProps {
 }
 
 // =============================================================================
+// SVG ICON COMPONENTS
+// =============================================================================
+
+function SortingIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      {/* Hopper Top */}
+      <path d="M4 4h16l-2 6H6L4 4z" />
+      {/* Product falling */}
+      <circle cx="9" cy="12" r="0.5" fill="currentColor" />
+      <circle cx="15" cy="12" r="0.5" fill="currentColor" />
+      <circle cx="12" cy="14" r="0.5" fill="currentColor" />
+      {/* Two chutes/bins */}
+      <path d="M7 16h4v4H7zM13 16h4v4h-4z" />
+      {/* Diverging lines */}
+      <path d="M10 10l-2 6M14 10l2 6" />
+    </svg>
+  );
+}
+
+// =============================================================================
 // ICON COMPONENTS
 // =============================================================================
 
@@ -66,16 +95,7 @@ const PROCESS_ICONS: Record<string, React.ReactNode> = {
       quality={100}
     />
   ),
-  sorting: (
-    <OptimizedImage
-      src="/Sorting.png"
-      alt="Sorting Process"
-      width={150}
-      height={150}
-      className="w-10 h-10 object-scale-down"
-      quality={100}
-    />
-  ),
+  sorting: <SortingIcon className="w-12 h-12" />,
   quality: <ShieldCheck className="w-8 h-8 md:w-10 md:h-10" strokeWidth={2} />,
   packing: <Package className="w-8 h-8 md:w-10 md:h-10" strokeWidth={2} />,
   shipping: <Truck className="w-8 h-8 md:w-10 md:h-10" strokeWidth={2} />,
@@ -281,7 +301,9 @@ function ProcessStepCard({ step, index, total }: ProcessStepCardProps) {
           <div
             className={`mb-4 ${textColor} transform group-hover:scale-110 transition-transform duration-300`}
           >
-            <div className="w-10 h-10 md:w-12 md:h-12 mx-auto">{icon}</div>
+            <div className="w-12 h-12 md:w-14 md:h-14 mx-auto flex items-center justify-center">
+              {icon}
+            </div>
           </div>
 
           <h3 className={`text-xl font-bold mb-3 ${textColor} leading-tight drop-shadow-sm`}>
@@ -308,7 +330,9 @@ function ProcessStepCard({ step, index, total }: ProcessStepCardProps) {
           </div>
           <div className="flex-1 text-left">
             <div className="flex items-center gap-3 mb-2">
-              <div className={`w-8 h-8 flex items-center justify-center ${textColor}`}>{icon}</div>
+              <div className={`w-10 h-10 flex items-center justify-center shrink-0 ${textColor}`}>
+                {icon}
+              </div>
               <h3 className={`text-lg font-bold ${textColor}`}>{step.title}</h3>
             </div>
             <p className={`text-sm ${textColor} opacity-90`}>{step.detail}</p>
