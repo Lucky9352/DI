@@ -812,7 +812,7 @@ const timeline = [
     title: "Third Generation Joins",
     description:
       "During the turbulent years of riots and emergency in Punjab, Mr. Sanjeev Sethi joined the business in his teenage years, dedicating himself to serving the people of Punjab—an involvement that became lifelong.",
-    imageUrl: "https://drive.google.com/file/d/1kk45Id4ph8WjqEzKIXYcKiixpC0apbZ1/view?usp=sharing",
+    imageUrl: "https://drive.google.com/file/d/1nL7yJtbwCnVIxrTKva1F775fqWi--D6M/view?usp=sharing",
   },
   {
     _id: "5",
