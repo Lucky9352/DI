@@ -700,10 +700,10 @@ const products = [
         items: [
           createListItem("Golden Raisins – Premium quality – preferred for retail & export packs"),
           createListItem(
-            "Indian Raisins – Green, Black, Golden (Sunde Khani / Long Raisins), Round Raisins – popular for traditional retail, gifting & FMCG use"
+            "Indian Raisins – Green, Black, Golden (Sunde Khani / Long Raisins) – popular for traditional retail, gifting & FMCG use"
           ),
           createListItem(
-            "Kandhari Raisins – Green, Black, Golden (Mannaca / Abjosh) – premium choice for retail, export and high-value consumption"
+            "Kandhari Raisins – Green, Black, Golden (Mannaca / Abjosh), Round Raisins – premium choice for retail, export and high-value consumption"
           ),
         ],
       },

@@ -40,18 +40,8 @@ interface ProductPageProps {
   showPageNumbers?: boolean;
 }
 
-const catalogueImages: Record<string, string> = {
-  almonds: "/catalogue-almonds.png",
-  cashews: "/catalogue-cashews.png",
-  walnuts: "/catalogue-walnuts.png",
-  pistachio: "/catalogue-pistachios.png",
-  coconut: "/catalogue-coconut.png",
-  raisins: "/catalogue-raisins.png",
-};
-
 function getCatalogueImage(product: Product): string {
-  const category = product.category?.toLowerCase() || "";
-  return catalogueImages[category] || getGoogleDriveImageUrl(product.heroImageUrl || "") || "";
+  return getGoogleDriveImageUrl(product.heroImageUrl || "") || "";
 }
 
 const ProductPage = forwardRef<HTMLDivElement, ProductPageProps>(
@@ -60,11 +50,11 @@ const ProductPage = forwardRef<HTMLDivElement, ProductPageProps>(
       return (
         <div
           ref={ref}
-          className="page-wrapper bg-linear-to-br from-deep-brown to-black text-white p-8 md:p-12 flex flex-col justify-between"
+          className="page-wrapper bg-linear-to-br from-deep-brown to-black text-white p-4 md:p-8 lg:p-12 flex flex-col justify-between"
           style={{ width: "100%", height: "100%" }}
         >
-          <div className="flex flex-col items-center justify-center h-full gap-8">
-            <div className="w-48 h-48 md:w-64 md:h-64 relative rounded-full overflow-hidden border-4 border-almond-gold/50 shadow-2xl">
+          <div className="flex flex-col items-center justify-center h-full gap-4 md:gap-8">
+            <div className="w-32 h-32 md:w-48 md:h-48 lg:w-64 lg:h-64 relative rounded-full overflow-hidden border-4 border-almond-gold/50 shadow-2xl">
               {product.heroImageUrl ? (
                 <OptimizedImage
                   src={product.heroImageUrl}
@@ -74,15 +64,17 @@ const ProductPage = forwardRef<HTMLDivElement, ProductPageProps>(
                 />
               ) : null}
             </div>
-            <div className="text-center">
-              <h1 className="text-4xl md:text-6xl font-bold font-heading text-almond-gold mb-4">
+            <div className="text-center px-2">
+              <h1 className="text-2xl md:text-4xl lg:text-6xl font-bold font-heading text-almond-gold mb-2 md:mb-4">
                 {product.title?.en}
               </h1>
-              <p className="text-white/80 text-lg max-w-md mx-auto">{product.heroHeading?.en}</p>
+              <p className="text-white/80 text-sm md:text-lg max-w-md mx-auto">
+                {product.heroHeading?.en}
+              </p>
             </div>
           </div>
-          <div className="text-center border-t border-white/10 pt-6">
-            <p className="text-sm tracking-widest uppercase text-almond-gold">
+          <div className="text-center border-t border-white/10 pt-3 md:pt-6">
+            <p className="text-xs md:text-sm tracking-widest uppercase text-almond-gold">
               Divyansh International Collection
             </p>
           </div>
@@ -94,7 +86,7 @@ const ProductPage = forwardRef<HTMLDivElement, ProductPageProps>(
       return (
         <div
           ref={ref}
-          className="page-wrapper bg-[#FAF6F1] p-8 md:p-10 flex flex-col h-full relative overflow-hidden"
+          className="page-wrapper bg-[#FAF6F1] p-3 md:p-8 lg:p-10 flex flex-col h-full relative overflow-hidden"
           style={{ width: "100%", height: "100%" }}
         >
           {/* Background image */}
@@ -106,30 +98,33 @@ const ProductPage = forwardRef<HTMLDivElement, ProductPageProps>(
               backgroundPosition: "center",
             }}
           />
-          {/* Subtle border */}
-          <div className="absolute inset-3 border border-[#D4C4A8] pointer-events-none z-10" />
-          {/* Product Image - natural size like ProductCard */}
-          <div className="relative z-10 w-full flex justify-center mb-4 overflow-visible">
-            <OptimizedImage
-              src={getCatalogueImage(product)}
-              alt={product.title?.en || "Product"}
-              width={400}
-              height={300}
-              quality={100}
-              overflowVisible
-              className="w-auto h-auto max-w-[90%] mx-auto block rounded-lg shadow-md border border-[#D4C4A8]"
-              imageClassName="object-contain"
-            />
+          <div className="absolute inset-2 md:inset-3 border border-[#D4C4A8] pointer-events-none z-10" />
+          <div className="relative z-10 w-full flex justify-center mb-2 md:mb-4 overflow-visible shrink-0">
+            <div className="relative w-full h-[150px] md:h-[200px]">
+              <OptimizedImage
+                src={getCatalogueImage(product)}
+                alt={product.title?.en || "Product"}
+                fill
+                quality={100}
+                priority
+                overflowVisible
+                className=""
+                imageClassName="object-contain"
+              />
+            </div>
           </div>
 
-          <h2 className="relative z-10 text-2xl font-bold text-[#3A2A1E] font-heading mb-3">
+          <h2 className="relative z-10 text-base md:text-2xl font-bold text-[#3A2A1E] font-heading mb-1.5 md:mb-3 shrink-0 text-center">
             {product.title?.en}
           </h2>
 
-          <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar relative z-10">
+          <div className="flex-1 overflow-y-auto pr-1 md:pr-2 custom-scrollbar relative z-10 min-h-0">
             <div className="prose prose-sm prose-brown">
               {product.introParagraphs?.slice(0, 2).map((para, idx) => (
-                <p key={idx} className="mb-3 text-[#5C4A3A] leading-relaxed text-sm">
+                <p
+                  key={idx}
+                  className="mb-1.5 md:mb-3 text-[#5C4A3A] leading-snug md:leading-relaxed text-[11px] md:text-sm"
+                >
                   {para.en}
                 </p>
               ))}
@@ -137,7 +132,7 @@ const ProductPage = forwardRef<HTMLDivElement, ProductPageProps>(
           </div>
 
           {showPageNumbers ? (
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-xs text-[#6B5B4F] font-semibold z-10 bg-[#FAF6F1]/80 px-3 py-1 rounded-full">
+            <div className="absolute bottom-2 md:bottom-4 left-1/2 -translate-x-1/2 text-[9px] md:text-xs text-[#6B5B4F] font-semibold z-10 bg-[#FAF6F1]/80 px-2 md:px-3 py-0.5 md:py-1 rounded-full">
               {pageNumber}
             </div>
           ) : null}
@@ -149,7 +144,7 @@ const ProductPage = forwardRef<HTMLDivElement, ProductPageProps>(
       return (
         <div
           ref={ref}
-          className="page-wrapper bg-[#F5EFE6] p-8 md:p-10 flex flex-col h-full relative overflow-hidden"
+          className="page-wrapper bg-[#F5EFE6] p-3 md:p-8 lg:p-10 flex flex-col h-full relative overflow-hidden"
           style={{ width: "100%", height: "100%" }}
         >
           {/* Background image */}
@@ -162,13 +157,13 @@ const ProductPage = forwardRef<HTMLDivElement, ProductPageProps>(
             }}
           />
           {/* Subtle border */}
-          <div className="absolute inset-3 border border-[#D4C4A8] pointer-events-none z-10" />
-          <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar relative z-10">
-            <h3 className="text-xl font-bold text-[#3A2A1E] mb-4 border-b border-[#C4A35A]/40 pb-2">
+          <div className="absolute inset-2 md:inset-3 border border-[#D4C4A8] pointer-events-none z-10" />
+          <div className="flex-1 overflow-y-auto pr-1 md:pr-2 custom-scrollbar relative z-10 min-h-0">
+            <h3 className="text-sm md:text-xl font-bold text-[#3A2A1E] mb-1.5 md:mb-4 border-b border-[#C4A35A]/40 pb-1 md:pb-2">
               Specifications
             </h3>
 
-            <dl className="grid grid-cols-1 gap-y-3 mb-6 text-sm">
+            <dl className="grid grid-cols-1 gap-y-1 md:gap-y-3 mb-2 md:mb-6 text-[9px] md:text-sm">
               {product.specifications?.origin ? (
                 <div className="grid grid-cols-3">
                   <dt className="font-semibold text-[#6B5B4F]">Origin</dt>
@@ -189,53 +184,157 @@ const ProductPage = forwardRef<HTMLDivElement, ProductPageProps>(
               ) : null}
             </dl>
 
-            <div className="space-y-4">
-              {product.listSections?.slice(0, 2).map((section) => (
-                <div
-                  key={section._key}
-                  className="bg-[#FAF6F1] p-3 rounded-lg border border-[#D4C4A8]"
-                >
-                  <h4 className="font-bold text-[#3A2A1E] mb-1.5 text-xs uppercase tracking-wide">
-                    {section.title?.en}
-                  </h4>
-                  <ul className="list-disc list-inside space-y-0.5">
-                    {section.items?.slice(0, 4).map((item, idx) => {
-                      const isNestedItem =
-                        typeof item === "object" && item !== null && "text" in item;
-                      const itemText = isNestedItem
-                        ? (item as { text?: { en?: string } }).text?.en
-                        : (item as { en?: string }).en;
-                      const hasSubItems =
-                        isNestedItem &&
-                        "subItems" in item &&
-                        Array.isArray((item as { subItems?: unknown[] }).subItems) &&
-                        (item as { subItems: unknown[] }).subItems.length > 0;
+            {product.category?.toLowerCase() === "almonds" ? (
+              <div className="space-y-2 md:space-y-4">
+                {product.listSections?.slice(0, 2).map((section, sectionIdx) => {
+                  const isProcessingForms = sectionIdx === 0;
+                  const leftSlice = isProcessingForms ? 3 : 2;
+                  const rightStart = leftSlice;
+                  const rightEnd = isProcessingForms ? 6 : 5;
 
-                      return (
-                        <li key={idx} className="text-xs text-[#5C4A3A] pl-1">
-                          <span className="text-[#3A2A1E]/80">{itemText}</span>
-                          {hasSubItems && isNestedItem && "subItems" in item ? (
-                            <ul className="list-circle list-inside ml-4 mt-0.5 space-y-0.5">
-                              {((item as { subItems: { en?: string }[] }).subItems || [])
-                                .slice(0, 3)
-                                .map((subItem: { en?: string }, subIdx: number) => (
-                                  <li key={subIdx} className="text-[10px] text-[#5C4A3A]/80">
-                                    {subItem.en}
-                                  </li>
-                                ))}
-                            </ul>
-                          ) : null}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              ))}
-            </div>
+                  return (
+                    <div
+                      key={section._key}
+                      className="bg-[#FAF6F1] p-1.5 md:p-3 rounded-lg border border-[#D4C4A8]"
+                    >
+                      <h4 className="font-bold text-[#3A2A1E] mb-0.5 md:mb-1.5 text-[9px] md:text-xs uppercase tracking-wide">
+                        {section.title?.en}
+                      </h4>
+                      <div className="grid grid-cols-2 gap-x-2 md:gap-x-4">
+                        <ul className="list-disc list-inside space-y-0.5">
+                          {section.items?.slice(0, leftSlice).map((item, idx) => {
+                            const isNestedItem =
+                              typeof item === "object" && item !== null && "text" in item;
+                            const itemText = isNestedItem
+                              ? (item as { text?: { en?: string } }).text?.en
+                              : (item as { en?: string }).en;
+                            const hasSubItems =
+                              isNestedItem &&
+                              "subItems" in item &&
+                              Array.isArray((item as { subItems?: unknown[] }).subItems) &&
+                              (item as { subItems: unknown[] }).subItems.length > 0;
+
+                            return (
+                              <li
+                                key={idx}
+                                className="text-[8px] md:text-xs text-[#5C4A3A] pl-0.5 md:pl-1"
+                              >
+                                <span className="text-[#3A2A1E]/80">{itemText}</span>
+                                {hasSubItems && isNestedItem && "subItems" in item ? (
+                                  <ul className="list-circle list-inside ml-2 md:ml-4 mt-0.5 space-y-0.5">
+                                    {((item as { subItems: { en?: string }[] }).subItems || []).map(
+                                      (subItem: { en?: string }, subIdx: number) => (
+                                        <li
+                                          key={subIdx}
+                                          className="text-[7px] md:text-[10px] text-[#5C4A3A]/80"
+                                        >
+                                          {subItem.en}
+                                        </li>
+                                      )
+                                    )}
+                                  </ul>
+                                ) : null}
+                              </li>
+                            );
+                          })}
+                        </ul>
+                        <ul className="list-disc list-inside space-y-0.5">
+                          {section.items?.slice(rightStart, rightEnd).map((item, idx) => {
+                            const isNestedItem =
+                              typeof item === "object" && item !== null && "text" in item;
+                            const itemText = isNestedItem
+                              ? (item as { text?: { en?: string } }).text?.en
+                              : (item as { en?: string }).en;
+                            const hasSubItems =
+                              isNestedItem &&
+                              "subItems" in item &&
+                              Array.isArray((item as { subItems?: unknown[] }).subItems) &&
+                              (item as { subItems: unknown[] }).subItems.length > 0;
+
+                            return (
+                              <li
+                                key={idx}
+                                className="text-[8px] md:text-xs text-[#5C4A3A] pl-0.5 md:pl-1"
+                              >
+                                <span className="text-[#3A2A1E]/80">{itemText}</span>
+                                {hasSubItems && isNestedItem && "subItems" in item ? (
+                                  <ul className="list-circle list-inside ml-2 md:ml-4 mt-0.5 space-y-0.5">
+                                    {((item as { subItems: { en?: string }[] }).subItems || []).map(
+                                      (subItem: { en?: string }, subIdx: number) => (
+                                        <li
+                                          key={subIdx}
+                                          className="text-[7px] md:text-[10px] text-[#5C4A3A]/80"
+                                        >
+                                          {subItem.en}
+                                        </li>
+                                      )
+                                    )}
+                                  </ul>
+                                ) : null}
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="space-y-2 md:space-y-4">
+                {product.listSections?.slice(0, 2).map((section) => (
+                  <div
+                    key={section._key}
+                    className="bg-[#FAF6F1] p-1.5 md:p-3 rounded-lg border border-[#D4C4A8]"
+                  >
+                    <h4 className="font-bold text-[#3A2A1E] mb-0.5 md:mb-1.5 text-[9px] md:text-xs uppercase tracking-wide">
+                      {section.title?.en}
+                    </h4>
+                    <ul className="list-disc list-inside space-y-0.5">
+                      {section.items?.slice(0, 4).map((item, idx) => {
+                        const isNestedItem =
+                          typeof item === "object" && item !== null && "text" in item;
+                        const itemText = isNestedItem
+                          ? (item as { text?: { en?: string } }).text?.en
+                          : (item as { en?: string }).en;
+                        const hasSubItems =
+                          isNestedItem &&
+                          "subItems" in item &&
+                          Array.isArray((item as { subItems?: unknown[] }).subItems) &&
+                          (item as { subItems: unknown[] }).subItems.length > 0;
+
+                        return (
+                          <li
+                            key={idx}
+                            className="text-[8px] md:text-xs text-[#5C4A3A] pl-0.5 md:pl-1"
+                          >
+                            <span className="text-[#3A2A1E]/80">{itemText}</span>
+                            {hasSubItems && isNestedItem && "subItems" in item ? (
+                              <ul className="list-circle list-inside ml-2 md:ml-4 mt-0.5 space-y-0.5">
+                                {((item as { subItems: { en?: string }[] }).subItems || []).map(
+                                  (subItem: { en?: string }, subIdx: number) => (
+                                    <li
+                                      key={subIdx}
+                                      className="text-[7px] md:text-[10px] text-[#5C4A3A]/80"
+                                    >
+                                      {subItem.en}
+                                    </li>
+                                  )
+                                )}
+                              </ul>
+                            ) : null}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            )}
 
             {product.ctaLine?.en ? (
-              <div className="relative z-10 mt-6 p-4 bg-[#FAF6F1] rounded-lg border border-[#C4A35A]/30 shadow-sm">
-                <p className="text-[#3A2A1E] font-medium italic text-sm">
+              <div className="relative z-10 mt-2 md:mt-6 p-1.5 md:p-4 bg-[#FAF6F1] rounded-lg border border-[#C4A35A]/30 shadow-sm">
+                <p className="text-[#3A2A1E] font-medium italic text-[9px] md:text-sm">
                   &quot;{product.ctaLine.en}&quot;
                 </p>
               </div>
@@ -243,7 +342,7 @@ const ProductPage = forwardRef<HTMLDivElement, ProductPageProps>(
           </div>
 
           {showPageNumbers ? (
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-xs text-[#6B5B4F] font-semibold z-10 bg-[#F5EFE6]/80 px-3 py-1 rounded-full">
+            <div className="absolute bottom-2 md:bottom-4 left-1/2 -translate-x-1/2 text-[9px] md:text-xs text-[#6B5B4F] font-semibold z-10 bg-[#F5EFE6]/80 px-2 md:px-3 py-0.5 md:py-1 rounded-full">
               {pageNumber}
             </div>
           ) : null}
@@ -264,7 +363,7 @@ const CoverPage = forwardRef<HTMLDivElement, { title: string; subtitle?: string 
   ({ title, subtitle }, ref) => (
     <div
       ref={ref}
-      className="page-wrapper bg-[#E8DDD0] p-8 flex flex-col items-center justify-center text-center relative overflow-hidden shadow-xl"
+      className="page-wrapper bg-[#E8DDD0] p-4 md:p-6 lg:p-8 flex flex-col items-center justify-center text-center relative overflow-hidden shadow-xl"
       style={{
         width: "100%",
         height: "100%",
@@ -281,19 +380,19 @@ const CoverPage = forwardRef<HTMLDivElement, { title: string; subtitle?: string 
       />
 
       {/* Double border */}
-      <div className="absolute inset-4 border border-[#A69070] pointer-events-none z-10" />
-      <div className="absolute inset-6 border border-[#C4B090] pointer-events-none z-10" />
+      <div className="absolute inset-2 md:inset-4 border border-[#A69070] pointer-events-none z-10" />
+      <div className="absolute inset-3 md:inset-6 border border-[#C4B090] pointer-events-none z-10" />
 
       {/* Content wrapper with z-index */}
       <div className="relative z-10 flex flex-col items-center justify-center text-center">
         {/* Logo */}
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center w-40 md:w-auto">
           <OptimizedImage
             src="/Logo.png"
             alt="Divyansh International Logo"
             width={300}
             height={300}
-            className="object-contain"
+            className="object-contain w-full"
           />
         </div>
 
@@ -333,11 +432,13 @@ const CoverPage = forwardRef<HTMLDivElement, { title: string; subtitle?: string 
       </div>
 
       {/* Footer */}
-      <div className="absolute bottom-14 left-1/2 -translate-x-1/2 text-center z-10">
-        <p className="text-sm text-[#3A2A1E] uppercase tracking-[0.05em] font-bold">
+      <div className="absolute bottom-4 md:bottom-14 left-1/2 -translate-x-1/2 text-center z-10 px-2">
+        <p className="text-[10px] md:text-sm text-[#3A2A1E] uppercase tracking-[0.05em] font-bold">
           Divyansh International Pvt Ltd · Ludhiana, Punjab
         </p>
-        <p className="text-[10px] text-[#8B7355] mt-1">Est. 1999 · Catalogue 2026</p>
+        <p className="text-[8px] md:text-[10px] text-[#8B7355] mt-0.5 md:mt-1">
+          Est. 1999 · Catalogue 2026
+        </p>
       </div>
     </div>
   )
@@ -426,9 +527,28 @@ export default function CatalogueViewer({ products }: CatalogueViewerProps) {
     return () => document.removeEventListener("fullscreenchange", handleFullscreenChange);
   }, []);
 
-  const handleFlip = useCallback((e: { data: number }) => {
-    setCurrentPage(e.data);
-  }, []);
+  const handleFlip = useCallback(
+    (e: { data: number }) => {
+      const newPage = e.data;
+
+      if (isMobile) {
+        if (newPage === 0) {
+          setTimeout(() => {
+            flipBookRef.current?.pageFlip()?.flipNext();
+          }, 0);
+          return;
+        } else if (newPage === totalPages - 1) {
+          setTimeout(() => {
+            flipBookRef.current?.pageFlip()?.flipPrev();
+          }, 0);
+          return;
+        }
+      }
+
+      setCurrentPage(newPage);
+    },
+    [isMobile, totalPages]
+  );
 
   const handleFlipStateChange = useCallback((e: { data: string }) => {
     if (e.data === "flipping") {
@@ -445,6 +565,16 @@ export default function CatalogueViewer({ products }: CatalogueViewerProps) {
   const flipPrev = () => {
     setFlipDirection("prev");
     flipBookRef.current?.pageFlip()?.flipPrev();
+  };
+
+  const getEffectivePageNumber = () => {
+    if (!isMobile) return currentPage + 1;
+    return Math.max(1, Math.min(currentPage, totalPages - 2));
+  };
+
+  const getEffectiveTotalPages = () => {
+    if (!isMobile) return totalPages;
+    return totalPages - 2;
   };
 
   // if (isMobile) {
@@ -512,7 +642,7 @@ export default function CatalogueViewer({ products }: CatalogueViewerProps) {
         </p>
       </motion.div>
 
-      <div className="flex justify-center mb-8">
+      <div className="justify-center mb-8 hidden md:flex">
         <button
           onClick={toggleFullscreen}
           className="group bg-white/80 backdrop-blur-sm p-4 rounded-full shadow-lg hover:shadow-xl hover:bg-white transition-all duration-300 text-deep-brown border border-gold-light/30"
@@ -547,25 +677,25 @@ export default function CatalogueViewer({ products }: CatalogueViewerProps) {
       >
         <button
           onClick={flipPrev}
-          className="absolute left-2 md:left-8 z-20 bg-white/80 p-3 rounded-full text-deep-brown shadow-lg hover:bg-white transition-all disabled:opacity-50 md:hidden"
-          disabled={currentPage === 0}
+          className="absolute left-3 top-1/2 -translate-y-1/2 z-20 text-deep-brown/80 hover:text-deep-brown transition-all disabled:opacity-20 md:hidden p-2"
+          disabled={isMobile ? currentPage <= 1 : currentPage === 0}
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
-              strokeWidth={2}
+              strokeWidth={2.5}
               d="M15 19l-7-7 7-7"
             />
           </svg>
         </button>
         <button
           onClick={flipNext}
-          className="absolute right-2 md:right-8 z-20 bg-white/80 p-3 rounded-full text-deep-brown shadow-lg hover:bg-white transition-all disabled:opacity-50 md:hidden"
-          disabled={currentPage >= totalPages - 1}
+          className="absolute right-2 top-1/2 -translate-y-1/2 z-20 text-deep-brown/80 hover:text-deep-brown transition-all disabled:opacity-20 md:hidden p-2"
+          disabled={isMobile ? currentPage >= totalPages - 2 : currentPage >= totalPages - 1}
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
           </svg>
         </button>
 
@@ -598,7 +728,7 @@ export default function CatalogueViewer({ products }: CatalogueViewerProps) {
             mobileScrollSupport={true}
             className="catalogue-book"
             style={{}}
-            startPage={0}
+            startPage={isMobile ? 1 : 0}
             drawShadow={false}
             flippingTime={1500}
             usePortrait={isMobile}
@@ -615,9 +745,13 @@ export default function CatalogueViewer({ products }: CatalogueViewerProps) {
           >
             <div
               className={cn("page-wrapper relative", isFullscreen ? "bg-black" : "bg-background")}
-              style={{ width: "100%", height: "100%" }}
+              style={{
+                width: "100%",
+                height: "100%",
+                ...(isMobile ? { opacity: 0, pointerEvents: "none" } : {}),
+              }}
             >
-              {!isFullscreen ? <div className="absolute inset-0 bg-sand/20" /> : null}
+              {!isFullscreen && !isMobile ? <div className="absolute inset-0 bg-sand/20" /> : null}
             </div>
             <CoverPage title="Product Catalogue" subtitle="Premium Dry Fruits & Nuts" />
 
@@ -644,7 +778,7 @@ export default function CatalogueViewer({ products }: CatalogueViewerProps) {
               .flatMap((x) => [x.props.children[1], x.props.children[2]])}
 
             <div
-              className="page-wrapper bg-[#E8DDD0] p-8 flex flex-col items-center justify-center text-center relative overflow-hidden shadow-xl"
+              className="page-wrapper bg-[#E8DDD0] p-4 md:p-6 lg:p-8 flex flex-col items-center justify-center text-center relative overflow-hidden shadow-xl"
               style={{ width: "100%", height: "100%" }}
             >
               {/* Background image with dry fruits */}
@@ -658,39 +792,39 @@ export default function CatalogueViewer({ products }: CatalogueViewerProps) {
               />
 
               {/* Double border */}
-              <div className="absolute inset-4 border border-[#A69070] pointer-events-none z-10" />
-              <div className="absolute inset-6 border border-[#C4B090] pointer-events-none z-10" />
+              <div className="absolute inset-2 md:inset-4 border border-[#A69070] pointer-events-none z-10" />
+              <div className="absolute inset-3 md:inset-6 border border-[#C4B090] pointer-events-none z-10" />
 
               {/* Content */}
               <div className="relative z-10 flex flex-col items-center justify-center text-center">
                 {/* Logo */}
-                <div className="flex items-center justify-center">
+                <div className="flex items-center justify-center w-48 md:w-80 lg:w-auto">
                   <OptimizedImage
                     src="/Logo.png"
                     alt="Divyansh International Logo"
                     width={500}
                     height={500}
-                    className="object-contain"
+                    className="object-contain w-full"
                   />
                 </div>
 
                 {/* Tagline */}
-                <p className="text-lg text-[#3A2A1E] font-semibold mt-8 mb-2">
+                <p className="text-sm md:text-base lg:text-lg text-[#3A2A1E] font-semibold mt-4 md:mt-6 lg:mt-8 mb-1 md:mb-2">
                   Bringing Nature&apos;s Finest to You
                 </p>
 
                 {/* Website */}
-                <p className="text-lg text-[#3A2A1E] font-semibold tracking-wide">
+                <p className="text-sm md:text-base lg:text-lg text-[#3A2A1E] font-semibold tracking-wide">
                   www.divyanshint.com
                 </p>
               </div>
 
               {/* Footer */}
-              <div className="absolute bottom-26 left-1/2 -translate-x-1/2 text-center z-10">
-                <p className="text-base text-[#3A2A1E] uppercase tracking-[0.08em] font-bold">
+              <div className="absolute bottom-8 md:bottom-16 lg:bottom-26 left-1/2 -translate-x-1/2 text-center z-10 px-2">
+                <p className="text-[10px] md:text-sm lg:text-base text-[#3A2A1E] uppercase tracking-[0.08em] font-bold">
                   Thank You for Choosing Us
                 </p>
-                <p className="text-xs text-[#6B5B4F] mt-1 font-medium">
+                <p className="text-[8px] md:text-[10px] lg:text-xs text-[#6B5B4F] mt-0.5 md:mt-1 font-medium">
                   Quality · Trust · Excellence
                 </p>
               </div>
@@ -698,16 +832,20 @@ export default function CatalogueViewer({ products }: CatalogueViewerProps) {
 
             <div
               className={cn("page-wrapper relative", isFullscreen ? "bg-black" : "bg-background")}
-              style={{ width: "100%", height: "100%" }}
+              style={{
+                width: "100%",
+                height: "100%",
+                ...(isMobile ? { opacity: 0, pointerEvents: "none" } : {}),
+              }}
             >
-              {!isFullscreen ? <div className="absolute inset-0 bg-sand/20" /> : null}
+              {!isFullscreen && !isMobile ? <div className="absolute inset-0 bg-sand/20" /> : null}
             </div>
           </HTMLFlipBook>
         </div>
       </div>
 
-      <div className="mt-8 text-center text- text-text-muted md:hidden">
-        Page {currentPage + 1} of {totalPages}
+      <div className="mt-8 text-center text- text-text-muted md:hidden hidden">
+        Page {getEffectivePageNumber()} of {getEffectiveTotalPages()}
       </div>
     </div>
   );
