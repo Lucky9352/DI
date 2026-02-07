@@ -361,25 +361,38 @@ export default function ContentBanner({ data, className, priority = false }: Con
         {features.length > 0 ? (
           <div
             className={cn(
-              "flex flex-wrap gap-x-6 gap-y-3 pt-4",
-              layout === "bottom-image" || layout === "text-only" ? "justify-center" : ""
+              "pt-4",
+              features.length === 6
+                ? "grid grid-cols-2 gap-x-3 sm:gap-x-4 md:gap-x-6 gap-y-4 max-w-2xl w-fit"
+                : "flex flex-wrap gap-x-6 gap-y-3",
+              (layout === "bottom-image" || layout === "text-only") && features.length !== 6
+                ? "justify-center"
+                : "",
+              (layout === "bottom-image" || layout === "text-only") && features.length === 6
+                ? "mx-auto"
+                : ""
             )}
           >
             {features.map((feature, idx) => (
-              <div key={idx} className="flex items-center gap-3 group">
-                <span className="flex items-center justify-center w-6 h-6 rounded-full bg-gold/20 text-gold group-hover:bg-gold group-hover:text-white transition-colors">
-                  <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div key={idx} className="flex items-start gap-2 md:gap-3 group text-left">
+                <span className="shrink-0 mt-1 flex items-center justify-center w-4 h-4 md:w-5 md:h-5 rounded-full bg-gold text-white shadow-[0_2px_4px_rgba(184,135,90,0.2)] transition-transform duration-300 group-hover:scale-110">
+                  <svg
+                    className="w-2.5 h-2.5 md:w-3 md:h-3"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      strokeWidth={3}
+                      strokeWidth={4}
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
                 </span>
                 <span
                   className={cn(
-                    "text-sm font-bold tracking-wide uppercase",
+                    "text-[11px] sm:text-xs md:text-sm font-bold tracking-wide uppercase leading-tight pt-1",
                     isLightText ? "text-[#f5f1e8]/90!" : "text-deep-brown!"
                   )}
                 >

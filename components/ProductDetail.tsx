@@ -18,7 +18,7 @@ import ProductVarietiesSection, {
 import ProductGradingSection, {
   type ProductGrade,
 } from "@/components/sections/ProductGradingSection";
-import { Check, Globe, Package, Hourglass, Warehouse, ChevronDown } from "lucide-react";
+import { Globe, Package, Hourglass, Warehouse, ChevronDown } from "lucide-react";
 
 // =============================================================================
 // ZOD SCHEMAS & TYPES
@@ -574,10 +574,6 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
                         </h3>
                         <ul className="space-y-2">
                           {section.items?.map((item, i) => {
-                            const title = getLocalized(section.title, language) || "";
-                            const isWhyChooseUs = title.toLowerCase().startsWith("why choose us");
-
-                            // Type guard to check if item is an object with text property
                             const isNestedItem =
                               typeof item === "object" && item !== null && "text" in item;
                             const itemText = isNestedItem
@@ -592,11 +588,7 @@ export default function ProductDetail({ product, labels }: ProductDetailProps) {
                             return (
                               <li key={i} className="flex flex-col gap-1">
                                 <div className="flex items-start gap-2">
-                                  {isWhyChooseUs ? (
-                                    <Check className="w-5 h-5 text-gold shrink-0 mt-0.5" />
-                                  ) : (
-                                    <span className="w-1.5 h-1.5 bg-gold rounded-full mt-2.5 shrink-0" />
-                                  )}
+                                  <span className="w-1.5 h-1.5 bg-gold rounded-full mt-2.5 shrink-0" />
                                   <span className="text-text-muted">{itemText}</span>
                                 </div>
                                 {hasSubItems &&

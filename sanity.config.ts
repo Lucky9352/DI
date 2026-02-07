@@ -3,7 +3,7 @@ import { visionTool } from "@sanity/vision";
 import { defineConfig, type SingleWorkspace } from "sanity";
 import { structureTool, type StructureBuilder } from "sanity/structure";
 
-import { env } from "@/lib/env";
+import { env } from "./lib/env";
 import { schemaTypes } from "./sanity/schemas";
 
 /**

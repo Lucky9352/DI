@@ -1566,12 +1566,6 @@ export type AllSanitySchemaTypes =
 
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
-type ArrayOf<T> = Array<
-  T & {
-    _key: string;
-  }
->;
-
 // Source: app/sitemap.ts
 // Variable: sitemapProductsQuery
 // Query: *[_type == "product"] {     "slug": slug.current,     _updatedAt   }
